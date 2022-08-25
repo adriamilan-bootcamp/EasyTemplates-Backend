@@ -1,6 +1,6 @@
 // Generated with g9.
 
-package jpa;
+package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
