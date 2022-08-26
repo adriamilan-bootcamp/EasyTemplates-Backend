@@ -21,11 +21,13 @@ public class GrupoTieneDocs<Grupo> implements Serializable {
     /**
      * IdClass for primary key when using JPA annotations
      */
+
     public class GrupoTieneDocsId implements Serializable {
         Grupo grupos;
         Plantilla plantillas;
         Imagen imagenes;
         Pdf pdfs;
+
     }
 
     /** Primary key. */
@@ -83,6 +85,7 @@ public class GrupoTieneDocs<Grupo> implements Serializable {
      *
      * @return the current value of grupos
      */
+
     public Grupo getGrupo() {
         return grupos;
     }
@@ -92,6 +95,7 @@ public class GrupoTieneDocs<Grupo> implements Serializable {
      *
      * @param aGrupo the new value for grupos
      */
+
     public void setGrupo(Grupo aGrupo) {
         grupos = aGrupo;
     }
