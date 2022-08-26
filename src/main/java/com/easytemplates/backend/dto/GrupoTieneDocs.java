@@ -15,17 +15,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="grupos_tienen_docs")
-@IdClass(GruposTienenDocs.GruposTienenDocsId.class)
-public class GruposTienenDocs implements Serializable {
+@IdClass(GrupoTieneDocs.GruposTienenDocsId.class)
+public class GrupoTieneDocs implements Serializable {
 
     /**
      * IdClass for primary key when using JPA annotations
      */
     public class GruposTienenDocsId implements Serializable {
-        Grupos grupos;
-        Plantillas plantillas;
-        Imagenes imagenes;
-        Pdfs pdfs;
+        Grupo grupos;
+        Plantilla plantillas;
+        Imagen imagenes;
+        Pdf pdfs;
     }
 
     /** Primary key. */
@@ -59,22 +59,22 @@ public class GruposTienenDocs implements Serializable {
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="grupo_id", nullable=false)
-    private Grupos grupos;
+    private Grupo grupo;
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="imagen_id", nullable=false)
-    private Imagenes imagenes;
+    private Imagen imagen;
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="pdf_id", nullable=false)
-    private Pdfs pdfs;
+    private Pdf pdf;
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="plantilla_id", nullable=false)
-    private Plantillas plantillas;
+    private Plantilla plantilla;
 
     /** Default constructor. */
-    public GruposTienenDocs() {
+    public GrupoTieneDocs() {
         super();
     }
 
@@ -83,7 +83,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @return the current value of grupos
      */
-    public Grupos getGrupos() {
+    public Grupo getGrupos() {
         return grupos;
     }
 
@@ -92,7 +92,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @param aGrupos the new value for grupos
      */
-    public void setGrupos(Grupos aGrupos) {
+    public void setGrupos(Grupo aGrupos) {
         grupos = aGrupos;
     }
 
@@ -101,7 +101,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @return the current value of imagenes
      */
-    public Imagenes getImagenes() {
+    public Imagen getImagenes() {
         return imagenes;
     }
 
@@ -110,7 +110,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @param aImagenes the new value for imagenes
      */
-    public void setImagenes(Imagenes aImagenes) {
+    public void setImagenes(Imagen aImagenes) {
         imagenes = aImagenes;
     }
 
@@ -119,7 +119,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @return the current value of pdfs
      */
-    public Pdfs getPdfs() {
+    public Pdf getPdfs() {
         return pdfs;
     }
 
@@ -128,7 +128,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @param aPdfs the new value for pdfs
      */
-    public void setPdfs(Pdfs aPdfs) {
+    public void setPdfs(Pdf aPdfs) {
         pdfs = aPdfs;
     }
 
@@ -137,7 +137,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @return the current value of plantillas
      */
-    public Plantillas getPlantillas() {
+    public Plantilla getPlantillas() {
         return plantillas;
     }
 
@@ -146,7 +146,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @param aPlantillas the new value for plantillas
      */
-    public void setPlantillas(Plantillas aPlantillas) {
+    public void setPlantillas(Plantilla aPlantillas) {
         plantillas = aPlantillas;
     }
 
@@ -300,10 +300,10 @@ public class GruposTienenDocs implements Serializable {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof GruposTienenDocs)) {
+        if (!(other instanceof GrupoTieneDocs)) {
             return false;
         }
-        GruposTienenDocs that = (GruposTienenDocs) other;
+        GrupoTieneDocs that = (GrupoTieneDocs) other;
         if (this.getGruposId() != that.getGruposId()) {
             return false;
         }
@@ -327,8 +327,8 @@ public class GruposTienenDocs implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof GruposTienenDocs)) return false;
-        return this.equalKeys(other) && ((GruposTienenDocs)other).equalKeys(this);
+        if (!(other instanceof GrupoTieneDocs)) return false;
+        return this.equalKeys(other) && ((GrupoTieneDocs)other).equalKeys(this);
     }
 
     /**
