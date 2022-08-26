@@ -71,7 +71,7 @@ public class UsuarioTieneDocs implements Serializable {
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="usuario_id", nullable=false)
-    private Usuarios usuarios;
+    private Usuario usuarios;
 
     /** Default constructor. */
     public UsuarioTieneDocs() {
@@ -137,7 +137,7 @@ public class UsuarioTieneDocs implements Serializable {
      *
      * @return the current value of usuarios
      */
-    public Usuarios getUsuarios() {
+    public Usuario getUsuarios() {
         return usuarios;
     }
 
@@ -146,7 +146,7 @@ public class UsuarioTieneDocs implements Serializable {
      *
      * @param aUsuarios the new value for usuarios
      */
-    public void setUsuarios(Usuarios aUsuarios) {
+    public void setUsuarios(Usuario aUsuarios) {
         usuarios = aUsuarios;
     }
 

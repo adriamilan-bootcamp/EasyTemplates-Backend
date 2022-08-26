@@ -43,7 +43,7 @@ public class Plantilla {
 	 */
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="plantilla")
-	private List<UsuariosTienenDocs> usuariosTienenDocs;
+	private List<UsuarioTieneDocs> usuariosTienenDocs;
 	
 	/*
 	 * Tabla intermedia
@@ -52,7 +52,7 @@ public class Plantilla {
 	 */
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="plantilla")
-	private List<GruposTienenDocs> gruposTienenDocs;
+	private List<GrupoTieneDocs> gruposTienenDocs;
 	
 	// Constructor por defecto
 	public Plantilla() {
@@ -126,15 +126,15 @@ public class Plantilla {
 	 * @return the usuariosTienenDocs
 	 */
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "UsuariosTienenDocs")
-	public List<UsuariosTienenDocs> getUsuariosTienenDocs() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "UsuarioTieneDocs")
+	public List<UsuarioTieneDocs> getUsuariosTienenDocs() {
 		return usuariosTienenDocs;
 	}
 
 	/**
 	 * @param usuariosTienenDocs the usuariosTienenDocs to set
 	 */
-	public void setUsuariosTienenDocs(List<UsuariosTienenDocs> usuariosTienenDocs) {
+	public void setUsuariosTienenDocs(List<UsuarioTieneDocs> usuariosTienenDocs) {
 		this.usuariosTienenDocs = usuariosTienenDocs;
 	}
 	
@@ -143,14 +143,14 @@ public class Plantilla {
 	 */
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "GruposTienenDocs")
-	public List<GruposTienenDocs> getGruposTienenDocs() {
+	public List<GrupoTieneDocs> getGruposTienenDocs() {
 		return gruposTienenDocs;
 	}
 
 	/**
 	 * @param usuariosTienenDocs the usuariosTienenDocs to set
 	 */
-	public void setGruposTienenDocs(List<GruposTienenDocs> gruposTienenDocs) {
+	public void setGruposTienenDocs(List<GrupoTieneDocs> gruposTienenDocs) {
 		this.gruposTienenDocs = gruposTienenDocs;
 	}
 
