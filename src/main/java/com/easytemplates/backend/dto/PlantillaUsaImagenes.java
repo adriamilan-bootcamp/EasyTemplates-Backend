@@ -8,23 +8,14 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
 import javax.persistence.Version;
 
 @Entity(name="plantillas_usan_imagenes")
-@IdClass(PlantillaUsaImagenes.PlantillaUsaImagenesId.class)
 public class PlantillaUsaImagenes implements Serializable {
 
-    /**
-     * IdClass for primary key when using JPA annotations
-     */
-    public class PlantillaUsaImagenesId implements Serializable {
-    }
-
     /** Primary key. */
-    protected static final String PK = "PlantillaUsaImagenesPrimary";
+    protected static final String PK = "id";
 
     /**
      * The optimistic lock. Available via standard bean get/set operations.
@@ -51,12 +42,9 @@ public class PlantillaUsaImagenes implements Serializable {
         lockFlag = aLockFlag;
     }
 
-    @ManyToOne(optional=false)
-    @JoinColumn(name="imagen_id", nullable=false)
-    private Imagen imagen;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="plantilla_id", nullable=false)
-    private Plantilla plantilla;
+    @Id
+    @Column(unique=true, nullable=false, precision=10)
+    private int id;
 
     /** Default constructor. */
     public PlantillaUsaImagenes() {
@@ -64,39 +52,21 @@ public class PlantillaUsaImagenes implements Serializable {
     }
 
     /**
-     * Access method for imagen.
+     * Access method for id.
      *
-     * @return the current value of imagen
+     * @return the current value of id
      */
-    public Imagen getImagen() {
-        return imagen;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Setter method for imagen.
+     * Setter method for id.
      *
-     * @param aImagen the new value for imagen
+     * @param aId the new value for id
      */
-    public void setImagen(Imagen aImagen) {
-        imagen = aImagen;
-    }
-
-    /**
-     * Access method for plantilla.
-     *
-     * @return the current value of plantilla
-     */
-    public Plantilla getPlantilla() {
-        return plantilla;
-    }
-
-    /**
-     * Setter method for plantilla.
-     *
-     * @param aPlantilla the new value for plantilla
-     */
-    public void setPlantilla(Plantilla aPlantilla) {
-        plantilla = aPlantilla;
+    public void setId(int aId) {
+        id = aId;
     }
 
     /**
@@ -113,6 +83,9 @@ public class PlantillaUsaImagenes implements Serializable {
             return false;
         }
         PlantillaUsaImagenes that = (PlantillaUsaImagenes) other;
+        if (this.getId() != that.getId()) {
+            return false;
+        }
         return true;
     }
 
@@ -137,6 +110,8 @@ public class PlantillaUsaImagenes implements Serializable {
     public int hashCode() {
         int i;
         int result = 17;
+        i = getId();
+        result = 37*result + i;
         return result;
     }
 
@@ -148,6 +123,7 @@ public class PlantillaUsaImagenes implements Serializable {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer("[PlantillaUsaImagenes |");
+        sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
     }
@@ -159,6 +135,7 @@ public class PlantillaUsaImagenes implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
+        ret.put("id", Integer.valueOf(getId()));
         return ret;
     }
 
