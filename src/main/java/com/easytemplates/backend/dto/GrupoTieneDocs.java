@@ -8,7 +8,11 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="grupos_tienen_docs")
@@ -43,8 +47,21 @@ public class GrupoTieneDocs implements Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
+    @ManyToOne
+    @JoinColumn(name="grupo_id")
+    private Grupo grupo;
+    @ManyToOne
+    @JoinColumn(name="imagen_id")
+    private Imagen imagen;
+    @ManyToOne
+    @JoinColumn(name="pdf_id")
+    private Pdf pdf;
+    @ManyToOne
+    @JoinColumn(name="plantilla_id")
+    private Plantilla plantilla;
 
     /** Default constructor. */
     public GrupoTieneDocs() {
@@ -67,6 +84,78 @@ public class GrupoTieneDocs implements Serializable {
      */
     public void setId(int aId) {
         id = aId;
+    }
+
+    /**
+     * Access method for grupo.
+     *
+     * @return the current value of grupo
+     */
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    /**
+     * Setter method for grupo.
+     *
+     * @param aGrupo the new value for grupo
+     */
+    public void setGrupo(Grupo aGrupo) {
+        grupo = aGrupo;
+    }
+
+    /**
+     * Access method for imagen.
+     *
+     * @return the current value of imagen
+     */
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    /**
+     * Setter method for imagen.
+     *
+     * @param aImagen the new value for imagen
+     */
+    public void setImagen(Imagen aImagen) {
+        imagen = aImagen;
+    }
+
+    /**
+     * Access method for pdf.
+     *
+     * @return the current value of pdf
+     */
+    public Pdf getPdf() {
+        return pdf;
+    }
+
+    /**
+     * Setter method for pdf.
+     *
+     * @param aPdf the new value for pdf
+     */
+    public void setPdf(Pdf aPdf) {
+        pdf = aPdf;
+    }
+
+    /**
+     * Access method for plantilla.
+     *
+     * @return the current value of plantilla
+     */
+    public Plantilla getPlantilla() {
+        return plantilla;
+    }
+
+    /**
+     * Setter method for plantilla.
+     *
+     * @param aPlantilla the new value for plantilla
+     */
+    public void setPlantilla(Plantilla aPlantilla) {
+        plantilla = aPlantilla;
     }
 
     /**

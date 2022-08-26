@@ -3,11 +3,13 @@ package com.easytemplates.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioTieneDocsDAO;
 import com.easytemplates.backend.dto.UsuarioTieneDocs;
 
 // Implementation of the UsuarioTieneDocsService interface
+@Service
 public class UsuarioTieneDocsServiceImpl implements IUsuarioTieneDocsService {
 
 	// The DAO Handler for the operations

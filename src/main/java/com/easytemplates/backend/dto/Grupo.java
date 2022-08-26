@@ -54,11 +54,13 @@ public class Grupo implements Serializable {
     private int id;
     @Column(nullable=false, length=255)
     private String nombre;
-    @OneToMany(mappedBy="grupos")
-    private Set<UsuarioPerteneceGrupos> usuariosPertenecenGrupos;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="admin", nullable=false)
-    private Usuario usuarios;
+    @OneToMany(mappedBy="grupo")
+    private Set<GrupoTieneDocs> grupoTieneDocs;
+    @OneToMany(mappedBy="grupo")
+    private Set<UsuarioPerteneceGrupos> usuarioPerteneceGrupos;
+    @ManyToOne
+    @JoinColumn(name="admin")
+    private Usuario usuario;
 
     /** Default constructor. */
     public Grupo() {
@@ -102,46 +104,64 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Access method for usuariosPertenecenGrupos.
+     * Access method for grupoTieneDocs.
      *
-     * @return the current value of usuariosPertenecenGrupos
+     * @return the current value of grupoTieneDocs
      */
-    public Set<UsuarioPerteneceGrupos> getUsuariosPertenecenGrupos() {
-        return usuariosPertenecenGrupos;
+    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
+        return grupoTieneDocs;
     }
 
     /**
-     * Setter method for usuariosPertenecenGrupos.
+     * Setter method for grupoTieneDocs.
      *
-     * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
+     * @param aGrupoTieneDocs the new value for grupoTieneDocs
      */
-    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupos> aUsuariosPertenecenGrupos) {
-        usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
+    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
+        grupoTieneDocs = aGrupoTieneDocs;
     }
 
     /**
-     * Access method for usuarios.
+     * Access method for usuarioPerteneceGrupos.
      *
-     * @return the current value of usuarios
+     * @return the current value of usuarioPerteneceGrupos
      */
-    public Usuario getUsuarios() {
-        return usuarios;
+    public Set<UsuarioPerteneceGrupos> getUsuarioPerteneceGrupos() {
+        return usuarioPerteneceGrupos;
     }
 
     /**
-     * Setter method for usuarios.
+     * Setter method for usuarioPerteneceGrupos.
      *
-     * @param aUsuarios the new value for usuarios
+     * @param aUsuarioPerteneceGrupos the new value for usuarioPerteneceGrupos
      */
-    public void setUsuarios(Usuario aUsuarios) {
-        usuarios = aUsuarios;
+    public void setUsuarioPerteneceGrupos(Set<UsuarioPerteneceGrupos> aUsuarioPerteneceGrupos) {
+        usuarioPerteneceGrupos = aUsuarioPerteneceGrupos;
     }
 
     /**
-     * Compares the key for this instance with another Grupos.
+     * Access method for usuario.
+     *
+     * @return the current value of usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * Setter method for usuario.
+     *
+     * @param aUsuario the new value for usuario
+     */
+    public void setUsuario(Usuario aUsuario) {
+        usuario = aUsuario;
+    }
+
+    /**
+     * Compares the key for this instance with another Grupo.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Grupos and the key objects are equal
+     * @return True if other object is instance of class Grupo and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
@@ -158,7 +178,7 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Compares this instance with another Grupos.
+     * Compares this instance with another Grupo.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
@@ -190,7 +210,7 @@ public class Grupo implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Grupos |");
+        StringBuffer sb = new StringBuffer("[Grupo |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

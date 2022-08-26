@@ -56,6 +56,10 @@ public class Imagen implements Serializable {
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
     @OneToMany(mappedBy="imagen")
+    private Set<GrupoTieneDocs> grupoTieneDocs;
+    @OneToMany(mappedBy="imagen")
+    private Set<UsuarioTieneDocs> usuarioTieneDocs;
+    @OneToMany(mappedBy="imagen")
     private Set<PlantillaUsaImagenes> plantillaUsaImagenes;
 
     /** Default constructor. */
@@ -115,6 +119,42 @@ public class Imagen implements Serializable {
      */
     public void setFechaCreacion(LocalDateTime aFechaCreacion) {
         fechaCreacion = aFechaCreacion;
+    }
+
+    /**
+     * Access method for grupoTieneDocs.
+     *
+     * @return the current value of grupoTieneDocs
+     */
+    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
+        return grupoTieneDocs;
+    }
+
+    /**
+     * Setter method for grupoTieneDocs.
+     *
+     * @param aGrupoTieneDocs the new value for grupoTieneDocs
+     */
+    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
+        grupoTieneDocs = aGrupoTieneDocs;
+    }
+
+    /**
+     * Access method for usuarioTieneDocs.
+     *
+     * @return the current value of usuarioTieneDocs
+     */
+    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
+        return usuarioTieneDocs;
+    }
+
+    /**
+     * Setter method for usuarioTieneDocs.
+     *
+     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
+     */
+    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
+        usuarioTieneDocs = aUsuarioTieneDocs;
     }
 
     /**

@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity(name="pdfs")
-
 public class Pdf implements Serializable {
 
     /** Primary key. */
@@ -58,10 +57,10 @@ public class Pdf implements Serializable {
     private String src;
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
-    @OneToMany(mappedBy="pdfs")
-    private Set<GrupoTieneDocs> gruposTienenDocs;
-    @OneToMany(mappedBy="pdfs")
-    private Set<UsuarioTieneDocs> usuariosTienenDocs;
+    @OneToMany(mappedBy="pdf")
+    private Set<GrupoTieneDocs> grupoTieneDocs;
+    @OneToMany(mappedBy="pdf")
+    private Set<UsuarioTieneDocs> usuarioTieneDocs;
 
     /** Default constructor. */
     public Pdf() {
@@ -141,39 +140,39 @@ public class Pdf implements Serializable {
     }
 
     /**
-     * Access method for gruposTienenDocs.
+     * Access method for grupoTieneDocs.
      *
-     * @return the current value of gruposTienenDocs
+     * @return the current value of grupoTieneDocs
      */
-    public Set<GrupoTieneDocs> getGrupoTienenDocs() {
-        return gruposTienenDocs;
+    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
+        return grupoTieneDocs;
     }
 
     /**
-     * Setter method for gruposTienenDocs.
+     * Setter method for grupoTieneDocs.
      *
-     * @param aGrupoTienenDocs the new value for gruposTienenDocs
+     * @param aGrupoTieneDocs the new value for grupoTieneDocs
      */
-    public void setGrupoTienenDocs(Set<GrupoTieneDocs> aGrupoTienenDocs) {
-        gruposTienenDocs = aGrupoTienenDocs;
+    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
+        grupoTieneDocs = aGrupoTieneDocs;
     }
 
     /**
-     * Access method for usuariosTienenDocs.
+     * Access method for usuarioTieneDocs.
      *
-     * @return the current value of usuariosTienenDocs
+     * @return the current value of usuarioTieneDocs
      */
     public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
-        return usuariosTienenDocs;
+        return usuarioTieneDocs;
     }
 
     /**
-     * Setter method for usuariosTienenDocs.
+     * Setter method for usuarioTieneDocs.
      *
-     * @param aUsuarioTieneDocs the new value for usuariosTienenDocs
+     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
      */
     public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
-        usuariosTienenDocs = aUsuarioTieneDocs;
+        usuarioTieneDocs = aUsuarioTieneDocs;
     }
 
     /**

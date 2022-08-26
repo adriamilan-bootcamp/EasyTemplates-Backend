@@ -8,26 +8,18 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="usuarios_pertenecen_grupos")
-@IdClass(UsuarioPerteneceGrupos.UsuariosPertenecenGruposId.class)
 public class UsuarioPerteneceGrupos implements Serializable {
 
-    /**
-     * IdClass for primary key when using JPA annotations
-     */
-    public class UsuariosPertenecenGruposId implements Serializable {
-        Usuario usuarios;
-        Grupo grupos;
-    }
-
     /** Primary key. */
-    protected static final String PK = "UsuariosPertenecenGruposPrimary";
+    protected static final String PK = "id";
 
     /**
      * The optimistic lock. Available via standard bean get/set operations.
@@ -54,14 +46,16 @@ public class UsuarioPerteneceGrupos implements Serializable {
         lockFlag = aLockFlag;
     }
 
-    @ManyToOne(optional=false)
     @Id
-    @JoinColumn(name="grupo_id", nullable=false)
-    private Grupo grupos;
-    @ManyToOne(optional=false)
-    @Id
-    @JoinColumn(name="usuario_id", nullable=false)
-    private Usuario usuarios;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(unique=true, nullable=false, precision=10)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name="grupo")
+    private Grupo grupo;
+    @ManyToOne
+    @JoinColumn(name="usuario")
+    private Usuario usuario;
 
     /** Default constructor. */
     public UsuarioPerteneceGrupos() {
@@ -69,116 +63,64 @@ public class UsuarioPerteneceGrupos implements Serializable {
     }
 
     /**
-     * Access method for grupos.
+     * Access method for id.
      *
-     * @return the current value of grupos
+     * @return the current value of id
      */
-    public Grupo getGrupos() {
-        return grupos;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Setter method for grupos.
+     * Setter method for id.
      *
-     * @param aGrupos the new value for grupos
+     * @param aId the new value for id
      */
-    public void setGrupos(Grupo aGrupos) {
-        grupos = aGrupos;
+    public void setId(int aId) {
+        id = aId;
     }
 
     /**
-     * Access method for usuarios.
+     * Access method for grupo.
      *
-     * @return the current value of usuarios
+     * @return the current value of grupo
      */
-    public Usuario getUsuarios() {
-        return usuarios;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
     /**
-     * Setter method for usuarios.
+     * Setter method for grupo.
      *
-     * @param aUsuarios the new value for usuarios
+     * @param aGrupo the new value for grupo
      */
-    public void setUsuarios(Usuario aUsuarios) {
-        usuarios = aUsuarios;
-    }
-
-    /** Temporary value holder for group key fragment usuariosId */
-    private transient int tempUsuariosId;
-
-    /**
-     * Gets the key fragment id for member usuarios.
-     * If this.usuarios is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setUsuariosId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Usuario
-     */
-    public int getUsuariosId() {
-        return (getUsuarios() == null ? tempUsuariosId : getUsuarios().getId());
+    public void setGrupo(Grupo aGrupo) {
+        grupo = aGrupo;
     }
 
     /**
-     * Sets the key fragment id from member usuarios.
-     * If this.usuarios is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getUsuariosId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
+     * Access method for usuario.
      *
-     * @param aId New value for the key fragment
-     * @see Usuario
+     * @return the current value of usuario
      */
-    public void setUsuariosId(int aId) {
-        if (getUsuarios() == null) {
-            tempUsuariosId = aId;
-        } else {
-            getUsuarios().setId(aId);
-        }
-    }
-
-    /** Temporary value holder for group key fragment gruposId */
-    private transient int tempGruposId;
-
-    /**
-     * Gets the key fragment id for member grupos.
-     * If this.grupos is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setGruposId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Grupo
-     */
-    public int getGruposId() {
-        return (getGrupos() == null ? tempGruposId : getGrupos().getId());
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     /**
-     * Sets the key fragment id from member grupos.
-     * If this.grupos is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getGruposId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
+     * Setter method for usuario.
      *
-     * @param aId New value for the key fragment
-     * @see Grupo
+     * @param aUsuario the new value for usuario
      */
-    public void setGruposId(int aId) {
-        if (getGrupos() == null) {
-            tempGruposId = aId;
-        } else {
-            getGrupos().setId(aId);
-        }
+    public void setUsuario(Usuario aUsuario) {
+        usuario = aUsuario;
     }
 
     /**
-     * Compares the key for this instance with another UsuariosPertenecenGrupos.
+     * Compares the key for this instance with another UsuarioPerteneceGrupos.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class UsuariosPertenecenGrupos and the key objects are equal
+     * @return True if other object is instance of class UsuarioPerteneceGrupos and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
@@ -188,17 +130,14 @@ public class UsuarioPerteneceGrupos implements Serializable {
             return false;
         }
         UsuarioPerteneceGrupos that = (UsuarioPerteneceGrupos) other;
-        if (this.getUsuariosId() != that.getUsuariosId()) {
-            return false;
-        }
-        if (this.getGruposId() != that.getGruposId()) {
+        if (this.getId() != that.getId()) {
             return false;
         }
         return true;
     }
 
     /**
-     * Compares this instance with another UsuariosPertenecenGrupos.
+     * Compares this instance with another UsuarioPerteneceGrupos.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
@@ -218,9 +157,7 @@ public class UsuarioPerteneceGrupos implements Serializable {
     public int hashCode() {
         int i;
         int result = 17;
-        i = getUsuariosId();
-        result = 37*result + i;
-        i = getGruposId();
+        i = getId();
         result = 37*result + i;
         return result;
     }
@@ -232,9 +169,8 @@ public class UsuarioPerteneceGrupos implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[UsuariosPertenecenGrupos |");
-        sb.append(" usuariosId=").append(getUsuariosId());
-        sb.append(" gruposId=").append(getGruposId());
+        StringBuffer sb = new StringBuffer("[UsuarioPerteneceGrupos |");
+        sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
     }
@@ -246,8 +182,7 @@ public class UsuarioPerteneceGrupos implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("usuariosId", Integer.valueOf(getUsuariosId()));
-        ret.put("gruposId", Integer.valueOf(getGruposId()));
+        ret.put("id", Integer.valueOf(getId()));
         return ret;
     }
 
