@@ -3,6 +3,7 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,13 +13,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-@Entity(name="grupos")
-public class Grupo implements Serializable {
+@Entity(name="pdfs")
+
+public class Pdf implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -52,16 +52,19 @@ public class Grupo implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
-    @Column(nullable=false, length=255)
-    private String nombre;
-    @OneToMany(mappedBy="grupos")
-    private Set<UsuarioPerteneceGrupos> usuariosPertenecenGrupos;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="admin", nullable=false)
-    private Usuario usuarios;
+    @Column(length=100)
+    private String titulo;
+    @Column(length=255)
+    private String src;
+    @Column(name="fecha_creacion")
+    private LocalDateTime fechaCreacion;
+    @OneToMany(mappedBy="pdfs")
+    private Set<GrupoTieneDocs> gruposTienenDocs;
+    @OneToMany(mappedBy="pdfs")
+    private Set<UsuarioTieneDocs> usuariosTienenDocs;
 
     /** Default constructor. */
-    public Grupo() {
+    public Pdf() {
         super();
     }
 
@@ -84,73 +87,109 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Access method for nombre.
+     * Access method for titulo.
      *
-     * @return the current value of nombre
+     * @return the current value of titulo
      */
-    public String getNombre() {
-        return nombre;
+    public String getTitulo() {
+        return titulo;
     }
 
     /**
-     * Setter method for nombre.
+     * Setter method for titulo.
      *
-     * @param aNombre the new value for nombre
+     * @param aTitulo the new value for titulo
      */
-    public void setNombre(String aNombre) {
-        nombre = aNombre;
+    public void setTitulo(String aTitulo) {
+        titulo = aTitulo;
     }
 
     /**
-     * Access method for usuariosPertenecenGrupos.
+     * Access method for src.
      *
-     * @return the current value of usuariosPertenecenGrupos
+     * @return the current value of src
      */
-    public Set<UsuarioPerteneceGrupos> getUsuariosPertenecenGrupos() {
-        return usuariosPertenecenGrupos;
+    public String getSrc() {
+        return src;
     }
 
     /**
-     * Setter method for usuariosPertenecenGrupos.
+     * Setter method for src.
      *
-     * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
+     * @param aSrc the new value for src
      */
-    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupos> aUsuariosPertenecenGrupos) {
-        usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
+    public void setSrc(String aSrc) {
+        src = aSrc;
     }
 
     /**
-     * Access method for usuarios.
+     * Access method for fechaCreacion.
      *
-     * @return the current value of usuarios
+     * @return the current value of fechaCreacion
      */
-    public Usuario getUsuarios() {
-        return usuarios;
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
     }
 
     /**
-     * Setter method for usuarios.
+     * Setter method for fechaCreacion.
      *
-     * @param aUsuarios the new value for usuarios
+     * @param aFechaCreacion the new value for fechaCreacion
      */
-    public void setUsuarios(Usuario aUsuarios) {
-        usuarios = aUsuarios;
+    public void setFechaCreacion(LocalDateTime aFechaCreacion) {
+        fechaCreacion = aFechaCreacion;
     }
 
     /**
-     * Compares the key for this instance with another Grupos.
+     * Access method for gruposTienenDocs.
+     *
+     * @return the current value of gruposTienenDocs
+     */
+    public Set<GrupoTieneDocs> getGrupoTienenDocs() {
+        return gruposTienenDocs;
+    }
+
+    /**
+     * Setter method for gruposTienenDocs.
+     *
+     * @param aGrupoTienenDocs the new value for gruposTienenDocs
+     */
+    public void setGrupoTienenDocs(Set<GrupoTieneDocs> aGrupoTienenDocs) {
+        gruposTienenDocs = aGrupoTienenDocs;
+    }
+
+    /**
+     * Access method for usuariosTienenDocs.
+     *
+     * @return the current value of usuariosTienenDocs
+     */
+    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
+        return usuariosTienenDocs;
+    }
+
+    /**
+     * Setter method for usuariosTienenDocs.
+     *
+     * @param aUsuarioTieneDocs the new value for usuariosTienenDocs
+     */
+    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
+        usuariosTienenDocs = aUsuarioTieneDocs;
+    }
+
+    /**
+     * Compares the key for this instance with another Pdf.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Grupos and the key objects are equal
+     * @return True if other object is instance of class Pdf and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Grupo)) {
+        if (!(other instanceof Pdf)) {
             return false;
         }
-        Grupo that = (Grupo) other;
+        Pdf that = (Pdf) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -158,15 +197,15 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Compares this instance with another Grupos.
+     * Compares this instance with another Pdf.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Grupo)) return false;
-        return this.equalKeys(other) && ((Grupo)other).equalKeys(this);
+        if (!(other instanceof Pdf)) return false;
+        return this.equalKeys(other) && ((Pdf)other).equalKeys(this);
     }
 
     /**
@@ -190,7 +229,7 @@ public class Grupo implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Grupos |");
+        StringBuffer sb = new StringBuffer("[Pdf |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
