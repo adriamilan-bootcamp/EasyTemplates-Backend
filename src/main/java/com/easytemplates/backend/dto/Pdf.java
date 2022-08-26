@@ -18,7 +18,7 @@ import javax.persistence.Version;
 
 @Entity(name="pdfs")
 
-public class Pdfs implements Serializable {
+public class Pdf implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -59,12 +59,12 @@ public class Pdfs implements Serializable {
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
     @OneToMany(mappedBy="pdfs")
-    private Set<GruposTienenDocs> gruposTienenDocs;
+    private Set<GrupoTienenDocs> gruposTienenDocs;
     @OneToMany(mappedBy="pdfs")
-    private Set<UsuariosTienenDocs> usuariosTienenDocs;
+    private Set<UsuarioTieneDocs> usuariosTienenDocs;
 
     /** Default constructor. */
-    public Pdfs() {
+    public Pdf() {
         super();
     }
 
@@ -145,17 +145,17 @@ public class Pdfs implements Serializable {
      *
      * @return the current value of gruposTienenDocs
      */
-    public Set<GruposTienenDocs> getGruposTienenDocs() {
+    public Set<GrupoTienenDocs> getGrupoTienenDocs() {
         return gruposTienenDocs;
     }
 
     /**
      * Setter method for gruposTienenDocs.
      *
-     * @param aGruposTienenDocs the new value for gruposTienenDocs
+     * @param aGrupoTienenDocs the new value for gruposTienenDocs
      */
-    public void setGruposTienenDocs(Set<GruposTienenDocs> aGruposTienenDocs) {
-        gruposTienenDocs = aGruposTienenDocs;
+    public void setGrupoTienenDocs(Set<GrupoTienenDocs> aGrupoTienenDocs) {
+        gruposTienenDocs = aGrupoTienenDocs;
     }
 
     /**
@@ -163,33 +163,33 @@ public class Pdfs implements Serializable {
      *
      * @return the current value of usuariosTienenDocs
      */
-    public Set<UsuariosTienenDocs> getUsuariosTienenDocs() {
+    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
         return usuariosTienenDocs;
     }
 
     /**
      * Setter method for usuariosTienenDocs.
      *
-     * @param aUsuariosTienenDocs the new value for usuariosTienenDocs
+     * @param aUsuarioTieneDocs the new value for usuariosTienenDocs
      */
-    public void setUsuariosTienenDocs(Set<UsuariosTienenDocs> aUsuariosTienenDocs) {
-        usuariosTienenDocs = aUsuariosTienenDocs;
+    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
+        usuariosTienenDocs = aUsuarioTieneDocs;
     }
 
     /**
-     * Compares the key for this instance with another Pdfs.
+     * Compares the key for this instance with another Pdf.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Pdfs and the key objects are equal
+     * @return True if other object is instance of class Pdf and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Pdfs)) {
+        if (!(other instanceof Pdf)) {
             return false;
         }
-        Pdfs that = (Pdfs) other;
+        Pdf that = (Pdf) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -197,15 +197,15 @@ public class Pdfs implements Serializable {
     }
 
     /**
-     * Compares this instance with another Pdfs.
+     * Compares this instance with another Pdf.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Pdfs)) return false;
-        return this.equalKeys(other) && ((Pdfs)other).equalKeys(this);
+        if (!(other instanceof Pdf)) return false;
+        return this.equalKeys(other) && ((Pdf)other).equalKeys(this);
     }
 
     /**
@@ -229,7 +229,7 @@ public class Pdfs implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Pdfs |");
+        StringBuffer sb = new StringBuffer("[Pdf |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
