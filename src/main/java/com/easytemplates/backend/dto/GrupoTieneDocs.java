@@ -9,9 +9,11 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
-@Entity(name="grupos_tienen_docs")
+@Entity
+@Table(name="grupos_tienen_docs")
 @IdClass(GrupoTieneDocs.GrupoTieneDocsId.class)
 public class GrupoTieneDocs implements Serializable {
 
