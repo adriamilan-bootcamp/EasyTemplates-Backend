@@ -22,7 +22,7 @@ public class GruposTienenDocs implements Serializable {
      * IdClass for primary key when using JPA annotations
      */
     public class GruposTienenDocsId implements Serializable {
-        Grupos grupos;
+        Grupo grupos;
         Plantillas plantillas;
         Imagenes imagenes;
         Pdfs pdfs;
@@ -59,7 +59,7 @@ public class GruposTienenDocs implements Serializable {
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="grupo_id", nullable=false)
-    private Grupos grupos;
+    private Grupo grupos;
     @ManyToOne(optional=false)
     @Id
     @JoinColumn(name="imagen_id", nullable=false)
@@ -83,7 +83,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @return the current value of grupos
      */
-    public Grupos getGrupos() {
+    public Grupo getGrupos() {
         return grupos;
     }
 
@@ -92,7 +92,7 @@ public class GruposTienenDocs implements Serializable {
      *
      * @param aGrupos the new value for grupos
      */
-    public void setGrupos(Grupos aGrupos) {
+    public void setGrupos(Grupo aGrupos) {
         grupos = aGrupos;
     }
 
@@ -161,7 +161,7 @@ public class GruposTienenDocs implements Serializable {
      * fetching of objects in arbitrary order.
      *
      * @return Current (or temporary) value of the key fragment
-     * @see Grupos
+     * @see Grupo
      */
     public int getGruposId() {
         return (getGrupos() == null ? tempGruposId : getGrupos().getId());
@@ -175,7 +175,7 @@ public class GruposTienenDocs implements Serializable {
      * fetching of objects in arbitrary order.
      *
      * @param aId New value for the key fragment
-     * @see Grupos
+     * @see Grupo
      */
     public void setGruposId(int aId) {
         if (getGrupos() == null) {
