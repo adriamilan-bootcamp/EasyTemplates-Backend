@@ -15,8 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="usuarios_pertenecen_grupos")
-@IdClass(UsuarioPerteneceGrupo.UsuariosPertenecenGruposId.class)
-public class UsuarioPerteneceGrupo implements Serializable {
+@IdClass(UsuarioPerteneceGrupos.UsuariosPertenecenGruposId.class)
+public class UsuarioPerteneceGrupos implements Serializable {
 
     /**
      * IdClass for primary key when using JPA annotations
@@ -64,7 +64,7 @@ public class UsuarioPerteneceGrupo implements Serializable {
     private Usuario usuarios;
 
     /** Default constructor. */
-    public UsuarioPerteneceGrupo() {
+    public UsuarioPerteneceGrupos() {
         super();
     }
 
@@ -184,10 +184,10 @@ public class UsuarioPerteneceGrupo implements Serializable {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof UsuarioPerteneceGrupo)) {
+        if (!(other instanceof UsuarioPerteneceGrupos)) {
             return false;
         }
-        UsuarioPerteneceGrupo that = (UsuarioPerteneceGrupo) other;
+        UsuarioPerteneceGrupos that = (UsuarioPerteneceGrupos) other;
         if (this.getUsuariosId() != that.getUsuariosId()) {
             return false;
         }
@@ -205,8 +205,8 @@ public class UsuarioPerteneceGrupo implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof UsuarioPerteneceGrupo)) return false;
-        return this.equalKeys(other) && ((UsuarioPerteneceGrupo)other).equalKeys(this);
+        if (!(other instanceof UsuarioPerteneceGrupos)) return false;
+        return this.equalKeys(other) && ((UsuarioPerteneceGrupos)other).equalKeys(this);
     }
 
     /**

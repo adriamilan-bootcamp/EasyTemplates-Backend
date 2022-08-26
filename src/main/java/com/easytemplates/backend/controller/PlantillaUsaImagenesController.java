@@ -12,48 +12,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.PlantillasUsanImagenes;
-import com.easytemplates.backend.service.IPlantillasUsanImagenesService;
+import com.easytemplates.backend.dto.PlantillaUsaImagenes;
+import com.easytemplates.backend.service.IPlantillaUsaImagenesService;
 
 @RestController
 @RequestMapping("/api")
-public class PlantillasUsanImagenesController {
+public class PlantillaUsaImagenesController {
 
 	@Autowired
-	IPlantillasUsanImagenesService puiService;
+	IPlantillaUsaImagenesService puiService;
 	
 	@GetMapping("/plantillasusanimagenes")
-	public List<PlantillasUsanImagenes> listPUIs() {
-		return puiService.listPlantillasUsanImagenes();
+	public List<PlantillaUsaImagenes> listPUIs() {
+		return puiService.listPlantillaUsaImagenes();
 	}
 	
 	@GetMapping("/plantillasusanimagenes/{id}")
-	public PlantillasUsanImagenes puiXID(@PathVariable(name="id") Long id) {
+	public PlantillaUsaImagenes puiXID(@PathVariable(name="id") Long id) {
 		return puiService.plantillasUsanImagenesXID(id);
 	}
 	
 	@PostMapping("/plantillasusanimagenes")
-	public PlantillasUsanImagenes savePUI(@RequestBody PlantillasUsanImagenes plantillasUsanImagenes) {
-		return puiService.savePlantillasUsanImagenes(plantillasUsanImagenes);
+	public PlantillaUsaImagenes savePUI(@RequestBody PlantillaUsaImagenes plantillasUsanImagenes) {
+		return puiService.savePlantillaUsaImagenes(plantillasUsanImagenes);
 	}
 	
 	@PutMapping("/plantillasusanimagenes/{id}")
-	public PlantillasUsanImagenes updatePUI(@PathVariable(name="id") Long id, @RequestBody PlantillasUsanImagenes plantillasUsanImagenes) {
-		PlantillasUsanImagenes puiSelected = new PlantillasUsanImagenes();
-		PlantillasUsanImagenes puiUpdated = new PlantillasUsanImagenes();
+	public PlantillaUsaImagenes updatePUI(@PathVariable(name="id") Long id, @RequestBody PlantillaUsaImagenes plantillasUsanImagenes) {
+		PlantillaUsaImagenes puiSelected = new PlantillaUsaImagenes();
+		PlantillaUsaImagenes puiUpdated = new PlantillaUsaImagenes();
 		
 		puiSelected = puiService.plantillasUsanImagenesXID(id);
 		puiSelected.setImagen(plantillasUsanImagenes.getImagen());
 		puiSelected.setPlantilla(plantillasUsanImagenes.getPlantilla());
 		
-		puiUpdated = puiService.updatePlantillasUsanImagenes(puiSelected);
+		puiUpdated = puiService.updatePlantillaUsaImagenes(puiSelected);
 		
 		return puiUpdated;
 	}
 	
 	@DeleteMapping("/plantillasusanimagenes/{id}")
 	public String deletePUI(@PathVariable(name="id") Long id) {
-		return puiService.deletePlantillasUsanImagenes(id);
+		return puiService.deletePlantillaUsaImagenes(id);
 	}
 	
 }
