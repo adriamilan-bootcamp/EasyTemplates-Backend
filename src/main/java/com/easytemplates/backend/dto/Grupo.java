@@ -55,7 +55,7 @@ public class Grupo implements Serializable {
     @Column(nullable=false, length=255)
     private String nombre;
     @OneToMany(mappedBy="grupos")
-    private Set<UsuarioPerteneceGrupo> usuariosPertenecenGrupos;
+    private Set<UsuarioPerteneceGrupos> usuariosPertenecenGrupos;
     @ManyToOne(optional=false)
     @JoinColumn(name="admin", nullable=false)
     private Usuario usuarios;
@@ -106,7 +106,7 @@ public class Grupo implements Serializable {
      *
      * @return the current value of usuariosPertenecenGrupos
      */
-    public Set<UsuarioPerteneceGrupo> getUsuariosPertenecenGrupos() {
+    public Set<UsuarioPerteneceGrupos> getUsuariosPertenecenGrupos() {
         return usuariosPertenecenGrupos;
     }
 
@@ -115,7 +115,7 @@ public class Grupo implements Serializable {
      *
      * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
      */
-    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupo> aUsuariosPertenecenGrupos) {
+    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupos> aUsuariosPertenecenGrupos) {
         usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
     }
 

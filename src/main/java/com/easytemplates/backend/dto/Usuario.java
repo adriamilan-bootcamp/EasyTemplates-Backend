@@ -64,7 +64,7 @@ public class Usuario implements Serializable {
     @Column(unique=true, length=255)
     private String token;
     @OneToMany(mappedBy="usuarios")
-    private Set<UsuarioPerteneceGrupo> usuariosPertenecenGrupos;
+    private Set<UsuarioPerteneceGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
     private Set<Grupo> grupos;
 
@@ -186,7 +186,7 @@ public class Usuario implements Serializable {
      *
      * @return the current value of usuariosPertenecenGrupos
      */
-    public Set<UsuarioPerteneceGrupo> getUsuariosPertenecenGrupos() {
+    public Set<UsuarioPerteneceGrupos> getUsuariosPertenecenGrupos() {
         return usuariosPertenecenGrupos;
     }
 
@@ -195,7 +195,7 @@ public class Usuario implements Serializable {
      *
      * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
      */
-    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupo> aUsuariosPertenecenGrupos) {
+    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupos> aUsuariosPertenecenGrupos) {
         usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
     }
 
