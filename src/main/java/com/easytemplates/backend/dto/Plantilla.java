@@ -1,162 +1,228 @@
+// Generated with g9.
+
 package com.easytemplates.backend.dto;
 
-import java.util.List;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+@Entity(name="plantillas")
+public class Plantilla implements Serializable {
 
-@Entity
-@Table(name="plantillas")
-public class Plantilla {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="titulo")
-	private String titulo;
-	
-	@Column(name="src")
-	private String src;
-	
-	/*
-	 * Tabla intermedia
-	 * Entre Plantillas - Imagenes
-	 * Nombre de la tabla: PlantillasUsanImagenes
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="plantilla")
-	private List<PlantillasUsanImagenes> plantillasUsanImagenes;
+    /** Primary key. */
+    protected static final String PK = "id";
 
-	/*
-	 * Tabla intermedia
-	 * Entre Usuarios - Plantillas
-	 * Nombre de la tabla: UsuariosTienenDocs
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="plantilla")
-	private List<UsuarioTieneDocs> usuariosTienenDocs;
-	
-	/*
-	 * Tabla intermedia
-	 * Entre Grupos - Imagenes
-	 * Nombre de la tabla: GruposTienenDocs
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="plantilla")
-	private List<GrupoTieneDocs> gruposTienenDocs;
-	
-	// Constructor por defecto
-	public Plantilla() {
-		
-	}
+    /**
+     * The optimistic lock. Available via standard bean get/set operations.
+     */
+    @Version
+    @Column(name="LOCK_FLAG")
+    private Integer lockFlag;
 
-	/**
-	 * @param id
-	 * @param titulo
-	 * @param src
-	 */
-	public Plantilla(Long id, String titulo, String src) {
-		super();
-		this.id = id;
-		this.titulo = titulo;
-		this.src = src;
-	}
+    /**
+     * Access method for the lockFlag property.
+     *
+     * @return the current value of the lockFlag property
+     */
+    public Integer getLockFlag() {
+        return lockFlag;
+    }
 
-	/**
-	 * @return the titulo
-	 */
-	public String getTitulo() {
-		return titulo;
-	}
+    /**
+     * Sets the value of the lockFlag property.
+     *
+     * @param aLockFlag the new value of the lockFlag property
+     */
+    public void setLockFlag(Integer aLockFlag) {
+        lockFlag = aLockFlag;
+    }
 
-	/**
-	 * @param titulo the titulo to set
-	 */
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(unique=true, nullable=false, precision=10)
+    private int id;
+    @Column(length=255)
+    private String titulo;
+    @Column(length=255)
+    private String src;
+    @Column(name="fecha_creacion")
+    private LocalDateTime fechaCreacion;
+    @OneToMany(mappedBy="plantilla")
+    private Set<PlantillaUsaImagenes> plantillaUsaImagenes;
 
-	/**
-	 * @return the src
-	 */
-	public String getSrc() {
-		return src;
-	}
+    /** Default constructor. */
+    public Plantilla() {
+        super();
+    }
 
-	/**
-	 * @param src the src to set
-	 */
-	public void setSrc(String src) {
-		this.src = src;
-	}
+    /**
+     * Access method for id.
+     *
+     * @return the current value of id
+     */
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-	
-	/**
-	 * @return the plantillasUsanImagenes
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "PlantillasUsanImagenes")
-	public List<PlantillasUsanImagenes> getPlantillasUsanImagenes() {
-		return plantillasUsanImagenes;
-	}
+    /**
+     * Setter method for id.
+     *
+     * @param aId the new value for id
+     */
+    public void setId(int aId) {
+        id = aId;
+    }
 
-	/**
-	 * @param ventas the ventas to set
-	 */
-	public void setPlantillasUsanImagenes(List<PlantillasUsanImagenes> plantillasUsanImagenes) {
-		this.plantillasUsanImagenes = plantillasUsanImagenes;
-	}
-	
-	/**
-	 * @return the usuariosTienenDocs
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "UsuarioTieneDocs")
-	public List<UsuarioTieneDocs> getUsuariosTienenDocs() {
-		return usuariosTienenDocs;
-	}
+    /**
+     * Access method for titulo.
+     *
+     * @return the current value of titulo
+     */
+    public String getTitulo() {
+        return titulo;
+    }
 
-	/**
-	 * @param usuariosTienenDocs the usuariosTienenDocs to set
-	 */
-	public void setUsuariosTienenDocs(List<UsuarioTieneDocs> usuariosTienenDocs) {
-		this.usuariosTienenDocs = usuariosTienenDocs;
-	}
-	
-	/**
-	 * @return the usuariosTienenDocs
-	 */
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "GruposTienenDocs")
-	public List<GrupoTieneDocs> getGruposTienenDocs() {
-		return gruposTienenDocs;
-	}
+    /**
+     * Setter method for titulo.
+     *
+     * @param aTitulo the new value for titulo
+     */
+    public void setTitulo(String aTitulo) {
+        titulo = aTitulo;
+    }
 
-	/**
-	 * @param usuariosTienenDocs the usuariosTienenDocs to set
-	 */
-	public void setGruposTienenDocs(List<GrupoTieneDocs> gruposTienenDocs) {
-		this.gruposTienenDocs = gruposTienenDocs;
-	}
+    /**
+     * Access method for src.
+     *
+     * @return the current value of src
+     */
+    public String getSrc() {
+        return src;
+    }
 
-	@Override
-	public String toString() {
-		return "Plantilla [id=" + id + ", titulo=" + titulo + ", src=" + src + "]";
-	}
-	
+    /**
+     * Setter method for src.
+     *
+     * @param aSrc the new value for src
+     */
+    public void setSrc(String aSrc) {
+        src = aSrc;
+    }
+
+    /**
+     * Access method for fechaCreacion.
+     *
+     * @return the current value of fechaCreacion
+     */
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    /**
+     * Setter method for fechaCreacion.
+     *
+     * @param aFechaCreacion the new value for fechaCreacion
+     */
+    public void setFechaCreacion(LocalDateTime aFechaCreacion) {
+        fechaCreacion = aFechaCreacion;
+    }
+
+    /**
+     * Access method for plantillaUsaImagenes.
+     *
+     * @return the current value of plantillaUsaImagenes
+     */
+    public Set<PlantillaUsaImagenes> getPlantillaUsaImagenes() {
+        return plantillaUsaImagenes;
+    }
+
+    /**
+     * Setter method for plantillaUsaImagenes.
+     *
+     * @param aPlantillaUsaImagenes the new value for plantillaUsaImagenes
+     */
+    public void setPlantillaUsaImagenes(Set<PlantillaUsaImagenes> aPlantillaUsaImagenes) {
+        plantillaUsaImagenes = aPlantillaUsaImagenes;
+    }
+
+    /**
+     * Compares the key for this instance with another Plantilla.
+     *
+     * @param other The object to compare to
+     * @return True if other object is instance of class Plantilla and the key objects are equal
+     */
+    private boolean equalKeys(Object other) {
+        if (this==other) {
+            return true;
+        }
+        if (!(other instanceof Plantilla)) {
+            return false;
+        }
+        Plantilla that = (Plantilla) other;
+        if (this.getId() != that.getId()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Compares this instance with another Plantilla.
+     *
+     * @param other The object to compare to
+     * @return True if the objects are the same
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Plantilla)) return false;
+        return this.equalKeys(other) && ((Plantilla)other).equalKeys(this);
+    }
+
+    /**
+     * Returns a hash code for this instance.
+     *
+     * @return Hash code
+     */
+    @Override
+    public int hashCode() {
+        int i;
+        int result = 17;
+        i = getId();
+        result = 37*result + i;
+        return result;
+    }
+
+    /**
+     * Returns a debug-friendly String representation of this instance.
+     *
+     * @return String representation of this instance
+     */
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer("[Plantilla |");
+        sb.append(" id=").append(getId());
+        sb.append("]");
+        return sb.toString();
+    }
+
+    /**
+     * Return all elements of the primary key.
+     *
+     * @return Map of key names to values
+     */
+    public Map<String, Object> getPrimaryKey() {
+        Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
+        ret.put("id", Integer.valueOf(getId()));
+        return ret;
+    }
+
 }
