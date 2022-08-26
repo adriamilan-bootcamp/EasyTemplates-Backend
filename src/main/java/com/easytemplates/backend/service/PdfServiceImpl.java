@@ -3,10 +3,12 @@ package com.easytemplates.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dto.Pdf;
 
+@Service
 // Implementation of the PdfService interface
 public class PdfServiceImpl implements IPdfService {
 	

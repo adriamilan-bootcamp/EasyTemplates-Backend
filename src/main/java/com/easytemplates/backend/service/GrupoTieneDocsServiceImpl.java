@@ -3,10 +3,12 @@ package com.easytemplates.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IGrupoTieneDocsDAO;
 import com.easytemplates.backend.dto.GrupoTieneDocs;
 
+@Service
 public class GrupoTieneDocsServiceImpl implements IGrupoTieneDocsService {
 
 	@Autowired
