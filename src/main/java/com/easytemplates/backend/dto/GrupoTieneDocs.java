@@ -8,23 +8,14 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
-@Table(name="grupos_tienen_docs")
-@IdClass(GrupoTieneDocs.GrupoTieneDocsId.class)
+@Entity(name="grupos_tienen_docs")
 public class GrupoTieneDocs implements Serializable {
 
-    /**
-     * IdClass for primary key when using JPA annotations
-     */
-    public class GrupoTieneDocsId implements Serializable {
-    }
-
     /** Primary key. */
-    protected static final String PK = "GrupoTieneDocsPrimary";
+    protected static final String PK = "id";
 
     /**
      * The optimistic lock. Available via standard bean get/set operations.
@@ -51,10 +42,31 @@ public class GrupoTieneDocs implements Serializable {
         lockFlag = aLockFlag;
     }
 
+    @Id
+    @Column(unique=true, nullable=false, precision=10)
+    private int id;
 
     /** Default constructor. */
     public GrupoTieneDocs() {
         super();
+    }
+
+    /**
+     * Access method for id.
+     *
+     * @return the current value of id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Setter method for id.
+     *
+     * @param aId the new value for id
+     */
+    public void setId(int aId) {
+        id = aId;
     }
 
     /**
@@ -71,6 +83,9 @@ public class GrupoTieneDocs implements Serializable {
             return false;
         }
         GrupoTieneDocs that = (GrupoTieneDocs) other;
+        if (this.getId() != that.getId()) {
+            return false;
+        }
         return true;
     }
 
@@ -95,6 +110,8 @@ public class GrupoTieneDocs implements Serializable {
     public int hashCode() {
         int i;
         int result = 17;
+        i = getId();
+        result = 37*result + i;
         return result;
     }
 
@@ -106,6 +123,7 @@ public class GrupoTieneDocs implements Serializable {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer("[GrupoTieneDocs |");
+        sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
     }
@@ -117,6 +135,7 @@ public class GrupoTieneDocs implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
+        ret.put("id", Integer.valueOf(getId()));
         return ret;
     }
 
