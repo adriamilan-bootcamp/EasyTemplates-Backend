@@ -16,7 +16,7 @@ import javax.persistence.Version;
 
 @Entity(name="grupos_tienen_docs")
 @IdClass(GrupoTieneDocs.GrupoTieneDocsId.class)
-public class GrupoTieneDocs implements Serializable {
+public class GrupoTieneDocs<Grupo> implements Serializable {
 
     /**
      * IdClass for primary key when using JPA annotations
