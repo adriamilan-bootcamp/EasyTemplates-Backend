@@ -43,8 +43,6 @@ public class PlantillaUsaImagenesController {
 		PlantillaUsaImagenes puiUpdated = new PlantillaUsaImagenes();
 		
 		puiSelected = puiService.plantillasUsanImagenesXID(id);
-		puiSelected.setImagen(plantillasUsanImagenes.getImagen());
-		puiSelected.setPlantilla(plantillasUsanImagenes.getPlantilla());
 		
 		puiUpdated = puiService.updatePlantillaUsaImagenes(puiSelected);
 		
