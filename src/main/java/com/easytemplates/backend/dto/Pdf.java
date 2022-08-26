@@ -59,7 +59,7 @@ public class Pdf implements Serializable {
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
     @OneToMany(mappedBy="pdfs")
-    private Set<GrupoTienenDocs> gruposTienenDocs;
+    private Set<GrupoTieneDocs> gruposTienenDocs;
     @OneToMany(mappedBy="pdfs")
     private Set<UsuarioTieneDocs> usuariosTienenDocs;
 
@@ -145,7 +145,7 @@ public class Pdf implements Serializable {
      *
      * @return the current value of gruposTienenDocs
      */
-    public Set<GrupoTienenDocs> getGrupoTienenDocs() {
+    public Set<GrupoTieneDocs> getGrupoTienenDocs() {
         return gruposTienenDocs;
     }
 
@@ -154,7 +154,7 @@ public class Pdf implements Serializable {
      *
      * @param aGrupoTienenDocs the new value for gruposTienenDocs
      */
-    public void setGrupoTienenDocs(Set<GrupoTienenDocs> aGrupoTienenDocs) {
+    public void setGrupoTienenDocs(Set<GrupoTieneDocs> aGrupoTienenDocs) {
         gruposTienenDocs = aGrupoTienenDocs;
     }
 
