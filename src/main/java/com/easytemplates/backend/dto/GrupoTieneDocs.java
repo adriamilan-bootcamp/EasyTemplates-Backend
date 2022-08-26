@@ -87,6 +87,7 @@ public class GrupoTieneDocs<Grupo> implements Serializable {
      */
 
     public Grupo getGrupo() {
+
         return grupos;
     }
 
@@ -144,10 +145,7 @@ public class GrupoTieneDocs<Grupo> implements Serializable {
     public Plantilla getPlantilla() {
         return plantillas;
     }
-
-    /**
-     * Setter method for plantillas.
-     *
+    
      * @param aPlantilla the new value for plantillas
      */
     public void setPlantilla(Plantilla aPlantilla) {
