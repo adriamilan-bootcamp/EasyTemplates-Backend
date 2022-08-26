@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Customized by the team
+.target/
+bin/
