@@ -48,8 +48,8 @@ public class UsuarioPerteneceGruposController {
 
 		seleccionado = usuario_gruposServiceImpl.usuarioPerteneceGruposById(id);
 
-		seleccionado.setUsuarios(usuario_grupos.getUsuarios());
-		seleccionado.setGrupos(usuario_grupos.getGrupos());
+		seleccionado.setUsuario(usuario_grupos.getUsuario());
+		seleccionado.setGrupo(usuario_grupos.getGrupo());
 
 		actualizado = usuario_gruposServiceImpl.updateUsuarioPerteneceGrupos(seleccionado);
 

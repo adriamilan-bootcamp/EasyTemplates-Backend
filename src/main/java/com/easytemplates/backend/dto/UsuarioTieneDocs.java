@@ -8,28 +8,18 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="usuarios_tienen_docs")
-@IdClass(UsuarioTieneDocs.UsuarioTieneDocsId.class)
 public class UsuarioTieneDocs implements Serializable {
 
-    /**
-     * IdClass for primary key when using JPA annotations
-     */
-    public class UsuarioTieneDocsId implements Serializable {
-        Usuario usuarios;
-        Pdf pdfs;
-        Imagen imagenes;
-        Plantilla plantillas;
-    }
-
     /** Primary key. */
-    protected static final String PK = "UsuarioTieneDocsPrimary";
+    protected static final String PK = "id";
 
     /**
      * The optimistic lock. Available via standard bean get/set operations.
@@ -56,22 +46,22 @@ public class UsuarioTieneDocs implements Serializable {
         lockFlag = aLockFlag;
     }
 
-    @ManyToOne(optional=false)
     @Id
-    @JoinColumn(name="imagen_id", nullable=false)
-    private Imagen imagenes;
-    @ManyToOne(optional=false)
-    @Id
-    @JoinColumn(name="pdf_id", nullable=false)
-    private Pdf pdfs;
-    @ManyToOne(optional=false)
-    @Id
-    @JoinColumn(name="plantilla_id", nullable=false)
-    private Plantilla plantillas;
-    @ManyToOne(optional=false)
-    @Id
-    @JoinColumn(name="usuario_id", nullable=false)
-    private Usuario usuarios;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(unique=true, nullable=false, precision=10)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name="imagen_id")
+    private Imagen imagen;
+    @ManyToOne
+    @JoinColumn(name="pdf_id")
+    private Pdf pdf;
+    @ManyToOne
+    @JoinColumn(name="plantilla_id")
+    private Plantilla plantilla;
+    @ManyToOne
+    @JoinColumn(name="usuario_id")
+    private Usuario usuario;
 
     /** Default constructor. */
     public UsuarioTieneDocs() {
@@ -79,215 +69,93 @@ public class UsuarioTieneDocs implements Serializable {
     }
 
     /**
-     * Access method for imagenes.
+     * Access method for id.
      *
-     * @return the current value of imagenes
+     * @return the current value of id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Setter method for id.
+     *
+     * @param aId the new value for id
+     */
+    public void setId(int aId) {
+        id = aId;
+    }
+
+    /**
+     * Access method for imagen.
+     *
+     * @return the current value of imagen
      */
     public Imagen getImagen() {
-        return imagenes;
+        return imagen;
     }
 
     /**
-     * Setter method for imagenes.
+     * Setter method for imagen.
      *
-     * @param aImagen the new value for imagenes
+     * @param aImagen the new value for imagen
      */
     public void setImagen(Imagen aImagen) {
-        imagenes = aImagen;
+        imagen = aImagen;
     }
 
     /**
-     * Access method for pdfs.
+     * Access method for pdf.
      *
-     * @return the current value of pdfs
+     * @return the current value of pdf
      */
     public Pdf getPdf() {
-        return pdfs;
+        return pdf;
     }
 
     /**
-     * Setter method for pdfs.
+     * Setter method for pdf.
      *
-     * @param aPdf the new value for pdfs
+     * @param aPdf the new value for pdf
      */
     public void setPdf(Pdf aPdf) {
-        pdfs = aPdf;
+        pdf = aPdf;
     }
 
     /**
-     * Access method for plantillas.
+     * Access method for plantilla.
      *
-     * @return the current value of plantillas
+     * @return the current value of plantilla
      */
     public Plantilla getPlantilla() {
-        return plantillas;
+        return plantilla;
     }
 
     /**
-     * Setter method for plantillas.
+     * Setter method for plantilla.
      *
-     * @param aPlantilla the new value for plantillas
+     * @param aPlantilla the new value for plantilla
      */
     public void setPlantilla(Plantilla aPlantilla) {
-        plantillas = aPlantilla;
+        plantilla = aPlantilla;
     }
 
     /**
-     * Access method for usuarios.
+     * Access method for usuario.
      *
-     * @return the current value of usuarios
+     * @return the current value of usuario
      */
-    public Usuario getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     /**
-     * Setter method for usuarios.
+     * Setter method for usuario.
      *
-     * @param aUsuarios the new value for usuarios
+     * @param aUsuario the new value for usuario
      */
-    public void setUsuarios(Usuario aUsuarios) {
-        usuarios = aUsuarios;
-    }
-
-    /** Temporary value holder for group key fragment usuariosId */
-    private transient int tempUsuariosId;
-
-    /**
-     * Gets the key fragment id for member usuarios.
-     * If this.usuarios is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setUsuariosId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Usuarios
-     */
-    public int getUsuariosId() {
-        return (getUsuarios() == null ? tempUsuariosId : getUsuarios().getId());
-    }
-
-    /**
-     * Sets the key fragment id from member usuarios.
-     * If this.usuarios is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getUsuariosId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @param aId New value for the key fragment
-     * @see Usuarios
-     */
-    public void setUsuariosId(int aId) {
-        if (getUsuarios() == null) {
-            tempUsuariosId = aId;
-        } else {
-            getUsuarios().setId(aId);
-        }
-    }
-
-    /** Temporary value holder for group key fragment pdfsId */
-    private transient int tempPdfId;
-
-    /**
-     * Gets the key fragment id for member pdfs.
-     * If this.pdfs is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setPdfId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Pdf
-     */
-    public int getPdfId() {
-        return (getPdf() == null ? tempPdfId : getPdf().getId());
-    }
-
-    /**
-     * Sets the key fragment id from member pdfs.
-     * If this.pdfs is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getPdfId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @param aId New value for the key fragment
-     * @see Pdf
-     */
-    public void setPdfId(int aId) {
-        if (getPdf() == null) {
-            tempPdfId = aId;
-        } else {
-            getPdf().setId(aId);
-        }
-    }
-
-    /** Temporary value holder for group key fragment imagenesId */
-    private transient int tempImagenId;
-
-    /**
-     * Gets the key fragment id for member imagenes.
-     * If this.imagenes is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setImagenId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Imagen
-     */
-    public int getImagenId() {
-        return (getImagen() == null ? tempImagenId : getImagen().getId());
-    }
-
-    /**
-     * Sets the key fragment id from member imagenes.
-     * If this.imagenes is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getImagenId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @param aId New value for the key fragment
-     * @see Imagen
-     */
-    public void setImagenId(int aId) {
-        if (getImagen() == null) {
-            tempImagenId = aId;
-        } else {
-            getImagen().setId(aId);
-        }
-    }
-
-    /** Temporary value holder for group key fragment plantillasId */
-    private transient int tempPlantillaId;
-
-    /**
-     * Gets the key fragment id for member plantillas.
-     * If this.plantillas is null, a temporary stored value for the key
-     * fragment will be returned. The temporary value is set by setPlantillaId.
-     * This behavior is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @return Current (or temporary) value of the key fragment
-     * @see Plantilla
-     */
-    public int getPlantillaId() {
-        return (getPlantilla() == null ? tempPlantillaId : getPlantilla().getId());
-    }
-
-    /**
-     * Sets the key fragment id from member plantillas.
-     * If this.plantillas is null, the passed value will be temporary
-     * stored, and returned by subsequent calls to getPlantillaId.
-     * This behaviour is required by some persistence libraries to allow
-     * fetching of objects in arbitrary order.
-     *
-     * @param aId New value for the key fragment
-     * @see Plantilla
-     */
-    public void setPlantillaId(int aId) {
-        if (getPlantilla() == null) {
-            tempPlantillaId = aId;
-        } else {
-            getPlantilla().setId(aId);
-        }
+    public void setUsuario(Usuario aUsuario) {
+        usuario = aUsuario;
     }
 
     /**
@@ -304,16 +172,7 @@ public class UsuarioTieneDocs implements Serializable {
             return false;
         }
         UsuarioTieneDocs that = (UsuarioTieneDocs) other;
-        if (this.getUsuariosId() != that.getUsuariosId()) {
-            return false;
-        }
-        if (this.getPdfId() != that.getPdfId()) {
-            return false;
-        }
-        if (this.getImagenId() != that.getImagenId()) {
-            return false;
-        }
-        if (this.getPlantillaId() != that.getPlantillaId()) {
+        if (this.getId() != that.getId()) {
             return false;
         }
         return true;
@@ -340,13 +199,7 @@ public class UsuarioTieneDocs implements Serializable {
     public int hashCode() {
         int i;
         int result = 17;
-        i = getUsuariosId();
-        result = 37*result + i;
-        i = getPdfId();
-        result = 37*result + i;
-        i = getImagenId();
-        result = 37*result + i;
-        i = getPlantillaId();
+        i = getId();
         result = 37*result + i;
         return result;
     }
@@ -359,10 +212,7 @@ public class UsuarioTieneDocs implements Serializable {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer("[UsuarioTieneDocs |");
-        sb.append(" usuariosId=").append(getUsuariosId());
-        sb.append(" pdfsId=").append(getPdfId());
-        sb.append(" imagenesId=").append(getImagenId());
-        sb.append(" plantillasId=").append(getPlantillaId());
+        sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
     }
@@ -374,10 +224,7 @@ public class UsuarioTieneDocs implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("usuariosId", Integer.valueOf(getUsuariosId()));
-        ret.put("pdfsId", Integer.valueOf(getPdfId()));
-        ret.put("imagenesId", Integer.valueOf(getImagenId()));
-        ret.put("plantillasId", Integer.valueOf(getPlantillaId()));
+        ret.put("id", Integer.valueOf(getId()));
         return ret;
     }
 

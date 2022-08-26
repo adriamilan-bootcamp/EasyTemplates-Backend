@@ -8,7 +8,11 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 @Entity(name="plantillas_usan_imagenes")
@@ -43,8 +47,15 @@ public class PlantillaUsaImagenes implements Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
+    @ManyToOne
+    @JoinColumn(name="imagen")
+    private Imagen imagen;
+    @ManyToOne
+    @JoinColumn(name="plantilla")
+    private Plantilla plantilla;
 
     /** Default constructor. */
     public PlantillaUsaImagenes() {
@@ -67,6 +78,42 @@ public class PlantillaUsaImagenes implements Serializable {
      */
     public void setId(int aId) {
         id = aId;
+    }
+
+    /**
+     * Access method for imagen.
+     *
+     * @return the current value of imagen
+     */
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    /**
+     * Setter method for imagen.
+     *
+     * @param aImagen the new value for imagen
+     */
+    public void setImagen(Imagen aImagen) {
+        imagen = aImagen;
+    }
+
+    /**
+     * Access method for plantilla.
+     *
+     * @return the current value of plantilla
+     */
+    public Plantilla getPlantilla() {
+        return plantilla;
+    }
+
+    /**
+     * Setter method for plantilla.
+     *
+     * @param aPlantilla the new value for plantilla
+     */
+    public void setPlantilla(Plantilla aPlantilla) {
+        plantilla = aPlantilla;
     }
 
     /**

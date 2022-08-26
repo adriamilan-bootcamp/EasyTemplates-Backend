@@ -3,10 +3,11 @@ package com.easytemplates.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Plantilla;
-
+@Service
 public class PlantillaServiceImpl implements IPlantillaService {
 
 	@Autowired

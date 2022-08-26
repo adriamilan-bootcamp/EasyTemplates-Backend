@@ -12,13 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
-@Entity
-@Table(name="usuarios", indexes={@Index(name="usuarios_email_IX", columnList="email", unique=true), @Index(name="usuarios_firma_IX", columnList="firma", unique=true), @Index(name="usuarios_token_IX", columnList="token", unique=true)})
+@Entity(name="usuarios")
 public class Usuario implements Serializable {
 
     /** Primary key. */
@@ -55,18 +52,20 @@ public class Usuario implements Serializable {
     private int id;
     @Column(nullable=false, length=255)
     private String nombre;
-    @Column(unique=true, nullable=false, length=255)
+    @Column(nullable=false, length=255)
     private String email;
-    @Column(unique=true, length=255)
+    @Column(length=255)
     private String firma;
     @Column(nullable=false, length=45)
     private String password;
-    @Column(unique=true, length=255)
+    @Column(length=255)
     private String token;
-    @OneToMany(mappedBy="usuarios")
-    private Set<UsuarioPerteneceGrupos> usuariosPertenecenGrupos;
-    @OneToMany(mappedBy="usuarios")
-    private Set<Grupo> grupos;
+    @OneToMany(mappedBy="usuario")
+    private Set<UsuarioTieneDocs> usuarioTieneDocs;
+    @OneToMany(mappedBy="usuario")
+    private Set<UsuarioPerteneceGrupos> usuarioPerteneceGrupos;
+    @OneToMany(mappedBy="usuario")
+    private Set<Grupo> grupo;
 
     /** Default constructor. */
     public Usuario() {
@@ -182,46 +181,64 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Access method for usuariosPertenecenGrupos.
+     * Access method for usuarioTieneDocs.
      *
-     * @return the current value of usuariosPertenecenGrupos
+     * @return the current value of usuarioTieneDocs
      */
-    public Set<UsuarioPerteneceGrupos> getUsuariosPertenecenGrupos() {
-        return usuariosPertenecenGrupos;
+    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
+        return usuarioTieneDocs;
     }
 
     /**
-     * Setter method for usuariosPertenecenGrupos.
+     * Setter method for usuarioTieneDocs.
      *
-     * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
+     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
      */
-    public void setUsuariosPertenecenGrupos(Set<UsuarioPerteneceGrupos> aUsuariosPertenecenGrupos) {
-        usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
+    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
+        usuarioTieneDocs = aUsuarioTieneDocs;
     }
 
     /**
-     * Access method for grupos.
+     * Access method for usuarioPerteneceGrupos.
      *
-     * @return the current value of grupos
+     * @return the current value of usuarioPerteneceGrupos
      */
-    public Set<Grupo> getGrupos() {
-        return grupos;
+    public Set<UsuarioPerteneceGrupos> getUsuarioPerteneceGrupos() {
+        return usuarioPerteneceGrupos;
     }
 
     /**
-     * Setter method for grupos.
+     * Setter method for usuarioPerteneceGrupos.
      *
-     * @param aGrupos the new value for grupos
+     * @param aUsuarioPerteneceGrupos the new value for usuarioPerteneceGrupos
      */
-    public void setGrupos(Set<Grupo> aGrupos) {
-        grupos = aGrupos;
+    public void setUsuarioPerteneceGrupos(Set<UsuarioPerteneceGrupos> aUsuarioPerteneceGrupos) {
+        usuarioPerteneceGrupos = aUsuarioPerteneceGrupos;
     }
 
     /**
-     * Compares the key for this instance with another Usuarios.
+     * Access method for grupo.
+     *
+     * @return the current value of grupo
+     */
+    public Set<Grupo> getGrupo() {
+        return grupo;
+    }
+
+    /**
+     * Setter method for grupo.
+     *
+     * @param aGrupo the new value for grupo
+     */
+    public void setGrupo(Set<Grupo> aGrupo) {
+        grupo = aGrupo;
+    }
+
+    /**
+     * Compares the key for this instance with another Usuario.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Usuarios and the key objects are equal
+     * @return True if other object is instance of class Usuario and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
@@ -238,7 +255,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Compares this instance with another Usuarios.
+     * Compares this instance with another Usuario.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
@@ -270,7 +287,7 @@ public class Usuario implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Usuarios |");
+        StringBuffer sb = new StringBuffer("[Usuario |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
