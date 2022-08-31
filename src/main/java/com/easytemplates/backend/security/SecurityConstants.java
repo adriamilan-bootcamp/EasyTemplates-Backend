@@ -6,7 +6,7 @@ public class SecurityConstants {
 	// Login URI
 	public static final String LOGIN_URL = "/login";
 	// Type of auth.
-	public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
+	public static final String HEADER_AUTHORIZATION_KEY = "Authorization";
 	// Bearer token, to use w/JWT
 	public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
