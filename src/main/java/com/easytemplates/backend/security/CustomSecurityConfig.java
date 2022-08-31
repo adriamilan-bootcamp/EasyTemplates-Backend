@@ -6,9 +6,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class CustomSecurityConfig {
-    
-   @Bean
-   public BCryptPasswordEncoder metodoCrittografia() {
-      return new BCryptPasswordEncoder();
-   }
+
+	@Bean
+	public BCryptPasswordEncoder password() {
+		return new BCryptPasswordEncoder();
+	}
 }
