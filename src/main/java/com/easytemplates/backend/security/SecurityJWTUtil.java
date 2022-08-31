@@ -56,4 +56,43 @@ public class SecurityJWTUtil {
         response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + jwtString);
     }
 
+    /**
+     * 	This method validates the authenticity of the used JWT against the collection of
+     * 	already registered JWT's in the service, sent by the client/user
+     * 
+     * 	@param	request	The request to process the JWT from
+     * 	@return			The security response based on the jjwt-api library
+     */
+    static Authentication getAuthentication(HttpServletRequest request) {
+
+        // Find the JWT on the HTTP Request in order to process it
+        String jwtString = request.getHeader(HEADER_AUTHORIZATION_KEY);
+
+        // Only continue if we have found a JWT, else bail out
+        if (jwtString != null) {
+        	
+        	// Find the username parsing the provided JWT
+            String username = Jwts.parser()
+            		
+            		// Signing key to decrypt the token into a plain-text JSON obj.
+                    .setSigningKey(SUPER_SECRET_KEY)
+                    
+                    // We need to validate the token first
+                    .parseClaimsJws(jwtString.replace("Bearer", ""))
+                    
+                    // Body...
+                    .getBody()
+                    
+                    // ...and subject of the Token
+                    .getSubject();
+
+            /**
+             *  Only /login URIs require auth. the remaining URIs don't so no need to protect them (For now)
+             */
+            return ((username != null) ? new UsernamePasswordAuthenticationToken(username, null, emptyList()) : null);
+        }
+        
+        // JWT Parsing Failed
+        return null;
+    }
 }
