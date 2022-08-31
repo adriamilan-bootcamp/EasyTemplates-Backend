@@ -1,5 +1,7 @@
 package com.easytemplates.backend.security;
 
-public class SecurityConfig {
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
