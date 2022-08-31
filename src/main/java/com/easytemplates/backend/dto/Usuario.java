@@ -17,7 +17,7 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="usuarios")
+@Entity
 public class Usuario implements Serializable {
 
     /** Primary key. */
