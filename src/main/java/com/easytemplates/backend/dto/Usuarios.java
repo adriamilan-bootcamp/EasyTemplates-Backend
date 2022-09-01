@@ -60,8 +60,6 @@ public class Usuarios implements Serializable {
     private String firma;
     @Column(nullable=false, length=45)
     private String password;
-    @Column(length=255)
-    private String token;
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
@@ -184,24 +182,6 @@ public class Usuarios implements Serializable {
      */
     public void setPassword(String aPassword) {
         password = aPassword;
-    }
-
-    /**
-     * Access method for token.
-     *
-     * @return the current value of token
-     */
-    public String getToken() {
-        return token;
-    }
-
-    /**
-     * Setter method for token.
-     *
-     * @param aToken the new value for token
-     */
-    public void setToken(String aToken) {
-        token = aToken;
     }
 
     /**
