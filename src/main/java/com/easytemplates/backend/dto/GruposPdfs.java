@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-@Entity(name="plantillas_usan_imagenes")
-public class PlantillaUsaImagenes implements Serializable {
+@Entity(name="grupos_pdfs")
+public class GruposPdfs implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -51,14 +51,14 @@ public class PlantillaUsaImagenes implements Serializable {
     @Column(unique=true, nullable=false, precision=10)
     private int id;
     @ManyToOne
-    @JoinColumn(name="imagen")
-    private Imagen imagen;
+    @JoinColumn(name="grupo")
+    private Grupos grupos;
     @ManyToOne
-    @JoinColumn(name="plantilla")
-    private Plantilla plantilla;
+    @JoinColumn(name="pdf")
+    private Pdfs pdfs;
 
     /** Default constructor. */
-    public PlantillaUsaImagenes() {
+    public GruposPdfs() {
         super();
     }
 
@@ -81,55 +81,55 @@ public class PlantillaUsaImagenes implements Serializable {
     }
 
     /**
-     * Access method for imagen.
+     * Access method for grupos.
      *
-     * @return the current value of imagen
+     * @return the current value of grupos
      */
-    public Imagen getImagen() {
-        return imagen;
+    public Grupos getGrupos() {
+        return grupos;
     }
 
     /**
-     * Setter method for imagen.
+     * Setter method for grupos.
      *
-     * @param aImagen the new value for imagen
+     * @param aGrupos the new value for grupos
      */
-    public void setImagen(Imagen aImagen) {
-        imagen = aImagen;
+    public void setGrupos(Grupos aGrupos) {
+        grupos = aGrupos;
     }
 
     /**
-     * Access method for plantilla.
+     * Access method for pdfs.
      *
-     * @return the current value of plantilla
+     * @return the current value of pdfs
      */
-    public Plantilla getPlantilla() {
-        return plantilla;
+    public Pdfs getPdfs() {
+        return pdfs;
     }
 
     /**
-     * Setter method for plantilla.
+     * Setter method for pdfs.
      *
-     * @param aPlantilla the new value for plantilla
+     * @param aPdfs the new value for pdfs
      */
-    public void setPlantilla(Plantilla aPlantilla) {
-        plantilla = aPlantilla;
+    public void setPdfs(Pdfs aPdfs) {
+        pdfs = aPdfs;
     }
 
     /**
-     * Compares the key for this instance with another PlantillaUsaImagenes.
+     * Compares the key for this instance with another GruposPdfs.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class PlantillaUsaImagenes and the key objects are equal
+     * @return True if other object is instance of class GruposPdfs and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof PlantillaUsaImagenes)) {
+        if (!(other instanceof GruposPdfs)) {
             return false;
         }
-        PlantillaUsaImagenes that = (PlantillaUsaImagenes) other;
+        GruposPdfs that = (GruposPdfs) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -137,15 +137,15 @@ public class PlantillaUsaImagenes implements Serializable {
     }
 
     /**
-     * Compares this instance with another PlantillaUsaImagenes.
+     * Compares this instance with another GruposPdfs.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof PlantillaUsaImagenes)) return false;
-        return this.equalKeys(other) && ((PlantillaUsaImagenes)other).equalKeys(this);
+        if (!(other instanceof GruposPdfs)) return false;
+        return this.equalKeys(other) && ((GruposPdfs)other).equalKeys(this);
     }
 
     /**
@@ -169,7 +169,7 @@ public class PlantillaUsaImagenes implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[PlantillaUsaImagenes |");
+        StringBuffer sb = new StringBuffer("[GruposPdfs |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

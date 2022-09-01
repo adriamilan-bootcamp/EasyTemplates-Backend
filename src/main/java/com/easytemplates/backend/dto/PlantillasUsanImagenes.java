@@ -3,21 +3,20 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-@Entity(name="pdfs")
-public class Pdf implements Serializable {
+@Entity(name="plantillas_usan_imagenes")
+public class PlantillasUsanImagenes implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -51,19 +50,15 @@ public class Pdf implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
-    @Column(length=100)
-    private String titulo;
-    @Column(length=255)
-    private String src;
-    @Column(name="fecha_creacion")
-    private LocalDateTime fechaCreacion;
-    @OneToMany(mappedBy="pdf")
-    private Set<GrupoTieneDocs> grupoTieneDocs;
-    @OneToMany(mappedBy="pdf")
-    private Set<UsuarioTieneDocs> usuarioTieneDocs;
+    @ManyToOne
+    @JoinColumn(name="plantilla")
+    private Plantillas plantillas;
+    @ManyToOne
+    @JoinColumn(name="imagen")
+    private Imagenes imagenes;
 
     /** Default constructor. */
-    public Pdf() {
+    public PlantillasUsanImagenes() {
         super();
     }
 
@@ -86,109 +81,55 @@ public class Pdf implements Serializable {
     }
 
     /**
-     * Access method for titulo.
+     * Access method for plantillas.
      *
-     * @return the current value of titulo
+     * @return the current value of plantillas
      */
-    public String getTitulo() {
-        return titulo;
+    public Plantillas getPlantillas() {
+        return plantillas;
     }
 
     /**
-     * Setter method for titulo.
+     * Setter method for plantillas.
      *
-     * @param aTitulo the new value for titulo
+     * @param aPlantillas the new value for plantillas
      */
-    public void setTitulo(String aTitulo) {
-        titulo = aTitulo;
+    public void setPlantillas(Plantillas aPlantillas) {
+        plantillas = aPlantillas;
     }
 
     /**
-     * Access method for src.
+     * Access method for imagenes.
      *
-     * @return the current value of src
+     * @return the current value of imagenes
      */
-    public String getSrc() {
-        return src;
+    public Imagenes getImagenes() {
+        return imagenes;
     }
 
     /**
-     * Setter method for src.
+     * Setter method for imagenes.
      *
-     * @param aSrc the new value for src
+     * @param aImagenes the new value for imagenes
      */
-    public void setSrc(String aSrc) {
-        src = aSrc;
+    public void setImagenes(Imagenes aImagenes) {
+        imagenes = aImagenes;
     }
 
     /**
-     * Access method for fechaCreacion.
-     *
-     * @return the current value of fechaCreacion
-     */
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    /**
-     * Setter method for fechaCreacion.
-     *
-     * @param aFechaCreacion the new value for fechaCreacion
-     */
-    public void setFechaCreacion(LocalDateTime aFechaCreacion) {
-        fechaCreacion = aFechaCreacion;
-    }
-
-    /**
-     * Access method for grupoTieneDocs.
-     *
-     * @return the current value of grupoTieneDocs
-     */
-    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
-        return grupoTieneDocs;
-    }
-
-    /**
-     * Setter method for grupoTieneDocs.
-     *
-     * @param aGrupoTieneDocs the new value for grupoTieneDocs
-     */
-    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
-        grupoTieneDocs = aGrupoTieneDocs;
-    }
-
-    /**
-     * Access method for usuarioTieneDocs.
-     *
-     * @return the current value of usuarioTieneDocs
-     */
-    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
-        return usuarioTieneDocs;
-    }
-
-    /**
-     * Setter method for usuarioTieneDocs.
-     *
-     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
-     */
-    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
-        usuarioTieneDocs = aUsuarioTieneDocs;
-    }
-
-    /**
-     * Compares the key for this instance with another Pdf.
+     * Compares the key for this instance with another PlantillasUsanImagenes.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Pdf and the key objects are equal
+     * @return True if other object is instance of class PlantillasUsanImagenes and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Pdf)) {
+        if (!(other instanceof PlantillasUsanImagenes)) {
             return false;
         }
-        Pdf that = (Pdf) other;
+        PlantillasUsanImagenes that = (PlantillasUsanImagenes) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -196,15 +137,15 @@ public class Pdf implements Serializable {
     }
 
     /**
-     * Compares this instance with another Pdf.
+     * Compares this instance with another PlantillasUsanImagenes.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Pdf)) return false;
-        return this.equalKeys(other) && ((Pdf)other).equalKeys(this);
+        if (!(other instanceof PlantillasUsanImagenes)) return false;
+        return this.equalKeys(other) && ((PlantillasUsanImagenes)other).equalKeys(this);
     }
 
     /**
@@ -228,7 +169,7 @@ public class Pdf implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Pdf |");
+        StringBuffer sb = new StringBuffer("[PlantillasUsanImagenes |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

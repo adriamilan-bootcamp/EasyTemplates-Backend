@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity(name="imagenes")
-public class Imagen implements Serializable {
+public class Imagenes implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -55,15 +55,15 @@ public class Imagen implements Serializable {
     private String src;
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
-    @OneToMany(mappedBy="imagen")
-    private Set<GrupoTieneDocs> grupoTieneDocs;
-    @OneToMany(mappedBy="imagen")
-    private Set<UsuarioTieneDocs> usuarioTieneDocs;
-    @OneToMany(mappedBy="imagen")
-    private Set<PlantillaUsaImagenes> plantillaUsaImagenes;
+    @OneToMany(mappedBy="imagenes")
+    private Set<GruposImagenes> gruposImagenes;
+    @OneToMany(mappedBy="imagenes")
+    private Set<PlantillasUsanImagenes> plantillasUsanImagenes;
+    @OneToMany(mappedBy="imagenes")
+    private Set<UsuariosImagenes> usuariosImagenes;
 
     /** Default constructor. */
-    public Imagen() {
+    public Imagenes() {
         super();
     }
 
@@ -122,73 +122,73 @@ public class Imagen implements Serializable {
     }
 
     /**
-     * Access method for grupoTieneDocs.
+     * Access method for gruposImagenes.
      *
-     * @return the current value of grupoTieneDocs
+     * @return the current value of gruposImagenes
      */
-    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
-        return grupoTieneDocs;
+    public Set<GruposImagenes> getGruposImagenes() {
+        return gruposImagenes;
     }
 
     /**
-     * Setter method for grupoTieneDocs.
+     * Setter method for gruposImagenes.
      *
-     * @param aGrupoTieneDocs the new value for grupoTieneDocs
+     * @param aGruposImagenes the new value for gruposImagenes
      */
-    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
-        grupoTieneDocs = aGrupoTieneDocs;
+    public void setGruposImagenes(Set<GruposImagenes> aGruposImagenes) {
+        gruposImagenes = aGruposImagenes;
     }
 
     /**
-     * Access method for usuarioTieneDocs.
+     * Access method for plantillasUsanImagenes.
      *
-     * @return the current value of usuarioTieneDocs
+     * @return the current value of plantillasUsanImagenes
      */
-    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
-        return usuarioTieneDocs;
+    public Set<PlantillasUsanImagenes> getPlantillasUsanImagenes() {
+        return plantillasUsanImagenes;
     }
 
     /**
-     * Setter method for usuarioTieneDocs.
+     * Setter method for plantillasUsanImagenes.
      *
-     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
+     * @param aPlantillasUsanImagenes the new value for plantillasUsanImagenes
      */
-    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
-        usuarioTieneDocs = aUsuarioTieneDocs;
+    public void setPlantillasUsanImagenes(Set<PlantillasUsanImagenes> aPlantillasUsanImagenes) {
+        plantillasUsanImagenes = aPlantillasUsanImagenes;
     }
 
     /**
-     * Access method for plantillaUsaImagenes.
+     * Access method for usuariosImagenes.
      *
-     * @return the current value of plantillaUsaImagenes
+     * @return the current value of usuariosImagenes
      */
-    public Set<PlantillaUsaImagenes> getPlantillaUsaImagenes() {
-        return plantillaUsaImagenes;
+    public Set<UsuariosImagenes> getUsuariosImagenes() {
+        return usuariosImagenes;
     }
 
     /**
-     * Setter method for plantillaUsaImagenes.
+     * Setter method for usuariosImagenes.
      *
-     * @param aPlantillaUsaImagenes the new value for plantillaUsaImagenes
+     * @param aUsuariosImagenes the new value for usuariosImagenes
      */
-    public void setPlantillaUsaImagenes(Set<PlantillaUsaImagenes> aPlantillaUsaImagenes) {
-        plantillaUsaImagenes = aPlantillaUsaImagenes;
+    public void setUsuariosImagenes(Set<UsuariosImagenes> aUsuariosImagenes) {
+        usuariosImagenes = aUsuariosImagenes;
     }
 
     /**
-     * Compares the key for this instance with another Imagen.
+     * Compares the key for this instance with another Imagenes.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Imagen and the key objects are equal
+     * @return True if other object is instance of class Imagenes and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Imagen)) {
+        if (!(other instanceof Imagenes)) {
             return false;
         }
-        Imagen that = (Imagen) other;
+        Imagenes that = (Imagenes) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -196,15 +196,15 @@ public class Imagen implements Serializable {
     }
 
     /**
-     * Compares this instance with another Imagen.
+     * Compares this instance with another Imagenes.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Imagen)) return false;
-        return this.equalKeys(other) && ((Imagen)other).equalKeys(this);
+        if (!(other instanceof Imagenes)) return false;
+        return this.equalKeys(other) && ((Imagenes)other).equalKeys(this);
     }
 
     /**
@@ -228,7 +228,7 @@ public class Imagen implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Imagen |");
+        StringBuffer sb = new StringBuffer("[Imagenes |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
