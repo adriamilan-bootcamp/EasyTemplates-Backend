@@ -5,15 +5,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.3</version>
+		<version>2.7.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.easytemplates</groupId>
-	<artifactId>EasyTemplates</artifactId>
-	<version>0.1</version>
+	<artifactId>backend</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>EasyTemplates</name>
-	<description>EasyTemplates Backend Project w/all it&apos;s required components.</description>
+	<name>backend</name>
+	<description>Backend - EasyTemplates</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -49,7 +49,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+		<dependency>
+		    <groupId>com.amazonaws</groupId>
+		    <artifactId>aws-java-sdk-s3</artifactId>
+		    <version>1.12.293</version>
+		</dependency>
 	</dependencies>
 
 	<build>
