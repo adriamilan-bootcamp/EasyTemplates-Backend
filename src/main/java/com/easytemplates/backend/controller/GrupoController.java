@@ -20,6 +20,7 @@ import com.easytemplates.backend.service.GrupoServiceImpl;
 @RequestMapping("/api")
 public class GrupoController {
 
+	
 	@Autowired
 	GrupoServiceImpl grupoServiceImpl;
 	
