@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IPdfDAO;
-import com.easytemplates.backend.dto.Pdf;
+import com.easytemplates.backend.dto.Pdfs;
 
 @Service
 // Implementation of the PdfService interface
@@ -22,7 +22,7 @@ public class PdfServiceImpl implements IPdfService {
 	 * @return the Pdf's
 	 */
 	@Override
-	public List<Pdf> listAllPdfs() {
+	public List<Pdfs> listAllPdfs() {
 		return pdfDAO.findAll();
 	}
 
@@ -33,7 +33,7 @@ public class PdfServiceImpl implements IPdfService {
 	 * @return the Pdf
 	 */
 	@Override
-	public Pdf savePdf(Pdf p) {
+	public Pdfs savePdf(Pdfs p) {
 		return pdfDAO.save(p);
 	}
 
@@ -44,7 +44,7 @@ public class PdfServiceImpl implements IPdfService {
 	 * @return the Pdf
 	 */
 	@Override
-	public Pdf pdfById(Long id) {
+	public Pdfs pdfById(Long id) {
 		return pdfDAO.findById(id).get();
 	}
 
@@ -55,7 +55,7 @@ public class PdfServiceImpl implements IPdfService {
 	 * @return the Pdf
 	 */
 	@Override
-	public Pdf updatePdf(Pdf p) {
+	public Pdfs updatePdf(Pdfs p) {
 		return pdfDAO.save(p);
 	}
 

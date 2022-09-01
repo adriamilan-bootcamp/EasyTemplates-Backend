@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.Imagen;
+import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 
 @RestController
@@ -23,24 +23,24 @@ public class ImagenesController {
 	IImagenService imagenService;
 	
 	@GetMapping("/imagenes")
-	public List<Imagen> listImagenes() {
+	public List<Imagenes> listImagenes() {
 		return imagenService.listImagenes();
 	}
 	
 	@GetMapping("/imagen/{id}")
-	public Imagen imagenXID(@PathVariable(name="id") Long id) {
+	public Imagenes imagenXID(@PathVariable(name="id") Long id) {
 		return imagenService.imagenXID(id);
 	}
 	
 	@PostMapping("/imagen")
-	public Imagen saveImagen(@RequestBody Imagen imagen) {
+	public Imagenes saveImagen(@RequestBody Imagenes imagen) {
 		return imagenService.saveImagen(imagen);
 	}
 	
 	@PutMapping("/imagen/{id}")
-	public Imagen editImagen(@PathVariable(name="id") Long id, @RequestBody Imagen imagen) {
-		Imagen imagenSelected = new Imagen();
-		Imagen imagenUpdated = new Imagen();
+	public Imagenes editImagen(@PathVariable(name="id") Long id, @RequestBody Imagenes imagen) {
+		Imagenes imagenSelected = new Imagenes();
+		Imagenes imagenUpdated = new Imagenes();
 		
 		imagenSelected = imagenService.imagenXID(id);
 		imagenSelected.setSrc(imagen.getSrc());

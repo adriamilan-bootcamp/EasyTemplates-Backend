@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.UsuarioPerteneceGrupos;
+import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 import com.easytemplates.backend.service.UsuarioPerteneceGruposServiceImpl;
 
 @RestController
@@ -23,33 +23,33 @@ public class UsuarioPerteneceGruposController {
 	UsuarioPerteneceGruposServiceImpl usuario_gruposServiceImpl;
 
 	@GetMapping("/usario_grupos")
-	public List<UsuarioPerteneceGrupos> listarUsuarioPerteneceGrupos() {
+	public List<UsuariosPertenecenGrupos> listarUsuarioPerteneceGrupos() {
 		return usuario_gruposServiceImpl.listAllUsuarioPerteneceGrupos();
 	}
 
 	@PostMapping("/usario_grupos")
-	public UsuarioPerteneceGrupos salvarUsuarioPerteneceGrupos(@RequestBody UsuarioPerteneceGrupos usario_grupos) {
+	public UsuariosPertenecenGrupos salvarUsuarioPerteneceGrupos(@RequestBody UsuariosPertenecenGrupos usario_grupos) {
 
 		return usuario_gruposServiceImpl.saveUsuarioPerteneceGrupos(usario_grupos);
 	}
 
 	@GetMapping("/usario_grupos/{id}")
-	public UsuarioPerteneceGrupos usuario_gruposXID(@PathVariable(name = "id") Long id) {
+	public UsuariosPertenecenGrupos usuario_gruposXID(@PathVariable(name = "id") Long id) {
 
 		return usuario_gruposServiceImpl.usuarioPerteneceGruposById(id);
 	}
 
 	@PutMapping("/usario_grupos/{id}")
-	public UsuarioPerteneceGrupos actualizarUsuarioPerteneceGrupos(@PathVariable(name = "id") Long id,
-			@RequestBody UsuarioPerteneceGrupos usuario_grupos) {
+	public UsuariosPertenecenGrupos actualizarUsuarioPerteneceGrupos(@PathVariable(name = "id") Long id,
+			@RequestBody UsuariosPertenecenGrupos usuario_grupos) {
 
-		UsuarioPerteneceGrupos seleccionado = new UsuarioPerteneceGrupos();
-		UsuarioPerteneceGrupos actualizado = new UsuarioPerteneceGrupos();
+		UsuariosPertenecenGrupos seleccionado = new UsuariosPertenecenGrupos();
+		UsuariosPertenecenGrupos actualizado = new UsuariosPertenecenGrupos();
 
 		seleccionado = usuario_gruposServiceImpl.usuarioPerteneceGruposById(id);
 
-		seleccionado.setUsuario(usuario_grupos.getUsuario());
-		seleccionado.setGrupo(usuario_grupos.getGrupo());
+		seleccionado.setUsuarios(usuario_grupos.getUsuarios());
+		seleccionado.setGrupos(usuario_grupos.getGrupos());
 
 		actualizado = usuario_gruposServiceImpl.updateUsuarioPerteneceGrupos(seleccionado);
 
