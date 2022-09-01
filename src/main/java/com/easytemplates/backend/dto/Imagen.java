@@ -4,6 +4,7 @@ package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +66,9 @@ public class Imagen implements Serializable {
     /** Default constructor. */
     public Imagen() {
         super();
+        // Date
+        LocalDateTime myDateObj = LocalDateTime.now();
+        this.fechaCreacion = myDateObj;
     }
 
     /**
