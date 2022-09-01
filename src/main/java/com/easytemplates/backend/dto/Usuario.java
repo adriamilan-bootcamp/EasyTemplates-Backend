@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="usuarios")
 public class Usuario implements Serializable {
 
@@ -60,10 +62,13 @@ public class Usuario implements Serializable {
     private String password;
     @Column(length=255)
     private String token;
+    @JsonIgnore
     @OneToMany(mappedBy="usuario")
     private Set<UsuarioTieneDocs> usuarioTieneDocs;
+    @JsonIgnore
     @OneToMany(mappedBy="usuario")
     private Set<UsuarioPerteneceGrupos> usuarioPerteneceGrupos;
+    @JsonIgnore
     @OneToMany(mappedBy="usuario")
     private Set<Grupo> grupo;
 
