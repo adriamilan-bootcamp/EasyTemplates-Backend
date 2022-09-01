@@ -47,5 +47,4 @@ public void init(FilterConfig filterConfig) {
 @Override
 public void destroy() {
 }
-
 }

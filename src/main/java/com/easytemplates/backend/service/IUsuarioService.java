@@ -20,6 +20,9 @@ public interface IUsuarioService{
 	
 	public Usuario saveUsuario(Usuario usuario);
 	
+
+	public Usuario usuarioByUsername (String username);
+	
 	/***
 	 * 
 	 * @param id

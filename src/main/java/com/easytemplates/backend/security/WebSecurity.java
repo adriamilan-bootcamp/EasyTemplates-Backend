@@ -23,40 +23,44 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	private UserDetailsService userDetailsService;
-
 	
 	public WebSecurity(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 	}
 	
-	@Autowired
-    private PasswordEncoder passwordEncoder;
-
-	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		/*
-		 * 1. Se desactiva el uso de cookies
-		 * 2. Se activa la configuración CORS con los valores por defecto
-		 * 3. Se desactiva el filtro CSRF
-		 * 4. Se indica que el login no requiere autenticación
-		 * 5. Se indica que el resto de URLs esten securizadas
-		 */
-		httpSecurity
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.cors().and()
-			.csrf().disable()
-			.authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
-			.anyRequest().authenticated().and()
-				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-				.addFilter(new JWTAuthorizationFilter(authenticationManager()));
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
-
+	
+	/*
+	 * 1. Se desactiva el uso de cookies
+	 * 2. Se activa la configuración CORS con los valores por defecto
+	 * 3. Se desactiva el filtro CSRF
+	 * 4. Se indica que el login no requiere autenticación
+	 * 5. Se indica que el resto de URLs esten securizadas
+	 */
 	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        	.cors().and()
+        	.csrf().disable()
+        	.authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll() //permitimos el acceso a /login a cualquiera
+            .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+            .and()
+            // Las peticiones /login pasaran previamente por este filtro
+            .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+
+            // Las demás peticiones pasarán por este filtro para validar el token
+            .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+    }
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// Se define la clase que recupera los usuarios y el algoritmo para procesar las passwords
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-	}
-
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
+	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
