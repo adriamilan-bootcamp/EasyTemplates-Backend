@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-@Entity(name="grupos_tienen_docs")
-public class GrupoTieneDocs implements Serializable {
+@Entity(name="usuarios_pertenecen_grupos")
+public class UsuariosPertenecenGrupos implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -51,20 +51,14 @@ public class GrupoTieneDocs implements Serializable {
     @Column(unique=true, nullable=false, precision=10)
     private int id;
     @ManyToOne
-    @JoinColumn(name="grupo_id")
-    private Grupo grupo;
+    @JoinColumn(name="grupo")
+    private Grupos grupos;
     @ManyToOne
-    @JoinColumn(name="imagen_id")
-    private Imagen imagen;
-    @ManyToOne
-    @JoinColumn(name="pdf_id")
-    private Pdf pdf;
-    @ManyToOne
-    @JoinColumn(name="plantilla_id")
-    private Plantilla plantilla;
+    @JoinColumn(name="usuario")
+    private Usuarios usuarios;
 
     /** Default constructor. */
-    public GrupoTieneDocs() {
+    public UsuariosPertenecenGrupos() {
         super();
     }
 
@@ -87,91 +81,55 @@ public class GrupoTieneDocs implements Serializable {
     }
 
     /**
-     * Access method for grupo.
+     * Access method for grupos.
      *
-     * @return the current value of grupo
+     * @return the current value of grupos
      */
-    public Grupo getGrupo() {
-        return grupo;
+    public Grupos getGrupos() {
+        return grupos;
     }
 
     /**
-     * Setter method for grupo.
+     * Setter method for grupos.
      *
-     * @param aGrupo the new value for grupo
+     * @param aGrupos the new value for grupos
      */
-    public void setGrupo(Grupo aGrupo) {
-        grupo = aGrupo;
+    public void setGrupos(Grupos aGrupos) {
+        grupos = aGrupos;
     }
 
     /**
-     * Access method for imagen.
+     * Access method for usuarios.
      *
-     * @return the current value of imagen
+     * @return the current value of usuarios
      */
-    public Imagen getImagen() {
-        return imagen;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * Setter method for imagen.
+     * Setter method for usuarios.
      *
-     * @param aImagen the new value for imagen
+     * @param aUsuarios the new value for usuarios
      */
-    public void setImagen(Imagen aImagen) {
-        imagen = aImagen;
+    public void setUsuarios(Usuarios aUsuarios) {
+        usuarios = aUsuarios;
     }
 
     /**
-     * Access method for pdf.
-     *
-     * @return the current value of pdf
-     */
-    public Pdf getPdf() {
-        return pdf;
-    }
-
-    /**
-     * Setter method for pdf.
-     *
-     * @param aPdf the new value for pdf
-     */
-    public void setPdf(Pdf aPdf) {
-        pdf = aPdf;
-    }
-
-    /**
-     * Access method for plantilla.
-     *
-     * @return the current value of plantilla
-     */
-    public Plantilla getPlantilla() {
-        return plantilla;
-    }
-
-    /**
-     * Setter method for plantilla.
-     *
-     * @param aPlantilla the new value for plantilla
-     */
-    public void setPlantilla(Plantilla aPlantilla) {
-        plantilla = aPlantilla;
-    }
-
-    /**
-     * Compares the key for this instance with another GrupoTieneDocs.
+     * Compares the key for this instance with another UsuariosPertenecenGrupos.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class GrupoTieneDocs and the key objects are equal
+     * @return True if other object is instance of class UsuariosPertenecenGrupos and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof GrupoTieneDocs)) {
+        if (!(other instanceof UsuariosPertenecenGrupos)) {
             return false;
         }
-        GrupoTieneDocs that = (GrupoTieneDocs) other;
+        UsuariosPertenecenGrupos that = (UsuariosPertenecenGrupos) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -179,15 +137,15 @@ public class GrupoTieneDocs implements Serializable {
     }
 
     /**
-     * Compares this instance with another GrupoTieneDocs.
+     * Compares this instance with another UsuariosPertenecenGrupos.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof GrupoTieneDocs)) return false;
-        return this.equalKeys(other) && ((GrupoTieneDocs)other).equalKeys(this);
+        if (!(other instanceof UsuariosPertenecenGrupos)) return false;
+        return this.equalKeys(other) && ((UsuariosPertenecenGrupos)other).equalKeys(this);
     }
 
     /**
@@ -211,7 +169,7 @@ public class GrupoTieneDocs implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[GrupoTieneDocs |");
+        StringBuffer sb = new StringBuffer("[UsuariosPertenecenGrupos |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.Grupo;
+import com.easytemplates.backend.dto.Grupos;
 import com.easytemplates.backend.service.GrupoServiceImpl;
 
 
@@ -24,27 +24,27 @@ public class GrupoController {
 	GrupoServiceImpl grupoServiceImpl;
 	
 	@GetMapping("/grupos")
-	public List<Grupo> listarGrupos() {
+	public List<Grupos> listarGrupos() {
 		return grupoServiceImpl.listAllGrupos();
 	}
 
 	@PostMapping("/grupos")
-	public Grupo salvarGrupo(@RequestBody Grupo grupo) {
+	public Grupos salvarGrupo(@RequestBody Grupos grupo) {
 
 		return grupoServiceImpl.saveGrupo(grupo);
 	}
 
 	@GetMapping("/grupos/{id}")
-	public Grupo grupoXID(@PathVariable(name = "id") Long id) {
+	public Grupos grupoXID(@PathVariable(name = "id") Long id) {
 
 		return grupoServiceImpl.gruposById(id);
 	}
 
 	@PutMapping("/grupos/{id}")
-	public Grupo actualizarGrupo(@PathVariable(name = "id") Long id, @RequestBody Grupo grupo) {
+	public Grupos actualizarGrupo(@PathVariable(name = "id") Long id, @RequestBody Grupos grupo) {
 
-		Grupo seleccionado = new Grupo();
-		Grupo actualizado = new Grupo();
+		Grupos seleccionado = new Grupos();
+		Grupos actualizado = new Grupos();
 
 		seleccionado = grupoServiceImpl.gruposById(id);
 

@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-@Entity(name="usuarios_tienen_docs")
-public class UsuarioTieneDocs implements Serializable {
+@Entity(name="usuarios_imagenes")
+public class UsuariosImagenes implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -51,20 +51,14 @@ public class UsuarioTieneDocs implements Serializable {
     @Column(unique=true, nullable=false, precision=10)
     private int id;
     @ManyToOne
-    @JoinColumn(name="imagen_id")
-    private Imagen imagen;
+    @JoinColumn(name="usuario")
+    private Usuarios usuarios;
     @ManyToOne
-    @JoinColumn(name="pdf_id")
-    private Pdf pdf;
-    @ManyToOne
-    @JoinColumn(name="plantilla_id")
-    private Plantilla plantilla;
-    @ManyToOne
-    @JoinColumn(name="usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name="imagen")
+    private Imagenes imagenes;
 
     /** Default constructor. */
-    public UsuarioTieneDocs() {
+    public UsuariosImagenes() {
         super();
     }
 
@@ -87,91 +81,55 @@ public class UsuarioTieneDocs implements Serializable {
     }
 
     /**
-     * Access method for imagen.
+     * Access method for usuarios.
      *
-     * @return the current value of imagen
+     * @return the current value of usuarios
      */
-    public Imagen getImagen() {
-        return imagen;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * Setter method for imagen.
+     * Setter method for usuarios.
      *
-     * @param aImagen the new value for imagen
+     * @param aUsuarios the new value for usuarios
      */
-    public void setImagen(Imagen aImagen) {
-        imagen = aImagen;
+    public void setUsuarios(Usuarios aUsuarios) {
+        usuarios = aUsuarios;
     }
 
     /**
-     * Access method for pdf.
+     * Access method for imagenes.
      *
-     * @return the current value of pdf
+     * @return the current value of imagenes
      */
-    public Pdf getPdf() {
-        return pdf;
+    public Imagenes getImagenes() {
+        return imagenes;
     }
 
     /**
-     * Setter method for pdf.
+     * Setter method for imagenes.
      *
-     * @param aPdf the new value for pdf
+     * @param aImagenes the new value for imagenes
      */
-    public void setPdf(Pdf aPdf) {
-        pdf = aPdf;
+    public void setImagenes(Imagenes aImagenes) {
+        imagenes = aImagenes;
     }
 
     /**
-     * Access method for plantilla.
-     *
-     * @return the current value of plantilla
-     */
-    public Plantilla getPlantilla() {
-        return plantilla;
-    }
-
-    /**
-     * Setter method for plantilla.
-     *
-     * @param aPlantilla the new value for plantilla
-     */
-    public void setPlantilla(Plantilla aPlantilla) {
-        plantilla = aPlantilla;
-    }
-
-    /**
-     * Access method for usuario.
-     *
-     * @return the current value of usuario
-     */
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * Setter method for usuario.
-     *
-     * @param aUsuario the new value for usuario
-     */
-    public void setUsuario(Usuario aUsuario) {
-        usuario = aUsuario;
-    }
-
-    /**
-     * Compares the key for this instance with another UsuarioTieneDocs.
+     * Compares the key for this instance with another UsuariosImagenes.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class UsuarioTieneDocs and the key objects are equal
+     * @return True if other object is instance of class UsuariosImagenes and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof UsuarioTieneDocs)) {
+        if (!(other instanceof UsuariosImagenes)) {
             return false;
         }
-        UsuarioTieneDocs that = (UsuarioTieneDocs) other;
+        UsuariosImagenes that = (UsuariosImagenes) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -179,15 +137,15 @@ public class UsuarioTieneDocs implements Serializable {
     }
 
     /**
-     * Compares this instance with another UsuarioTieneDocs.
+     * Compares this instance with another UsuariosImagenes.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof UsuarioTieneDocs)) return false;
-        return this.equalKeys(other) && ((UsuarioTieneDocs)other).equalKeys(this);
+        if (!(other instanceof UsuariosImagenes)) return false;
+        return this.equalKeys(other) && ((UsuariosImagenes)other).equalKeys(this);
     }
 
     /**
@@ -211,7 +169,7 @@ public class UsuarioTieneDocs implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[UsuarioTieneDocs |");
+        StringBuffer sb = new StringBuffer("[UsuariosImagenes |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();
