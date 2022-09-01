@@ -49,10 +49,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
 		<dependency>
 		    <groupId>com.amazonaws</groupId>
-		    <artifactId>aws-java-sdk</artifactId>
+		    <artifactId>aws-java-sdk-s3</artifactId>
 		    <version>1.12.293</version>
 		</dependency>
 	</dependencies>
