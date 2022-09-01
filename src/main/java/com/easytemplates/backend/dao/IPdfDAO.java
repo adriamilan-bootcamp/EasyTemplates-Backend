@@ -1,8 +1,8 @@
 package com.easytemplates.backend.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.easytemplates.backend.dto.Pdf;
+import com.easytemplates.backend.dto.Pdfs;
 
-public interface IPdfDAO extends JpaRepository<Pdf, Long> {
+public interface IPdfDAO extends JpaRepository<Pdfs, Long> {
 	
 }

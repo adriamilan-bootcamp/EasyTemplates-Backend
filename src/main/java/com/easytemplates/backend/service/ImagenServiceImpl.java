@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IImagenDAO;
-import com.easytemplates.backend.dto.Imagen;
+import com.easytemplates.backend.dto.Imagenes;
 @Service
 public class ImagenServiceImpl implements IImagenService {
 	
@@ -14,22 +14,22 @@ public class ImagenServiceImpl implements IImagenService {
 	IImagenDAO imagenDAO;
 
 	@Override
-	public List<Imagen> listImagenes() {
+	public List<Imagenes> listImagenes() {
 		return imagenDAO.findAll();
 	}
 
 	@Override
-	public Imagen imagenXID(Long id) {
+	public Imagenes imagenXID(Long id) {
 		return imagenDAO.findById(id).get();
 	}
 
 	@Override
-	public Imagen saveImagen(Imagen imagen) {
+	public Imagenes saveImagen(Imagenes imagen) {
 		return imagenDAO.save(imagen);
 	}
 
 	@Override
-	public Imagen updateImagen(Imagen imagen) {
+	public Imagenes updateImagen(Imagenes imagen) {
 		return imagenDAO.save(imagen);
 	}
 

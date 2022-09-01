@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
-import com.easytemplates.backend.dto.Usuario;
+import com.easytemplates.backend.dto.Usuarios;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
@@ -14,22 +14,22 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	IUsuarioDAO usuarioDAO;
 
 	@Override
-	public List<Usuario> listAllUsuarios() {
+	public List<Usuarios> listAllUsuarios() {
 		return usuarioDAO.findAll();
 	}
 
 	@Override
-	public Usuario saveUsuario(Usuario usuario) {
+	public Usuarios saveUsuario(Usuarios usuario) {
 		return usuarioDAO.save(usuario);
 	}
 
 	@Override
-	public Usuario usuarioById(Long id) {
+	public Usuarios usuarioById(Long id) {
 		return usuarioDAO.findById(id).get();
 	}
 
 	@Override
-	public Usuario updateUsuario(Usuario usuario) {
+	public Usuarios updateUsuario(Usuarios usuario) {
 		return usuarioDAO.save(usuario);
 	}
 

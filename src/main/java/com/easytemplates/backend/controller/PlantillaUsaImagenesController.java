@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.PlantillaUsaImagenes;
+import com.easytemplates.backend.dto.PlantillasUsanImagenes;
 import com.easytemplates.backend.service.IPlantillaUsaImagenesService;
 
 @RestController
@@ -23,24 +23,24 @@ public class PlantillaUsaImagenesController {
 	IPlantillaUsaImagenesService puiService;
 	
 	@GetMapping("/plantillasusanimagenes")
-	public List<PlantillaUsaImagenes> listPUIs() {
+	public List<PlantillasUsanImagenes> listPUIs() {
 		return puiService.listPlantillaUsaImagenes();
 	}
 	
 	@GetMapping("/plantillasusanimagenes/{id}")
-	public PlantillaUsaImagenes puiXID(@PathVariable(name="id") Long id) {
+	public PlantillasUsanImagenes puiXID(@PathVariable(name="id") Long id) {
 		return puiService.plantillasUsanImagenesXID(id);
 	}
 	
 	@PostMapping("/plantillasusanimagenes")
-	public PlantillaUsaImagenes savePUI(@RequestBody PlantillaUsaImagenes plantillasUsanImagenes) {
+	public PlantillasUsanImagenes savePUI(@RequestBody PlantillasUsanImagenes plantillasUsanImagenes) {
 		return puiService.savePlantillaUsaImagenes(plantillasUsanImagenes);
 	}
 	
 	@PutMapping("/plantillasusanimagenes/{id}")
-	public PlantillaUsaImagenes updatePUI(@PathVariable(name="id") Long id, @RequestBody PlantillaUsaImagenes plantillasUsanImagenes) {
-		PlantillaUsaImagenes puiSelected = new PlantillaUsaImagenes();
-		PlantillaUsaImagenes puiUpdated = new PlantillaUsaImagenes();
+	public PlantillasUsanImagenes updatePUI(@PathVariable(name="id") Long id, @RequestBody PlantillasUsanImagenes plantillasUsanImagenes) {
+		PlantillasUsanImagenes puiSelected = new PlantillasUsanImagenes();
+		PlantillasUsanImagenes puiUpdated = new PlantillasUsanImagenes();
 		
 		puiSelected = puiService.plantillasUsanImagenesXID(id);
 		

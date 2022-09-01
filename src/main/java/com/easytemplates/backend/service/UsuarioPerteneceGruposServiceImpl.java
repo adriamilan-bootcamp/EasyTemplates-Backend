@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioPerteneceGruposDAO;
-import com.easytemplates.backend.dto.UsuarioPerteneceGrupos;
+import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 
 @Service
 public class UsuarioPerteneceGruposServiceImpl implements IUsuarioPerteneceGruposService{
@@ -15,22 +15,22 @@ public class UsuarioPerteneceGruposServiceImpl implements IUsuarioPerteneceGrupo
 	IUsuarioPerteneceGruposDAO usuarioPerteneceGrupoDAO;
 	
 	@Override
-	public List<UsuarioPerteneceGrupos> listAllUsuarioPerteneceGrupos() {
+	public List<UsuariosPertenecenGrupos> listAllUsuarioPerteneceGrupos() {
 		return usuarioPerteneceGrupoDAO.findAll();
 	}
 
 	@Override
-	public UsuarioPerteneceGrupos saveUsuarioPerteneceGrupos(UsuarioPerteneceGrupos usuarioPerteneceGrupos) {
+	public UsuariosPertenecenGrupos saveUsuarioPerteneceGrupos(UsuariosPertenecenGrupos usuarioPerteneceGrupos) {
 		return usuarioPerteneceGrupoDAO.save(usuarioPerteneceGrupos);
 	}
 
 	@Override
-	public UsuarioPerteneceGrupos usuarioPerteneceGruposById(Long id) {
+	public UsuariosPertenecenGrupos usuarioPerteneceGruposById(Long id) {
 		return usuarioPerteneceGrupoDAO.findById(id).get();
 	}
 
 	@Override
-	public UsuarioPerteneceGrupos updateUsuarioPerteneceGrupos(UsuarioPerteneceGrupos usuarioPerteneceGrupo) {
+	public UsuariosPertenecenGrupos updateUsuarioPerteneceGrupos(UsuariosPertenecenGrupos usuarioPerteneceGrupo) {
 		return usuarioPerteneceGrupoDAO.save(usuarioPerteneceGrupo);
 	}
 

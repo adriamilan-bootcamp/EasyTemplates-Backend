@@ -2,7 +2,7 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.UsuarioPerteneceGrupos;
+import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 
 
 
@@ -12,7 +12,7 @@ public interface IUsuarioPerteneceGruposService{
 	 * 
 	 * @return all usuarioPerenecegrupos
 	 */
-	public List<UsuarioPerteneceGrupos> listAllUsuarioPerteneceGrupos();
+	public List<UsuariosPertenecenGrupos> listAllUsuarioPerteneceGrupos();
 	
 	
 	/***
@@ -20,14 +20,14 @@ public interface IUsuarioPerteneceGruposService{
 	 * @param usuarioPerteneceGrupos
 	 * @return
 	 */
-	public UsuarioPerteneceGrupos saveUsuarioPerteneceGrupos(UsuarioPerteneceGrupos usuarioPerteneceGrupos);
+	public UsuariosPertenecenGrupos saveUsuarioPerteneceGrupos(UsuariosPertenecenGrupos usuarioPerteneceGrupos);
 	
 	/***
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public UsuarioPerteneceGrupos usuarioPerteneceGruposById(Long id);
+	public UsuariosPertenecenGrupos usuarioPerteneceGruposById(Long id);
 	
 	
 	/***
@@ -35,7 +35,7 @@ public interface IUsuarioPerteneceGruposService{
 	 * @param usuarioPerteneceGrupo
 	 * @return
 	 */
-	public UsuarioPerteneceGrupos updateUsuarioPerteneceGrupos(UsuarioPerteneceGrupos usuarioPerteneceGrupo);
+	public UsuariosPertenecenGrupos updateUsuarioPerteneceGrupos(UsuariosPertenecenGrupos usuarioPerteneceGrupo);
 	
 	/***
 	 * 
