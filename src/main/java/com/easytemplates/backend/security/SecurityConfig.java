@@ -1,6 +1,7 @@
 package com.easytemplates.backend.security;
 
 import static com.easytemplates.backend.security.SecurityConstants.LOGIN_URL;
+import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,11 +49,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	// TODO: Is CORS *really active* then?
         	.cors().and()
         	.csrf().disable()
+
+        	.authorizeRequests()
+        		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+        		.antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+        		.anyRequest().authenticated()
         	// Permit POST Method in /login URI (No auth. needed)
-        	.authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
-        	// For all the rest of the requests, you need an Auth. Bearer Token
-            .anyRequest().authenticated()
-            .and()
+        	
+        	.and()
             // Request Filters
             .addFilter(new SecurityJWTUtil(authenticationManager()))
             .addFilter(new SecurityJWTFilter(authenticationManager()));
