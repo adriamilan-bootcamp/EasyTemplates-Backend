@@ -41,6 +41,13 @@ public class GrupoController {
 		return grupoServiceImpl.gruposById(id);
 	}
 
+	@GetMapping("/grupos_nombre/{nombre}")
+	public Grupos grupoXNombre(@PathVariable(name = "nombre") String nombre) {
+
+		return grupoServiceImpl.grupoByNombre(nombre);
+	}
+
+	
 	@PutMapping("/grupos/{id}")
 	public Grupos actualizarGrupo(@PathVariable(name = "id") Long id, @RequestBody Grupos grupo) {
 

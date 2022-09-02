@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 import com.easytemplates.backend.service.UsuarioPerteneceGruposServiceImpl;
 
@@ -38,6 +39,12 @@ public class UsuarioPerteneceGruposController {
 
 		return usuario_gruposServiceImpl.usuarioPerteneceGruposById(id);
 	}
+	@GetMapping("/usuarios_grupos/{grupo_nombre}")
+	public List<Usuarios> usuarioXGrupo(@PathVariable(name = "grupo_nombre") String grupo_nombre) {
+
+		return usuario_gruposServiceImpl.usuariosByGrupo(grupo_nombre);
+	}
+	
 
 	@PutMapping("/usario_grupos/{id}")
 	public UsuariosPertenecenGrupos actualizarUsuarioPerteneceGrupos(@PathVariable(name = "id") Long id,

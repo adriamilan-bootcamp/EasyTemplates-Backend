@@ -56,5 +56,7 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 	public Usuarios usuarioByNombre(String username) {
 		return usuarioDAO.findByNombre(username);
 	}
+	
+
 
 }

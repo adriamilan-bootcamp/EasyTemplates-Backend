@@ -42,6 +42,8 @@ public class UsuarioController {
 		return usuarioServiceImpl.usuarioById(id);
 	}
 
+
+	
 	@PutMapping("/usuarios/{id}")
 	public Usuarios actualizarUsuario(@PathVariable(name = "id") Long id, @RequestBody Usuarios usuario) {
 
@@ -65,5 +67,7 @@ public class UsuarioController {
 	public void eliminarUsuario(@PathVariable(name = "id") Long id) {
 		usuarioServiceImpl.deleteUsuario(id);
 	}
+	
+	
 	
 }

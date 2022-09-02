@@ -2,6 +2,7 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
+import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 
 
@@ -42,4 +43,6 @@ public interface IUsuarioPerteneceGruposService{
 	 * @param id
 	 */
 	public void deleteUsuarioPerteneceGrupos(Long id);
+	
+	
 }

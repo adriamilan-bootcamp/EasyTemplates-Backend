@@ -47,4 +47,6 @@ public interface IUsuarioService{
 	 * @param id
 	 */
 	public void deleteUsuario(Long id);
+	
+	
 }

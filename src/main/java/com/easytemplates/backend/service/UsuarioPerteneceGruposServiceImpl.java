@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioPerteneceGruposDAO;
+import com.easytemplates.backend.dto.Grupos;
+import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 
 @Service
@@ -39,4 +41,8 @@ public class UsuarioPerteneceGruposServiceImpl implements IUsuarioPerteneceGrupo
 		usuarioPerteneceGrupoDAO.deleteById(id);		
 	}
 	
+	public List<Usuarios> usuariosByGrupo(String grupo_nombre){
+		return (List<Usuarios>) usuarioPerteneceGrupoDAO.findByGrupos(grupo_nombre).getUsuarios();
+		
+	}
 }

@@ -39,4 +39,8 @@ public class GrupoServiceImpl implements IGrupoService{
 		grupoDAO.deleteById(id);		
 	}
 	
+	public Grupos grupoByNombre(String nombre) {
+		return grupoDAO.findGrupoByNombre(nombre);
+		
+	}
 }
