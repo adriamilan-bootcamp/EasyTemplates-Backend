@@ -2,17 +2,17 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.PlantillaUsaImagenes;
+import com.easytemplates.backend.dto.PlantillasUsanImagenes;
 
 public interface IPlantillaUsaImagenesService {
 
-	public List<PlantillaUsaImagenes> listPlantillaUsaImagenes();
+	public List<PlantillasUsanImagenes> listPlantillaUsaImagenes();
 	
-	public PlantillaUsaImagenes plantillasUsanImagenesXID(Long id);
+	public PlantillasUsanImagenes plantillasUsanImagenesXID(Long id);
 	
-	public PlantillaUsaImagenes savePlantillaUsaImagenes(PlantillaUsaImagenes plantillasUsanImagenes);
+	public PlantillasUsanImagenes savePlantillaUsaImagenes(PlantillasUsanImagenes plantillasUsanImagenes);
 	
-	public PlantillaUsaImagenes updatePlantillaUsaImagenes(PlantillaUsaImagenes plantillasUsanImagenes);
+	public PlantillasUsanImagenes updatePlantillaUsaImagenes(PlantillasUsanImagenes plantillasUsanImagenes);
 	
 	public String deletePlantillaUsaImagenes(Long id);
 	

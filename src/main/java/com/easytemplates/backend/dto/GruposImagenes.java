@@ -5,7 +5,6 @@ package com.easytemplates.backend.dto;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,11 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-@Entity(name="grupos")
-public class Grupo implements Serializable {
+@Entity(name="grupos_imagenes")
+public class GruposImagenes implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -52,18 +50,15 @@ public class Grupo implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
-    @Column(nullable=false, length=255)
-    private String nombre;
-    @OneToMany(mappedBy="grupo")
-    private Set<GrupoTieneDocs> grupoTieneDocs;
-    @OneToMany(mappedBy="grupo")
-    private Set<UsuarioPerteneceGrupos> usuarioPerteneceGrupos;
     @ManyToOne
-    @JoinColumn(name="admin")
-    private Usuario usuario;
+    @JoinColumn(name="grupo")
+    private Grupos grupos;
+    @ManyToOne
+    @JoinColumn(name="imagen")
+    private Imagenes imagenes;
 
     /** Default constructor. */
-    public Grupo() {
+    public GruposImagenes() {
         super();
     }
 
@@ -86,91 +81,55 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Access method for nombre.
+     * Access method for grupos.
      *
-     * @return the current value of nombre
+     * @return the current value of grupos
      */
-    public String getNombre() {
-        return nombre;
+    public Grupos getGrupos() {
+        return grupos;
     }
 
     /**
-     * Setter method for nombre.
+     * Setter method for grupos.
      *
-     * @param aNombre the new value for nombre
+     * @param aGrupos the new value for grupos
      */
-    public void setNombre(String aNombre) {
-        nombre = aNombre;
+    public void setGrupos(Grupos aGrupos) {
+        grupos = aGrupos;
     }
 
     /**
-     * Access method for grupoTieneDocs.
+     * Access method for imagenes.
      *
-     * @return the current value of grupoTieneDocs
+     * @return the current value of imagenes
      */
-    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
-        return grupoTieneDocs;
+    public Imagenes getImagenes() {
+        return imagenes;
     }
 
     /**
-     * Setter method for grupoTieneDocs.
+     * Setter method for imagenes.
      *
-     * @param aGrupoTieneDocs the new value for grupoTieneDocs
+     * @param aImagenes the new value for imagenes
      */
-    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
-        grupoTieneDocs = aGrupoTieneDocs;
+    public void setImagenes(Imagenes aImagenes) {
+        imagenes = aImagenes;
     }
 
     /**
-     * Access method for usuarioPerteneceGrupos.
-     *
-     * @return the current value of usuarioPerteneceGrupos
-     */
-    public Set<UsuarioPerteneceGrupos> getUsuarioPerteneceGrupos() {
-        return usuarioPerteneceGrupos;
-    }
-
-    /**
-     * Setter method for usuarioPerteneceGrupos.
-     *
-     * @param aUsuarioPerteneceGrupos the new value for usuarioPerteneceGrupos
-     */
-    public void setUsuarioPerteneceGrupos(Set<UsuarioPerteneceGrupos> aUsuarioPerteneceGrupos) {
-        usuarioPerteneceGrupos = aUsuarioPerteneceGrupos;
-    }
-
-    /**
-     * Access method for usuario.
-     *
-     * @return the current value of usuario
-     */
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * Setter method for usuario.
-     *
-     * @param aUsuario the new value for usuario
-     */
-    public void setUsuario(Usuario aUsuario) {
-        usuario = aUsuario;
-    }
-
-    /**
-     * Compares the key for this instance with another Grupo.
+     * Compares the key for this instance with another GruposImagenes.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Grupo and the key objects are equal
+     * @return True if other object is instance of class GruposImagenes and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Grupo)) {
+        if (!(other instanceof GruposImagenes)) {
             return false;
         }
-        Grupo that = (Grupo) other;
+        GruposImagenes that = (GruposImagenes) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -178,15 +137,15 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * Compares this instance with another Grupo.
+     * Compares this instance with another GruposImagenes.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Grupo)) return false;
-        return this.equalKeys(other) && ((Grupo)other).equalKeys(this);
+        if (!(other instanceof GruposImagenes)) return false;
+        return this.equalKeys(other) && ((GruposImagenes)other).equalKeys(this);
     }
 
     /**
@@ -210,7 +169,7 @@ public class Grupo implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Grupo |");
+        StringBuffer sb = new StringBuffer("[GruposImagenes |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

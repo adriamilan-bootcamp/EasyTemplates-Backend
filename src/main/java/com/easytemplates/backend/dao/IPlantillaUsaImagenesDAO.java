@@ -2,8 +2,8 @@ package com.easytemplates.backend.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.easytemplates.backend.dto.PlantillaUsaImagenes;
+import com.easytemplates.backend.dto.PlantillasUsanImagenes;
 
-public interface IPlantillaUsaImagenesDAO extends JpaRepository<PlantillaUsaImagenes, Long> {
+public interface IPlantillaUsaImagenesDAO extends JpaRepository<PlantillasUsanImagenes, Long> {
 
 }

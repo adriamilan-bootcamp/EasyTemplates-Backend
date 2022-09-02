@@ -15,10 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity(name="usuarios")
-public class Usuario implements Serializable {
+public class Usuarios implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -56,24 +54,25 @@ public class Usuario implements Serializable {
     private String nombre;
     @Column(nullable=false, length=255)
     private String email;
+    @Column(length=100)
+    private String role;
     @Column(length=255)
     private String firma;
     @Column(nullable=false, length=45)
     private String password;
-    @Column(length=255)
-    private String token;
-    @JsonIgnore
-    @OneToMany(mappedBy="usuario")
-    private Set<UsuarioTieneDocs> usuarioTieneDocs;
-    @JsonIgnore
-    @OneToMany(mappedBy="usuario")
-    private Set<UsuarioPerteneceGrupos> usuarioPerteneceGrupos;
-    @JsonIgnore
-    @OneToMany(mappedBy="usuario")
-    private Set<Grupo> grupo;
+    @OneToMany(mappedBy="usuarios")
+    private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
+    @OneToMany(mappedBy="usuarios")
+    private Set<Grupos> grupos;
+    @OneToMany(mappedBy="usuarios")
+    private Set<UsuariosImagenes> usuariosImagenes;
+    @OneToMany(mappedBy="usuarios")
+    private Set<UsuariosPdfs> usuariosPdfs;
+    @OneToMany(mappedBy="usuarios")
+    private Set<UsuariosPlantillas> usuariosPlantillas;
 
     /** Default constructor. */
-    public Usuario() {
+    public Usuarios() {
         super();
     }
 
@@ -132,6 +131,24 @@ public class Usuario implements Serializable {
     }
 
     /**
+     * Access method for role.
+     *
+     * @return the current value of role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * Setter method for role.
+     *
+     * @param aRole the new value for role
+     */
+    public void setRole(String aRole) {
+        role = aRole;
+    }
+
+    /**
      * Access method for firma.
      *
      * @return the current value of firma
@@ -168,91 +185,109 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Access method for token.
+     * Access method for usuariosPertenecenGrupos.
      *
-     * @return the current value of token
+     * @return the current value of usuariosPertenecenGrupos
      */
-    public String getToken() {
-        return token;
+    public Set<UsuariosPertenecenGrupos> getUsuariosPertenecenGrupos() {
+        return usuariosPertenecenGrupos;
     }
 
     /**
-     * Setter method for token.
+     * Setter method for usuariosPertenecenGrupos.
      *
-     * @param aToken the new value for token
+     * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
      */
-    public void setToken(String aToken) {
-        token = aToken;
+    public void setUsuariosPertenecenGrupos(Set<UsuariosPertenecenGrupos> aUsuariosPertenecenGrupos) {
+        usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
     }
 
     /**
-     * Access method for usuarioTieneDocs.
+     * Access method for grupos.
      *
-     * @return the current value of usuarioTieneDocs
+     * @return the current value of grupos
      */
-    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
-        return usuarioTieneDocs;
+    public Set<Grupos> getGrupos() {
+        return grupos;
     }
 
     /**
-     * Setter method for usuarioTieneDocs.
+     * Setter method for grupos.
      *
-     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
+     * @param aGrupos the new value for grupos
      */
-    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
-        usuarioTieneDocs = aUsuarioTieneDocs;
+    public void setGrupos(Set<Grupos> aGrupos) {
+        grupos = aGrupos;
     }
 
     /**
-     * Access method for usuarioPerteneceGrupos.
+     * Access method for usuariosImagenes.
      *
-     * @return the current value of usuarioPerteneceGrupos
+     * @return the current value of usuariosImagenes
      */
-    public Set<UsuarioPerteneceGrupos> getUsuarioPerteneceGrupos() {
-        return usuarioPerteneceGrupos;
+    public Set<UsuariosImagenes> getUsuariosImagenes() {
+        return usuariosImagenes;
     }
 
     /**
-     * Setter method for usuarioPerteneceGrupos.
+     * Setter method for usuariosImagenes.
      *
-     * @param aUsuarioPerteneceGrupos the new value for usuarioPerteneceGrupos
+     * @param aUsuariosImagenes the new value for usuariosImagenes
      */
-    public void setUsuarioPerteneceGrupos(Set<UsuarioPerteneceGrupos> aUsuarioPerteneceGrupos) {
-        usuarioPerteneceGrupos = aUsuarioPerteneceGrupos;
+    public void setUsuariosImagenes(Set<UsuariosImagenes> aUsuariosImagenes) {
+        usuariosImagenes = aUsuariosImagenes;
     }
 
     /**
-     * Access method for grupo.
+     * Access method for usuariosPdfs.
      *
-     * @return the current value of grupo
+     * @return the current value of usuariosPdfs
      */
-    public Set<Grupo> getGrupo() {
-        return grupo;
+    public Set<UsuariosPdfs> getUsuariosPdfs() {
+        return usuariosPdfs;
     }
 
     /**
-     * Setter method for grupo.
+     * Setter method for usuariosPdfs.
      *
-     * @param aGrupo the new value for grupo
+     * @param aUsuariosPdfs the new value for usuariosPdfs
      */
-    public void setGrupo(Set<Grupo> aGrupo) {
-        grupo = aGrupo;
+    public void setUsuariosPdfs(Set<UsuariosPdfs> aUsuariosPdfs) {
+        usuariosPdfs = aUsuariosPdfs;
     }
 
     /**
-     * Compares the key for this instance with another Usuario.
+     * Access method for usuariosPlantillas.
+     *
+     * @return the current value of usuariosPlantillas
+     */
+    public Set<UsuariosPlantillas> getUsuariosPlantillas() {
+        return usuariosPlantillas;
+    }
+
+    /**
+     * Setter method for usuariosPlantillas.
+     *
+     * @param aUsuariosPlantillas the new value for usuariosPlantillas
+     */
+    public void setUsuariosPlantillas(Set<UsuariosPlantillas> aUsuariosPlantillas) {
+        usuariosPlantillas = aUsuariosPlantillas;
+    }
+
+    /**
+     * Compares the key for this instance with another Usuarios.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Usuario and the key objects are equal
+     * @return True if other object is instance of class Usuarios and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Usuario)) {
+        if (!(other instanceof Usuarios)) {
             return false;
         }
-        Usuario that = (Usuario) other;
+        Usuarios that = (Usuarios) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -260,15 +295,15 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Compares this instance with another Usuario.
+     * Compares this instance with another Usuarios.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Usuario)) return false;
-        return this.equalKeys(other) && ((Usuario)other).equalKeys(this);
+        if (!(other instanceof Usuarios)) return false;
+        return this.equalKeys(other) && ((Usuarios)other).equalKeys(this);
     }
 
     /**
@@ -292,7 +327,7 @@ public class Usuario implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Usuario |");
+        StringBuffer sb = new StringBuffer("[Usuarios |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

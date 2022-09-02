@@ -2,7 +2,7 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.Usuario;
+import com.easytemplates.backend.dto.Usuarios;
 
 
 public interface IUsuarioService{
@@ -10,7 +10,7 @@ public interface IUsuarioService{
 	 * 
 	 * @return all usuarios
 	 */
-	public List<Usuario> listAllUsuarios();
+	public List<Usuarios> listAllUsuarios();
 	
 	/***
 	 * 
@@ -18,21 +18,29 @@ public interface IUsuarioService{
 	 * @return
 	 */
 	
-	public Usuario saveUsuario(Usuario usuario);
+	public Usuarios saveUsuario(Usuarios usuario);
 	
 	/***
 	 * 
 	 * @param id
 	 * @return usuario
 	 */
-	public Usuario usuarioById(Long id);
+	public Usuarios usuarioById(Long id);
+	
+	
+	/***
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public Usuarios usuarioByNombre (String username);
 	
 	/***
 	 * 
 	 * @param usuario
 	 * @return
 	 */
-	public Usuario updateUsuario(Usuario usuario);
+	public Usuarios updateUsuario(Usuarios usuario);
 	
 	/***
 	 * 

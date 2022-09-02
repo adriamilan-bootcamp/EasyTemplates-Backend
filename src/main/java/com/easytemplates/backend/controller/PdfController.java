@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.Pdf;
+import com.easytemplates.backend.dto.Pdfs;
 import com.easytemplates.backend.service.PdfServiceImpl;
 
 @RestController
@@ -23,23 +23,23 @@ public class PdfController {
 	PdfServiceImpl pdfCtl;
 	
 	@GetMapping("/pdfs")
-	public List<Pdf> listAllPdfs() {
+	public List<Pdfs> listAllPdfs() {
 		return pdfCtl.listAllPdfs();
 	}
 	
 	@PostMapping("/pdfs")
-	public Pdf savePdf(@RequestBody Pdf p) {
+	public Pdfs savePdf(@RequestBody Pdfs p) {
 		return pdfCtl.savePdf(p);
 	}
 	
 	@GetMapping("/pdfs/{id}")
-	public Pdf getPdfById(@PathVariable(name = "id") Long id) {
+	public Pdfs getPdfById(@PathVariable(name = "id") Long id) {
 		return pdfCtl.pdfById(id);
 	}
 	
 	@PutMapping("/pdfs/{id}")
-	public Pdf updatePdf(@PathVariable(name = "id") Long id, @RequestBody Pdf p) {
-		Pdf updatedPdf;
+	public Pdfs updatePdf(@PathVariable(name = "id") Long id, @RequestBody Pdfs p) {
+		Pdfs updatedPdf;
 		
 		updatedPdf = pdfCtl.pdfById(id);
 

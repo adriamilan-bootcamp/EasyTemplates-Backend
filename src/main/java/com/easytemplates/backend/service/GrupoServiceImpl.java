@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IGrupoDAO;
-import com.easytemplates.backend.dto.Grupo;
+import com.easytemplates.backend.dto.Grupos;
 @Service
 public class GrupoServiceImpl implements IGrupoService{
 
@@ -15,22 +15,22 @@ public class GrupoServiceImpl implements IGrupoService{
 	IGrupoDAO grupoDAO;
 	
 	@Override
-	public List<Grupo> listAllGrupos() {
+	public List<Grupos> listAllGrupos() {
 		return grupoDAO.findAll();
 	}
 
 	@Override
-	public Grupo saveGrupo(Grupo grupo) {
+	public Grupos saveGrupo(Grupos grupo) {
 		return grupoDAO.save(grupo);
 	}
 
 	@Override
-	public Grupo gruposById(Long id) {
+	public Grupos gruposById(Long id) {
 		return grupoDAO.findById(id).get();
 	}
 
 	@Override
-	public Grupo updateGrupo(Grupo grupo) {
+	public Grupos updateGrupo(Grupos grupo) {
 		return grupoDAO.save(grupo);
 	}
 
