@@ -56,7 +56,7 @@ public class ImagenServiceImpl implements IImagenService {
 			Imagen imagen = new Imagen();
 			imagen.setSrc(amazonS3.getUrl(bucketName, newFileName).toString());
 			imagenDAO.save(imagen);
-		} catch (IOException e) { 
+		} catch (IOException e) {
 			e.printStackTrace();
 		} 
 	}
