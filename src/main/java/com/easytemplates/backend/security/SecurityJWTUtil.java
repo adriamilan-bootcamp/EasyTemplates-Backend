@@ -51,7 +51,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 
 			// Try to authenticate
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					userCreds.getNombre(), userCreds.getPassword(), new ArrayList<>()));
+					userCreds.getEmail(), userCreds.getPassword(), new ArrayList<>()));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
