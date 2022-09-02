@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 
@@ -22,6 +23,9 @@ public class AuthController {
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
 	
+	@Autowired
+	IUsuarioDAO usuarioDAO;
+	
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public AuthController(BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -31,6 +35,12 @@ public class AuthController {
 	@PostMapping(REGISTER_URL)
 	public Usuarios registrarUsuario(@RequestBody Usuarios usuario) {
 		Usuarios usuarioNuevo = new Usuarios();
+		
+		if (usuarioDAO.findByEmail(usuario.getEmail()) != null) {
+			  System.out.println("Email is already registered!");
+			  return null;
+		}
+		
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setEmail(usuario.getEmail());
 		usuarioNuevo.setRole("user");
