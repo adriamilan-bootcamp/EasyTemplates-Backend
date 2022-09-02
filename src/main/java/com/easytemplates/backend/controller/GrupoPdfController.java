@@ -23,24 +23,24 @@ public class GrupoPdfController {
 	@Autowired
 	GrupoPdfServiceImpl serviceImpl;
 	
-	@GetMapping("/grupos_plantillas")
+	@GetMapping("/grupos_pdfs")
 	public List<GruposPdfs> listarGruposPdfs() {
 		return serviceImpl.listAllGruposPdfs();
 	}
 
-	@PostMapping("/grupos_plantillas")
+	@PostMapping("/grupos_pdfs")
 	public GruposPdfs salvarGruposPdfs(@RequestBody GruposPdfs grupo_pdf) {
 
 		return serviceImpl.saveGruposPdfs(grupo_pdf);
 	}
 
-	@GetMapping("/grupos_plantillas/{id}")
+	@GetMapping("/grupos_pdfs/{id}")
 	public GruposPdfs gruposPdfsXID(@PathVariable(name = "id") Long id) {
 
 		return serviceImpl.gruposPdfsById(id);
 	}
 
-	@PutMapping("/grupos_plantillas/{id}")
+	@PutMapping("/grupos_pdfs/{id}")
 	public GruposPdfs actualizarGruposPdfs(@PathVariable(name = "id") Long id, @RequestBody GruposPdfs grupo_pdf) {
 
 		GruposPdfs seleccionado = new GruposPdfs();
@@ -58,7 +58,7 @@ public class GrupoPdfController {
 		return actualizado;
 	}
 
-	@DeleteMapping("/grupos_plantillas/{id}")
+	@DeleteMapping("/grupos_pdfs/{id}")
 
 	public void eliminarGruposPdfs(@PathVariable(name = "id") Long id) {
 		serviceImpl.deleteGruposPdfs(id);
