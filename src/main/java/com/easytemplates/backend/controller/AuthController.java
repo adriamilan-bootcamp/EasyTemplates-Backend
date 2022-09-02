@@ -33,12 +33,14 @@ public class AuthController {
 	}
 	
 	@PostMapping(REGISTER_URL)
-	public Usuarios registrarUsuario(@RequestBody Usuarios usuario) {
+	public ResponseEntity<String> registrarUsuario(@RequestBody Usuarios usuario) {
+		HttpHeaders responseHeaders = new HttpHeaders();
 		Usuarios usuarioNuevo = new Usuarios();
 		
 		if (usuarioDAO.findByEmail(usuario.getEmail()) != null) {
 			  System.out.println("Email is already registered!");
-			  return null;
+			  return ResponseEntity.badRequest()
+				      .body("Email is already registered!");
 		}
 		
 		usuarioNuevo.setNombre(usuario.getNombre());
@@ -50,7 +52,10 @@ public class AuthController {
 		
 		
 		usuarioNuevo.setLockFlag(0);
-		return usuarioServiceImpl.saveUsuario(usuarioNuevo);
+		usuarioServiceImpl.saveUsuario(usuarioNuevo);
+		
+		return ResponseEntity.ok()
+			      .body("User registered succesfully!");
 	}
 	
 
