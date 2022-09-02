@@ -2,17 +2,17 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.Plantilla;
+import com.easytemplates.backend.dto.Plantillas;
 
 public interface IPlantillaService {
 
-	public List<Plantilla> listPlantillas();
+	public List<Plantillas> listPlantillas();
 	
-	public Plantilla plantillaXID(Long id);
+	public Plantillas plantillaXID(Long id);
 	
-	public Plantilla savePlantilla(Plantilla plantilla);
+	public Plantillas savePlantilla(Plantillas plantilla);
 	
-	public Plantilla updatePlantila(Plantilla plantilla);
+	public Plantillas updatePlantila(Plantillas plantilla);
 	
 	public String deletePlantilla(Long id);
 	

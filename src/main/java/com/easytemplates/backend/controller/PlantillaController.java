@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easytemplates.backend.dto.Plantilla;
+import com.easytemplates.backend.dto.Plantillas;
 import com.easytemplates.backend.service.PlantillaServiceImpl;
 
 @RestController
@@ -23,24 +23,24 @@ public class PlantillaController {
 	PlantillaServiceImpl plantillaService;
 	
 	@GetMapping("/plantillas")
-	public List<Plantilla> listPlantillas() {
+	public List<Plantillas> listPlantillas() {
 		return plantillaService.listPlantillas();
 	}
 	
 	@GetMapping("/plantilla/{id}")
-	public Plantilla plantillaXID(@PathVariable(name="id") Long id) {
+	public Plantillas plantillaXID(@PathVariable(name="id") Long id) {
 		return plantillaService.plantillaXID(id);
 	}
 	
 	@PostMapping("/plantilla") 
-	public Plantilla savePlantilla(@RequestBody Plantilla plantilla) {
+	public Plantillas savePlantilla(@RequestBody Plantillas plantilla) {
 		return plantillaService.savePlantilla(plantilla);
 	}
 	
 	@PutMapping("/plantilla/{id}")
-	public Plantilla updatePlantilla(@PathVariable(name="id") Long id, @RequestBody Plantilla plantilla) {
-		Plantilla plantillaSelected = new Plantilla();
-		Plantilla plantillaUpdated = new Plantilla();
+	public Plantillas updatePlantilla(@PathVariable(name="id") Long id, @RequestBody Plantillas plantilla) {
+		Plantillas plantillaSelected = new Plantillas();
+		Plantillas plantillaUpdated = new Plantillas();
 		
 		plantillaSelected = plantillaService.plantillaXID(id);
 		plantillaSelected.setTitulo(plantilla.getTitulo());

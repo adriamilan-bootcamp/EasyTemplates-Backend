@@ -3,20 +3,21 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-@Entity(name="usuarios_pertenecen_grupos")
-public class UsuarioPerteneceGrupos implements Serializable {
+@Entity(name="pdfs")
+public class Pdfs implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -50,15 +51,19 @@ public class UsuarioPerteneceGrupos implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
     private int id;
-    @ManyToOne
-    @JoinColumn(name="grupo")
-    private Grupo grupo;
-    @ManyToOne
-    @JoinColumn(name="usuario")
-    private Usuario usuario;
+    @Column(length=100)
+    private String titulo;
+    @Column(length=255)
+    private String src;
+    @Column(name="fecha_creacion")
+    private LocalDateTime fechaCreacion;
+    @OneToMany(mappedBy="pdfs")
+    private Set<GruposPdfs> gruposPdfs;
+    @OneToMany(mappedBy="pdfs")
+    private Set<UsuariosPdfs> usuariosPdfs;
 
     /** Default constructor. */
-    public UsuarioPerteneceGrupos() {
+    public Pdfs() {
         super();
     }
 
@@ -81,55 +86,109 @@ public class UsuarioPerteneceGrupos implements Serializable {
     }
 
     /**
-     * Access method for grupo.
+     * Access method for titulo.
      *
-     * @return the current value of grupo
+     * @return the current value of titulo
      */
-    public Grupo getGrupo() {
-        return grupo;
+    public String getTitulo() {
+        return titulo;
     }
 
     /**
-     * Setter method for grupo.
+     * Setter method for titulo.
      *
-     * @param aGrupo the new value for grupo
+     * @param aTitulo the new value for titulo
      */
-    public void setGrupo(Grupo aGrupo) {
-        grupo = aGrupo;
+    public void setTitulo(String aTitulo) {
+        titulo = aTitulo;
     }
 
     /**
-     * Access method for usuario.
+     * Access method for src.
      *
-     * @return the current value of usuario
+     * @return the current value of src
      */
-    public Usuario getUsuario() {
-        return usuario;
+    public String getSrc() {
+        return src;
     }
 
     /**
-     * Setter method for usuario.
+     * Setter method for src.
      *
-     * @param aUsuario the new value for usuario
+     * @param aSrc the new value for src
      */
-    public void setUsuario(Usuario aUsuario) {
-        usuario = aUsuario;
+    public void setSrc(String aSrc) {
+        src = aSrc;
     }
 
     /**
-     * Compares the key for this instance with another UsuarioPerteneceGrupos.
+     * Access method for fechaCreacion.
+     *
+     * @return the current value of fechaCreacion
+     */
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    /**
+     * Setter method for fechaCreacion.
+     *
+     * @param aFechaCreacion the new value for fechaCreacion
+     */
+    public void setFechaCreacion(LocalDateTime aFechaCreacion) {
+        fechaCreacion = aFechaCreacion;
+    }
+
+    /**
+     * Access method for gruposPdfs.
+     *
+     * @return the current value of gruposPdfs
+     */
+    public Set<GruposPdfs> getGruposPdfs() {
+        return gruposPdfs;
+    }
+
+    /**
+     * Setter method for gruposPdfs.
+     *
+     * @param aGruposPdfs the new value for gruposPdfs
+     */
+    public void setGruposPdfs(Set<GruposPdfs> aGruposPdfs) {
+        gruposPdfs = aGruposPdfs;
+    }
+
+    /**
+     * Access method for usuariosPdfs.
+     *
+     * @return the current value of usuariosPdfs
+     */
+    public Set<UsuariosPdfs> getUsuariosPdfs() {
+        return usuariosPdfs;
+    }
+
+    /**
+     * Setter method for usuariosPdfs.
+     *
+     * @param aUsuariosPdfs the new value for usuariosPdfs
+     */
+    public void setUsuariosPdfs(Set<UsuariosPdfs> aUsuariosPdfs) {
+        usuariosPdfs = aUsuariosPdfs;
+    }
+
+    /**
+     * Compares the key for this instance with another Pdfs.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class UsuarioPerteneceGrupos and the key objects are equal
+     * @return True if other object is instance of class Pdfs and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof UsuarioPerteneceGrupos)) {
+        if (!(other instanceof Pdfs)) {
             return false;
         }
-        UsuarioPerteneceGrupos that = (UsuarioPerteneceGrupos) other;
+        Pdfs that = (Pdfs) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -137,15 +196,15 @@ public class UsuarioPerteneceGrupos implements Serializable {
     }
 
     /**
-     * Compares this instance with another UsuarioPerteneceGrupos.
+     * Compares this instance with another Pdfs.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof UsuarioPerteneceGrupos)) return false;
-        return this.equalKeys(other) && ((UsuarioPerteneceGrupos)other).equalKeys(this);
+        if (!(other instanceof Pdfs)) return false;
+        return this.equalKeys(other) && ((Pdfs)other).equalKeys(this);
     }
 
     /**
@@ -169,7 +228,7 @@ public class UsuarioPerteneceGrupos implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[UsuarioPerteneceGrupos |");
+        StringBuffer sb = new StringBuffer("[Pdfs |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

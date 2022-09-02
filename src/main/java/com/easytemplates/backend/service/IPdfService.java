@@ -2,7 +2,7 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.Pdf;
+import com.easytemplates.backend.dto.Pdfs;
 
 // Interface skeleton for the Pdf Service
 public interface IPdfService {
@@ -12,7 +12,7 @@ public interface IPdfService {
 	 * 
 	 * @return the Pdf's
 	 */
-	public List<Pdf> listAllPdfs();
+	public List<Pdfs> listAllPdfs();
 	
 	/**
 	 * Saves the Pdf
@@ -20,7 +20,7 @@ public interface IPdfService {
 	 * @param p
 	 * @return the Pdf
 	 */
-	public Pdf savePdf(Pdf p);
+	public Pdfs savePdf(Pdfs p);
 	
 	/**
 	 * Returns a Pdf
@@ -28,7 +28,7 @@ public interface IPdfService {
 	 * @param id
 	 * @return the Pdf
 	 */
-	public Pdf pdfById(Long id);
+	public Pdfs pdfById(Long id);
 	
 	/**
 	 * Updates the Pdf
@@ -36,7 +36,7 @@ public interface IPdfService {
 	 * @param p
 	 * @return the Pdf
 	 */
-	public Pdf updatePdf(Pdf p);
+	public Pdfs updatePdf(Pdfs p);
 	
 	/**
 	 * Deletes a Pdf

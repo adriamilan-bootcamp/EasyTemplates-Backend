@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IPlantillaUsaImagenesDAO;
-import com.easytemplates.backend.dto.PlantillaUsaImagenes;
+import com.easytemplates.backend.dto.PlantillasUsanImagenes;
 @Service
 public class PlantillaUsaImagenesServiceImpl implements IPlantillaUsaImagenesService {
 
@@ -14,22 +14,22 @@ public class PlantillaUsaImagenesServiceImpl implements IPlantillaUsaImagenesSer
 	IPlantillaUsaImagenesDAO puiDao;
 
 	@Override
-	public List<PlantillaUsaImagenes> listPlantillaUsaImagenes() {
+	public List<PlantillasUsanImagenes> listPlantillaUsaImagenes() {
 		return puiDao.findAll();
 	}
 
 	@Override
-	public PlantillaUsaImagenes plantillasUsanImagenesXID(Long id) {
+	public PlantillasUsanImagenes plantillasUsanImagenesXID(Long id) {
 		return puiDao.findById(id).get();
 	}
 
 	@Override
-	public PlantillaUsaImagenes savePlantillaUsaImagenes(PlantillaUsaImagenes plantillasUsanImagenes) {
+	public PlantillasUsanImagenes savePlantillaUsaImagenes(PlantillasUsanImagenes plantillasUsanImagenes) {
 		return puiDao.save(plantillasUsanImagenes);
 	}
 
 	@Override
-	public PlantillaUsaImagenes updatePlantillaUsaImagenes(PlantillaUsaImagenes plantillasUsanImagenes) {
+	public PlantillasUsanImagenes updatePlantillaUsaImagenes(PlantillasUsanImagenes plantillasUsanImagenes) {
 		return puiDao.save(plantillasUsanImagenes);
 	}
 

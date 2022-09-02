@@ -2,7 +2,7 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-import com.easytemplates.backend.dto.Grupo;
+import com.easytemplates.backend.dto.Grupos;
 
 
 public interface IGrupoService{
@@ -11,7 +11,7 @@ public interface IGrupoService{
 	 * 
 	 * @return all grupos
 	 */
-	public List<Grupo> listAllGrupos();
+	public List<Grupos> listAllGrupos();
 	
 	/***
 	 * 
@@ -19,21 +19,21 @@ public interface IGrupoService{
 	 * @return
 	 */
 	
-	public Grupo saveGrupo(Grupo grupo);
+	public Grupos saveGrupo(Grupos grupo);
 	
 	/***
 	 * 
 	 * @param id
 	 * @return usuario
 	 */
-	public Grupo gruposById(Long id);
+	public Grupos gruposById(Long id);
 	
 	/***
 	 * 
 	 * @param grupos
 	 * @return
 	 */
-	public Grupo updateGrupo(Grupo grupo);
+	public Grupos updateGrupo(Grupos grupo);
 	
 	/***
 	 * 

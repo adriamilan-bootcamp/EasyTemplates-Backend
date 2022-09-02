@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity(name="plantillas")
-public class Plantilla implements Serializable {
+public class Plantillas implements Serializable {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -57,15 +57,15 @@ public class Plantilla implements Serializable {
     private String src;
     @Column(name="fecha_creacion")
     private LocalDateTime fechaCreacion;
-    @OneToMany(mappedBy="plantilla")
-    private Set<GrupoTieneDocs> grupoTieneDocs;
-    @OneToMany(mappedBy="plantilla")
-    private Set<UsuarioTieneDocs> usuarioTieneDocs;
-    @OneToMany(mappedBy="plantilla")
-    private Set<PlantillaUsaImagenes> plantillaUsaImagenes;
+    @OneToMany(mappedBy="plantillas")
+    private Set<GruposPlantillas> gruposPlantillas;
+    @OneToMany(mappedBy="plantillas")
+    private Set<PlantillasUsanImagenes> plantillasUsanImagenes;
+    @OneToMany(mappedBy="plantillas")
+    private Set<UsuariosPlantillas> usuariosPlantillas;
 
     /** Default constructor. */
-    public Plantilla() {
+    public Plantillas() {
         super();
     }
 
@@ -142,73 +142,73 @@ public class Plantilla implements Serializable {
     }
 
     /**
-     * Access method for grupoTieneDocs.
+     * Access method for gruposPlantillas.
      *
-     * @return the current value of grupoTieneDocs
+     * @return the current value of gruposPlantillas
      */
-    public Set<GrupoTieneDocs> getGrupoTieneDocs() {
-        return grupoTieneDocs;
+    public Set<GruposPlantillas> getGruposPlantillas() {
+        return gruposPlantillas;
     }
 
     /**
-     * Setter method for grupoTieneDocs.
+     * Setter method for gruposPlantillas.
      *
-     * @param aGrupoTieneDocs the new value for grupoTieneDocs
+     * @param aGruposPlantillas the new value for gruposPlantillas
      */
-    public void setGrupoTieneDocs(Set<GrupoTieneDocs> aGrupoTieneDocs) {
-        grupoTieneDocs = aGrupoTieneDocs;
+    public void setGruposPlantillas(Set<GruposPlantillas> aGruposPlantillas) {
+        gruposPlantillas = aGruposPlantillas;
     }
 
     /**
-     * Access method for usuarioTieneDocs.
+     * Access method for plantillasUsanImagenes.
      *
-     * @return the current value of usuarioTieneDocs
+     * @return the current value of plantillasUsanImagenes
      */
-    public Set<UsuarioTieneDocs> getUsuarioTieneDocs() {
-        return usuarioTieneDocs;
+    public Set<PlantillasUsanImagenes> getPlantillasUsanImagenes() {
+        return plantillasUsanImagenes;
     }
 
     /**
-     * Setter method for usuarioTieneDocs.
+     * Setter method for plantillasUsanImagenes.
      *
-     * @param aUsuarioTieneDocs the new value for usuarioTieneDocs
+     * @param aPlantillasUsanImagenes the new value for plantillasUsanImagenes
      */
-    public void setUsuarioTieneDocs(Set<UsuarioTieneDocs> aUsuarioTieneDocs) {
-        usuarioTieneDocs = aUsuarioTieneDocs;
+    public void setPlantillasUsanImagenes(Set<PlantillasUsanImagenes> aPlantillasUsanImagenes) {
+        plantillasUsanImagenes = aPlantillasUsanImagenes;
     }
 
     /**
-     * Access method for plantillaUsaImagenes.
+     * Access method for usuariosPlantillas.
      *
-     * @return the current value of plantillaUsaImagenes
+     * @return the current value of usuariosPlantillas
      */
-    public Set<PlantillaUsaImagenes> getPlantillaUsaImagenes() {
-        return plantillaUsaImagenes;
+    public Set<UsuariosPlantillas> getUsuariosPlantillas() {
+        return usuariosPlantillas;
     }
 
     /**
-     * Setter method for plantillaUsaImagenes.
+     * Setter method for usuariosPlantillas.
      *
-     * @param aPlantillaUsaImagenes the new value for plantillaUsaImagenes
+     * @param aUsuariosPlantillas the new value for usuariosPlantillas
      */
-    public void setPlantillaUsaImagenes(Set<PlantillaUsaImagenes> aPlantillaUsaImagenes) {
-        plantillaUsaImagenes = aPlantillaUsaImagenes;
+    public void setUsuariosPlantillas(Set<UsuariosPlantillas> aUsuariosPlantillas) {
+        usuariosPlantillas = aUsuariosPlantillas;
     }
 
     /**
-     * Compares the key for this instance with another Plantilla.
+     * Compares the key for this instance with another Plantillas.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Plantilla and the key objects are equal
+     * @return True if other object is instance of class Plantillas and the key objects are equal
      */
     private boolean equalKeys(Object other) {
         if (this==other) {
             return true;
         }
-        if (!(other instanceof Plantilla)) {
+        if (!(other instanceof Plantillas)) {
             return false;
         }
-        Plantilla that = (Plantilla) other;
+        Plantillas that = (Plantillas) other;
         if (this.getId() != that.getId()) {
             return false;
         }
@@ -216,15 +216,15 @@ public class Plantilla implements Serializable {
     }
 
     /**
-     * Compares this instance with another Plantilla.
+     * Compares this instance with another Plantillas.
      *
      * @param other The object to compare to
      * @return True if the objects are the same
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Plantilla)) return false;
-        return this.equalKeys(other) && ((Plantilla)other).equalKeys(this);
+        if (!(other instanceof Plantillas)) return false;
+        return this.equalKeys(other) && ((Plantillas)other).equalKeys(this);
     }
 
     /**
@@ -248,7 +248,7 @@ public class Plantilla implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[Plantilla |");
+        StringBuffer sb = new StringBuffer("[Plantillas |");
         sb.append(" id=").append(getId());
         sb.append("]");
         return sb.toString();

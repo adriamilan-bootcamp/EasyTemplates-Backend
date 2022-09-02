@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IPlantillaDAO;
-import com.easytemplates.backend.dto.Plantilla;
+import com.easytemplates.backend.dto.Plantillas;
 @Service
 public class PlantillaServiceImpl implements IPlantillaService {
 
@@ -14,22 +14,22 @@ public class PlantillaServiceImpl implements IPlantillaService {
 	IPlantillaDAO plantillaDAO;
 	
 	@Override
-	public List<Plantilla> listPlantillas() {
+	public List<Plantillas> listPlantillas() {
 		return plantillaDAO.findAll();
 	}
 
 	@Override
-	public Plantilla plantillaXID(Long id) {
+	public Plantillas plantillaXID(Long id) {
 		return plantillaDAO.findById(id).get();
 	}
 
 	@Override
-	public Plantilla savePlantilla(Plantilla plantilla) {
+	public Plantillas savePlantilla(Plantillas plantilla) {
 		return plantillaDAO.save(plantilla);
 	}
 
 	@Override
-	public Plantilla updatePlantila(Plantilla plantilla) {
+	public Plantillas updatePlantila(Plantillas plantilla) {
 		return plantillaDAO.save(plantilla);
 	}
 
