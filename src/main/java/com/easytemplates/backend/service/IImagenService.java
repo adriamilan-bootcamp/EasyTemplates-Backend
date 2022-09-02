@@ -17,3 +17,4 @@ public interface IImagenService {
 	public void uploadFile(MultipartFile file);
 	
 }
+ 

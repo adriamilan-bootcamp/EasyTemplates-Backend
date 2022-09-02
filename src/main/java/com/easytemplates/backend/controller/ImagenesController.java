@@ -29,7 +29,7 @@ public class ImagenesController {
 	@GetMapping("/imagenes")
 	public List<Imagen> listImagenes() {
 		return imagenService.listImagenes();
-	}
+	} 
 	
 	@GetMapping("/imagen/{id}")
 	public Imagen imagenXID(@PathVariable(name="id") Long id) {
