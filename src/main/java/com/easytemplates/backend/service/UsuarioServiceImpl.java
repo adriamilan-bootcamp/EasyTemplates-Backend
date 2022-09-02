@@ -45,7 +45,7 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuarios user = usuarioDAO.findByNombre(username);
+		Usuarios user = usuarioDAO.findByEmail(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
