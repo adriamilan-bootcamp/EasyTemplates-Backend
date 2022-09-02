@@ -54,12 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         		.antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
         		.anyRequest().authenticated()
-        	// Permit POST Method in /login URI (No auth. needed)
+        		// Permit POST Method in /login URI (No auth. needed)
         	
         	.and()
-            // Request Filters
-            .addFilter(new SecurityJWTUtil(authenticationManager()))
-            .addFilter(new SecurityJWTFilter(authenticationManager()));
+	            // Request Filters
+	            .addFilter(new SecurityJWTUtil(authenticationManager()))
+	            .addFilter(new SecurityJWTFilter(authenticationManager()));
     }
 	
 	@Override
