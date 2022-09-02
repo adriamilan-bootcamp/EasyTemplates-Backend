@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.easytemplates.backend.dto.Imagen;
+import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 
 @RestController
@@ -27,12 +27,12 @@ public class ImagenesController {
 	IImagenService imagenService;
 	
 	@GetMapping("/imagenes")
-	public List<Imagen> listImagenes() {
+	public List<Imagenes> listImagenes() {
 		return imagenService.listImagenes();
 	} 
 	
 	@GetMapping("/imagen/{id}")
-	public Imagen imagenXID(@PathVariable(name="id") Long id) {
+	public Imagenes imagenXID(@PathVariable(name="id") Long id) {
 		return imagenService.imagenXID(id);
 	}
 	

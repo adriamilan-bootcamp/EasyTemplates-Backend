@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.easytemplates.backend.dao.IImagenDAO;
-import com.easytemplates.backend.dto.Imagen;
+import com.easytemplates.backend.dto.Imagenes;
 
 @Service
 public class ImagenServiceImpl implements IImagenService {
@@ -28,12 +28,12 @@ public class ImagenServiceImpl implements IImagenService {
 	private String bucketName;
 	
 	@Override
-	public List<Imagen> listImagenes() {
+	public List<Imagenes> listImagenes() {
 		return imagenDAO.findAll();
 	}
 
 	@Override
-	public Imagen imagenXID(Long id) {
+	public Imagenes imagenXID(Long id) {
 		return imagenDAO.findById(id).get();
 	}
 
@@ -54,7 +54,7 @@ public class ImagenServiceImpl implements IImagenService {
 			amazonS3.putObject(request);
 
 			// Image Constructor 
-			Imagen imagen = new Imagen();
+			Imagenes imagen = new Imagenes();
 			imagen.setSrc(amazonS3.getUrl(bucketName, newFileName).toString());
 			imagenDAO.save(imagen);
 		} catch (IOException e) {

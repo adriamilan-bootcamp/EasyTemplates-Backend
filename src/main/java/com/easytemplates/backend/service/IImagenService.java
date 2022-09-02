@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.easytemplates.backend.dto.Imagen;
+import com.easytemplates.backend.dto.Imagenes;
 
 public interface IImagenService {
 
-	public List<Imagen> listImagenes();
+	public List<Imagenes> listImagenes();
 	
-	public Imagen imagenXID(Long id);
+	public Imagenes imagenXID(Long id);
 	
 	public String deleteImagen(Long id);
 	
