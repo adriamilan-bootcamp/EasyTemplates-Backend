@@ -35,23 +35,6 @@ public class UsuarioController {
 	public List<Usuarios> listarUsuarios() {
 		return usuarioServiceImpl.listAllUsuarios();
 	}
-	
-	@GetMapping("/response-entity-builder-with-http-headers")
-	public ResponseEntity<String> usingResponseEntityBuilderAndHttpHeaders() {
-	    HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.set("Baeldung-Example-Header", 
-	      "Value-ResponseEntityBuilderWithHttpHeaders");
-
-	    return ResponseEntity.ok()
-	      .headers(responseHeaders)
-	      .body("Response with header using ResponseEntity");
-	}
-
-	@PostMapping("/usuarios")
-	public Usuarios salvarUsuario(@RequestBody Usuarios usuario) {
-
-		return usuarioServiceImpl.saveUsuario(usuario);
-	}
 
 	@GetMapping("/usuarios/{id}")
 	public Usuarios usuarioXID(@PathVariable(name = "id") Long id) {
