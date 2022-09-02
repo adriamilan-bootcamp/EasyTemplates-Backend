@@ -3,6 +3,9 @@ package com.easytemplates.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,15 +25,15 @@ public class UsuarioController {
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
 	
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public UsuarioController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+	
 	@GetMapping("/usuarios")
 	public List<Usuarios> listarUsuarios() {
 		return usuarioServiceImpl.listAllUsuarios();
-	}
-
-	@PostMapping("/usuarios")
-	public Usuarios salvarUsuario(@RequestBody Usuarios usuario) {
-
-		return usuarioServiceImpl.saveUsuario(usuario);
 	}
 
 	@GetMapping("/usuarios/{id}")
