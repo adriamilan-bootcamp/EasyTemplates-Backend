@@ -23,7 +23,7 @@ public class Imagen implements Serializable {
     /** Primary key. */
     protected static final String PK = "id";
 
-    /**
+    /** 
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
