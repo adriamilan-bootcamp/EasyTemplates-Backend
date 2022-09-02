@@ -65,6 +65,7 @@ public class Imagenes implements Serializable {
     /** Default constructor. */
     public Imagenes() {
         super();
+        this.fechaCreacion = LocalDateTime.now();
     }
 
     /**
