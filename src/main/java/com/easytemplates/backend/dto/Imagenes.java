@@ -22,7 +22,7 @@ public class Imagenes implements Serializable {
     /** Primary key. */
     protected static final String PK = "id";
 
-    /** 
+    /**
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
@@ -65,7 +65,6 @@ public class Imagenes implements Serializable {
     /** Default constructor. */
     public Imagenes() {
         super();
-        this.fechaCreacion = LocalDateTime.now();
     }
 
     /**

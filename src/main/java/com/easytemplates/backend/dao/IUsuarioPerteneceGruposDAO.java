@@ -11,5 +11,5 @@ import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 
 
 public interface IUsuarioPerteneceGruposDAO extends JpaRepository<UsuariosPertenecenGrupos, Long> {
-	Grupos findByGrupos(String grupo_name);
+	UsuariosPertenecenGrupos findByGrupos(String grupo_name);
 }

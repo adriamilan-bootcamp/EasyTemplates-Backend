@@ -64,6 +64,8 @@ public class Usuarios implements Serializable {
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
     private Set<Grupos> grupos;
+    @OneToMany(mappedBy="usuarios2")
+    private Set<Grupos> grupos2;
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosImagenes> usuariosImagenes;
     @OneToMany(mappedBy="usuarios")
@@ -218,6 +220,24 @@ public class Usuarios implements Serializable {
      */
     public void setGrupos(Set<Grupos> aGrupos) {
         grupos = aGrupos;
+    }
+
+    /**
+     * Access method for grupos2.
+     *
+     * @return the current value of grupos2
+     */
+    public Set<Grupos> getGrupos2() {
+        return grupos2;
+    }
+
+    /**
+     * Setter method for grupos2.
+     *
+     * @param aGrupos2 the new value for grupos2
+     */
+    public void setGrupos2(Set<Grupos> aGrupos2) {
+        grupos2 = aGrupos2;
     }
 
     /**

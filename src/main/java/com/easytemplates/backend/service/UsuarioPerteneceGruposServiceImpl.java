@@ -42,7 +42,7 @@ public class UsuarioPerteneceGruposServiceImpl implements IUsuarioPerteneceGrupo
 	}
 	
 	public List<Usuarios> usuariosByGrupo(String grupo_nombre){
-		return (List<Usuarios>) usuarioPerteneceGrupoDAO.findByGrupos(grupo_nombre).getUsuarios();
+		return  (List<Usuarios>) usuarioPerteneceGrupoDAO.findByGrupos(grupo_nombre).getUsuarios();
 		
 	}
 }

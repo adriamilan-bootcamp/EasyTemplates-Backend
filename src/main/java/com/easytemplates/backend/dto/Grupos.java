@@ -65,6 +65,9 @@ public class Grupos implements Serializable {
     private Set<GruposPdfs> gruposPdfs;
     @OneToMany(mappedBy="grupos")
     private Set<GruposPlantillas> gruposPlantillas;
+    @ManyToOne
+    @JoinColumn(name="usuario")
+    private Usuarios usuarios2;
 
     /** Default constructor. */
     public Grupos() {
@@ -195,6 +198,24 @@ public class Grupos implements Serializable {
      */
     public void setGruposPlantillas(Set<GruposPlantillas> aGruposPlantillas) {
         gruposPlantillas = aGruposPlantillas;
+    }
+
+    /**
+     * Access method for usuarios2.
+     *
+     * @return the current value of usuarios2
+     */
+    public Usuarios getUsuarios2() {
+        return usuarios2;
+    }
+
+    /**
+     * Setter method for usuarios2.
+     *
+     * @param aUsuarios2 the new value for usuarios2
+     */
+    public void setUsuarios2(Usuarios aUsuarios2) {
+        usuarios2 = aUsuarios2;
     }
 
     /**
