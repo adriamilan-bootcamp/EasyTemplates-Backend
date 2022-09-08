@@ -41,8 +41,4 @@ public class UsuarioPerteneceGruposServiceImpl implements IUsuarioPerteneceGrupo
 		usuarioPerteneceGrupoDAO.deleteById(id);		
 	}
 	
-	public List<Usuarios> usuariosByGrupo(String grupo_nombre){
-		return  (List<Usuarios>) usuarioPerteneceGrupoDAO.findByGrupos(grupo_nombre).getUsuarios();
-		
-	}
 }
