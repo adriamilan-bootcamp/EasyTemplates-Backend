@@ -40,6 +40,11 @@ public class UsuarioImagenController {
 
 		return serviceImpl.usuariosImagenesById(id);
 	}
+	
+	@GetMapping("/usuarios_imagenes/user/{id}")
+	public List<UsuariosImagenes> findByUsuario(@PathVariable(name="id") Long id) {
+		return serviceImpl.findByUsuario(id);
+	}
 
 	@PutMapping("/usuarios_imagenes/{id}")
 	public UsuariosImagenes actualizarUsuariosImagenes(@PathVariable(name = "id") Long id, @RequestBody UsuariosImagenes usuario_imagen) {
@@ -60,7 +65,6 @@ public class UsuarioImagenController {
 	}
 
 	@DeleteMapping("/usuarios_imagenes/{id}")
-
 	public void eliminarUsuariosImagenes(@PathVariable(name = "id") Long id) {
 		serviceImpl.deleteUsuariosImagenes(id);
 	}

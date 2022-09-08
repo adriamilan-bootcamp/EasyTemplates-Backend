@@ -58,7 +58,7 @@ public class Usuarios implements Serializable {
     private String role;
     @Column(length=255)
     private String firma;
-    @Column(nullable=false, length=45)
+    @Column(nullable=false, length=100)
     private String password;
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;

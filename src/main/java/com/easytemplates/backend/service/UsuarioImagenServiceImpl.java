@@ -41,4 +41,10 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 		iUsuarioImagenDAO.deleteById(id);		
 	}
 
+	@Override
+	public List<UsuariosImagenes> findByUsuario(Long id) {
+		// TODO Auto-generated method stub
+		return iUsuarioImagenDAO.findByUsuario(id);
+	}
+
 }
