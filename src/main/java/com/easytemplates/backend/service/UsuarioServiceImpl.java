@@ -54,7 +54,7 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 
 	@Override
 	public Usuarios usuarioByNombre(String username) {
-		return usuarioDAO.findByNombre(username);
+		return usuarioDAO.findByUsername(username);
 	}
 
 }
