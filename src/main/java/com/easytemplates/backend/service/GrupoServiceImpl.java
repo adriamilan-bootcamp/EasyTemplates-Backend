@@ -40,7 +40,7 @@ public class GrupoServiceImpl implements IGrupoService{
 	}
 	
 	public Grupos grupoByNombre(String nombre) {
-		return grupoDAO.findGrupoByNombre(nombre);
+		return grupoDAO.findByNombre(nombre);
 		
 	}
 }
