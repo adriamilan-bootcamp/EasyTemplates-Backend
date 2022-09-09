@@ -45,7 +45,7 @@ public class AuthController {
 		
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setEmail(usuario.getEmail());
-		usuarioNuevo.setRole("user");
+		usuarioNuevo.setRol(Usuarios.Rol.USER);
 		
 		String encoded = bCryptPasswordEncoder.encode(usuario.getPassword());
 		usuarioNuevo.setPassword(encoded);
