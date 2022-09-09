@@ -44,7 +44,7 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 	@Override
 	public List<UsuariosImagenes> findByUsuario(Long id) {
 		// TODO Auto-generated method stub
-		return iUsuarioImagenDAO.findByUsuario(id);
+		return iUsuarioImagenDAO.findByUsuarios(id);
 	}
 
 }
