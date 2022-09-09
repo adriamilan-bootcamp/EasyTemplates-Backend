@@ -49,7 +49,7 @@ public class Usuarios implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(nullable=false, length=255)
     private String nombre;
     @Column(nullable=false, length=255)
@@ -81,7 +81,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -90,7 +90,7 @@ public class Usuarios implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -315,7 +315,7 @@ public class Usuarios implements Serializable {
     public int hashCode() {
         int i;
         int result = 17;
-        i = getId();
+        i = 32;
         result = 37*result + i;
         return result;
     }
@@ -340,7 +340,7 @@ public class Usuarios implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", Long.valueOf(getId()));
         return ret;
     }
 
