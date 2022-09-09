@@ -3,21 +3,35 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-@Entity(name="usuarios")
-public class Usuarios implements Serializable {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+@Entity(name="usuarios")
+public class Usuarios implements Serializable, UserDetails {
+
+	public enum Rol {
+	    ADMIN,
+	    USER;
+	}
+	
     /** Primary key. */
     protected static final String PK = "id";
 
@@ -49,17 +63,18 @@ public class Usuarios implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(nullable=false, length=255)
-    private String nombre;
+    private String username;
     @Column(nullable=false, length=255)
     private String email;
-    @Column(length=100)
-    private String role;
     @Column(length=255)
     private String firma;
     @Column(nullable=false, length=100)
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Rol rol = Rol.USER;
+    
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
@@ -81,7 +96,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -90,7 +105,7 @@ public class Usuarios implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -100,7 +115,7 @@ public class Usuarios implements Serializable {
      * @return the current value of nombre
      */
     public String getNombre() {
-        return nombre;
+        return username;
     }
 
     /**
@@ -109,7 +124,7 @@ public class Usuarios implements Serializable {
      * @param aNombre the new value for nombre
      */
     public void setNombre(String aNombre) {
-        nombre = aNombre;
+    	username = aNombre;
     }
 
     /**
@@ -128,24 +143,6 @@ public class Usuarios implements Serializable {
      */
     public void setEmail(String aEmail) {
         email = aEmail;
-    }
-
-    /**
-     * Access method for role.
-     *
-     * @return the current value of role
-     */
-    public String getRole() {
-        return role;
-    }
-
-    /**
-     * Setter method for role.
-     *
-     * @param aRole the new value for role
-     */
-    public void setRole(String aRole) {
-        role = aRole;
     }
 
     /**
@@ -313,10 +310,10 @@ public class Usuarios implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+        Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -340,8 +337,48 @@ public class Usuarios implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", Long.valueOf(getId()));
         return ret;
     }
+
+	@Override
+	public String getUsername() {
+		return this.getNombre();
+	}
+
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(rol.toString()));
+        return roles;
+    }
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	public void setRol(Rol role) {
+		this.rol = role;
+	}
+	
+	public String getRol() {
+		return this.rol.toString();
+	}
+	
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }
