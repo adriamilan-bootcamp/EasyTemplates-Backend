@@ -13,7 +13,7 @@ import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Usuarios;
 import static java.util.Collections.emptyList;
 
-@Service
+@Service("userDetailsService")
 public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 	@Autowired
 	IUsuarioDAO usuarioDAO;
@@ -51,7 +51,7 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		return user;
+		return (Usuarios) user;
 	}
 
 	@Override

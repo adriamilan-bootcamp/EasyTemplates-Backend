@@ -3,6 +3,7 @@ package com.easytemplates.backend.security;
 import static com.easytemplates.backend.security.SecurityConstants.LOGIN_URL;
 import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// UserDetailsService to use for auth.
+	@Qualifier("userDetailsService")
 	private UserDetailsService userDetailsService;
 	
 	/**
