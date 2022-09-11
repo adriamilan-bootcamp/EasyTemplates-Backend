@@ -3,6 +3,7 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,8 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity(name="usuarios")
-public class Usuarios implements Serializable {
+public class Usuarios implements Serializable,UserDetails {
 
     /** Primary key. */
     protected static final String PK = "id";
@@ -76,7 +80,8 @@ public class Usuarios implements Serializable {
         super();
     }
 
-    /**
+
+	/**
      * Access method for id.
      *
      * @return the current value of id
@@ -343,5 +348,40 @@ public class Usuarios implements Serializable {
         ret.put("id", Long.valueOf(getId()));
         return ret;
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.getNombre();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 }
