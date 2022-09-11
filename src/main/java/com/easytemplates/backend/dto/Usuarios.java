@@ -3,20 +3,28 @@
 package com.easytemplates.backend.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name="usuarios")
@@ -58,8 +66,6 @@ public class Usuarios implements Serializable,UserDetails {
     private String nombre;
     @Column(nullable=false, length=255)
     private String email;
-    @Column(length=100)
-    private String role;
     @Column(length=255)
     private String firma;
     @Column(nullable=false, length=100)
@@ -75,6 +81,35 @@ public class Usuarios implements Serializable,UserDetails {
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPlantillas> usuariosPlantillas;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();     
+ 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+ 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+ 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+     
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+    
     /** Default constructor. */
     public Usuarios() {
         super();
@@ -133,24 +168,6 @@ public class Usuarios implements Serializable,UserDetails {
      */
     public void setEmail(String aEmail) {
         email = aEmail;
-    }
-
-    /**
-     * Access method for role.
-     *
-     * @return the current value of role
-     */
-    public String getRole() {
-        return role;
-    }
-
-    /**
-     * Setter method for role.
-     *
-     * @param aRole the new value for role
-     */
-    public void setRole(String aRole) {
-        role = aRole;
     }
 
     /**
@@ -348,12 +365,6 @@ public class Usuarios implements Serializable,UserDetails {
         ret.put("id", Long.valueOf(getId()));
         return ret;
     }
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String getUsername() {

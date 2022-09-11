@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
+import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 
@@ -45,7 +46,7 @@ public class AuthController {
 		
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setEmail(usuario.getEmail());
-		usuarioNuevo.setRole("user");
+		usuarioNuevo.addRole(new Role(3));
 		
 		String encoded = bCryptPasswordEncoder.encode(usuario.getPassword());
 		usuarioNuevo.setPassword(encoded);
