@@ -67,7 +67,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 				// Token Issuer (Us)
 				.setIssuer(ISSUER_INFO)
 				// Subject for the Token (User who requested it)
-				.setSubject(((User) auth.getPrincipal()).getUsername())
+				.setSubject(((Usuarios) auth.getPrincipal()).getUsername())
 				// Expiration date for the token
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				// What to sign the token with
@@ -79,7 +79,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + JWTToken);
 
 		// ...and response
-		response.getWriter().write("Logged in succesfully!\nWelcome " + ((User) auth.getPrincipal()).getUsername() + ", your token is: " + JWTToken);
+		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getUsername() + ", your token is: " + JWTToken);
 		
 		// Print it on Spring
 		System.out.println(response.getHeader(HEADER_AUTHORIZATION_KEY));
