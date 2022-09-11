@@ -71,6 +71,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 				.setIssuedAt(new Date())
 				// Token Issuer (Us)
 				.setIssuer(ISSUER_INFO)
+				.claim("roles", ((Usuarios) auth.getPrincipal()).getRoles().toString())
 				// Subject for the Token (User who requested it)
 				.setSubject(((Usuarios) auth.getPrincipal()).getNombre())
 				// Expiration date for the token
@@ -84,7 +85,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + JWTToken);
 
 		// ...and response
-		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getNombre() + ", your token is: " + JWTToken);
+		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getNombre() + ", your token is: " + JWTToken + "\nCurrent roles: " + ((Usuarios) auth.getPrincipal()).getRoles().toString());
 		
 		// Print it on Spring
 		System.out.println(response.getHeader(HEADER_AUTHORIZATION_KEY));
