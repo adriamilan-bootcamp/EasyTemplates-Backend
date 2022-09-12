@@ -62,24 +62,28 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 		}
 	}
 
+	public String generateAccessToken(Usuarios user) {
+		return Jwts.builder()
+			// Token Issuing Date
+			.setIssuedAt(new Date())
+			// Token Issuer (Us)
+			.setIssuer(ISSUER_INFO)
+			.claim("roles", user.getAuthorities())
+			// Subject for the Token (User who requested it)
+			.setSubject(user.getUsername())
+			// Expiration date for the token
+			.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+			// What to sign the token with
+			.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY)
+			// Build and sign the token
+			.compact();		
+	}
+	
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 
-		String JWTToken = Jwts.builder()
-				// Token Issuing Date
-				.setIssuedAt(new Date())
-				// Token Issuer (Us)
-				.setIssuer(ISSUER_INFO)
-				.claim("roles", ((Usuarios) auth.getPrincipal()).getRoles().toString())
-				// Subject for the Token (User who requested it)
-				.setSubject(((Usuarios) auth.getPrincipal()).getNombre())
-				// Expiration date for the token
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-				// What to sign the token with
-				.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY)
-				// Build and sign the token
-				.compact();
+		String JWTToken = generateAccessToken((Usuarios) auth.getPrincipal());
 		
 		// Add the token to the header...
 		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + JWTToken);
