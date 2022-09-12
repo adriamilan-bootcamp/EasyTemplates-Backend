@@ -9,7 +9,10 @@ import com.easytemplates.backend.dto.Usuarios;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,12 +23,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -77,6 +86,17 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 			.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY)
 			// Build and sign the token
 			.compact();		
+	}
+	
+	private String getToken(HttpServletRequest request) {
+		String header = request.getHeader(HEADER_AUTHORIZATION_KEY);
+		
+		if (header != null && header.startsWith("Bearer"))
+		{
+			return header.replace(TOKEN_BEARER_PREFIX, "");
+		}
+		
+		return null;
 	}
 	
 	@Override
