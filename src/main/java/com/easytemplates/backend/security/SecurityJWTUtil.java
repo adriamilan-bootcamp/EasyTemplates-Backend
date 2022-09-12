@@ -59,10 +59,10 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 			Usuarios userCreds = new ObjectMapper().readValue(request.getInputStream(), Usuarios.class);
 			
 			// Try to authenticate
-			
+
 			try {
 				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-						userCreds.getEmail(), userCreds.getPassword(), new ArrayList<>()));
+						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
 			} catch (AuthenticationException e) {
 				throw new RuntimeException(e);
 			}
@@ -72,12 +72,16 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 	}
 
 	public String generateAccessToken(Usuarios user) {
+		final String authorities = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+		
 		return Jwts.builder()
 			// Token Issuing Date
 			.setIssuedAt(new Date())
 			// Token Issuer (Us)
 			.setIssuer(ISSUER_INFO)
-			.claim("roles", user.getAuthorities())
+			.claim("roles", authorities)
 			// Subject for the Token (User who requested it)
 			.setSubject(user.getUsername())
 			// Expiration date for the token
