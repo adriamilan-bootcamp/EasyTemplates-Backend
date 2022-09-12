@@ -25,12 +25,11 @@ public class RoleRepositoryTests {
     @Test
     public void testCreateRoles() {
         Role admin = new Role("ROLE_ADMIN");
-        Role editor = new Role("ROLE_EDITOR");
-        Role customer = new Role("ROLE_CUSTOMER");
+        Role user = new Role("ROLE_USER");
          
-        repo.saveAll(List.of(admin, editor, customer));
+        repo.saveAll(List.of(admin, user));
          
         long count = repo.count();
-        assertEquals(3, count);
+        assertEquals(2, count);
     }
 }
