@@ -3,11 +3,13 @@ package com.easytemplates.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
@@ -33,6 +35,14 @@ public class AuthController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value="/admin", method = RequestMethod.GET)
+	public ResponseEntity<String> test()
+	{
+		return ResponseEntity.ok()
+			      .body("Admin role works perfectly!");
+	}
+	
 	@PostMapping(REGISTER_URL)
 	public ResponseEntity<String> registrarUsuario(@RequestBody Usuarios usuario) {
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -46,7 +56,7 @@ public class AuthController {
 		
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setEmail(usuario.getEmail());
-		usuarioNuevo.addRole(new Role(3));
+		usuarioNuevo.addRole(new Role(2));
 		
 		String encoded = bCryptPasswordEncoder.encode(usuario.getPassword());
 		usuarioNuevo.setPassword(encoded);

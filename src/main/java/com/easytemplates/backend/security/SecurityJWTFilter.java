@@ -6,28 +6,44 @@ import static com.easytemplates.backend.security.SecurityConstants.TOKEN_BEARER_
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 
 public class SecurityJWTFilter extends BasicAuthenticationFilter {
 
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	/**
 	 * 	Class constructor
 	 * 	@param authManager
 	 */
-	public SecurityJWTFilter(AuthenticationManager authManager) {
+	public SecurityJWTFilter(AuthenticationManager authManager, UserDetailsService userDetailsService) {
 		super(authManager);
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
@@ -44,45 +60,43 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 			return;
 		}
 		
-		// Start the authentication
-		UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+		String username = Jwts.parser()
+				// Cipher key to decrypt the token
+				.setSigningKey(SUPER_SECRET_KEY)
+				// Parse the Bearer Token
+				.parseClaimsJws(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""))
+				// Get the body of the token...
+				.getBody()
+				// ...and the subject, which (If all's correct) should be the username
+				.getSubject();
+
+		username += "@easytemplates.com";
+
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		
-		// Handle the auth.
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), SecurityContextHolder.getContext().getAuthentication(), userDetails);
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        logger.info("authenticated user " + username + ", setting security context");
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		// Filter it based on the type
 		chain.doFilter(request, response);
 	}
+	
+	UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication authentication, final UserDetails userDetails) {
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+        final JwtParser jwtParser = Jwts.parser().setSigningKey(SUPER_SECRET_KEY);
 
-		// Get the HTTP Request's Header
-		String JWTToken = request.getHeader(HEADER_AUTHORIZATION_KEY);
-		
-		// Proceed if and only if the token exists on the header
-		if (JWTToken != null) {
-			/**
-			 * 	In order to retrieve the username (And match it w/the password to return a token) we first
-			 * 	need to decipher the actual token using our secret HMAC SHA512 key
-			 */
-			String username = Jwts.parser()
-						// Cipher key to decrypt the token
-						.setSigningKey(SUPER_SECRET_KEY)
-						// Parse the Bearer Token
-						.parseClaimsJws(JWTToken.replace(TOKEN_BEARER_PREFIX, ""))
-						// Get the body of the token...
-						.getBody()
-						// ...and the subject, which (If all's correct) should be the username
-						.getSubject();
+        final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
 
-			// If the username exists, we can proceed to retrieve a new token for the user logon
-			if (username != null) {
-				return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
-			}
-			
-			return null;
-		}
+        final Claims claims = claimsJws.getBody();
 
-		return null;
-	}
+        final Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get("roles").toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+    }
 }
