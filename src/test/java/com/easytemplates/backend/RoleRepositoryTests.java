@@ -20,6 +20,7 @@ import com.easytemplates.backend.dto.Usuarios;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class RoleRepositoryTests {
+	/*
     @Autowired private IRoleRepository repo;
      
     @Test
@@ -32,4 +33,5 @@ public class RoleRepositoryTests {
         long count = repo.count();
         assertEquals(2, count);
     }
+    */
 }
