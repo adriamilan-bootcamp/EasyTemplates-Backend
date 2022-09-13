@@ -13,7 +13,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +29,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name="usuarios")
-public class Usuarios implements Serializable,UserDetails {
+public class Usuarios implements Serializable, UserDetails {
 
+	public enum Rol {
+	    ADMIN,
+	    USER;
+	}
+	
     /** Primary key. */
     protected static final String PK = "id";
 
@@ -63,13 +69,16 @@ public class Usuarios implements Serializable,UserDetails {
     @Column(unique=true, nullable=false, precision=10)
     private Long id;
     @Column(nullable=false, length=255)
-    private String nombre;
+    private String username;
     @Column(nullable=false, length=255)
     private String email;
     @Column(length=255)
     private String firma;
     @Column(nullable=false, length=100)
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Rol rol = Rol.USER;
+    
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
@@ -140,7 +149,7 @@ public class Usuarios implements Serializable,UserDetails {
      * @return the current value of nombre
      */
     public String getNombre() {
-        return nombre;
+        return username;
     }
 
     /**
@@ -149,7 +158,7 @@ public class Usuarios implements Serializable,UserDetails {
      * @param aNombre the new value for nombre
      */
     public void setNombre(String aNombre) {
-        nombre = aNombre;
+    	username = aNombre;
     }
 
     /**
@@ -335,10 +344,10 @@ public class Usuarios implements Serializable,UserDetails {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
-        i = 32;
-        result = 37*result + i;
+        Long i;
+        int result;
+        i = getId();
+        result = (37 * 1337);
         return result;
     }
 
@@ -372,26 +381,18 @@ public class Usuarios implements Serializable,UserDetails {
 	}
 
 	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
