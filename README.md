@@ -25,6 +25,53 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
 * Heroku deploy w/MySQL database interconnection for data persistence
 * Built with 💙 by and for Developers
 
+## 📖 API Endpoints
+
+```html
+/register
+```
+
+This endpoint expects a User object on the Request's Body.
+
+Example:
+
+```json
+{
+    "nombre": "testuser",
+    "email": "testuser@easytemplates.com",
+    "password": "testuserpwd"
+}
+```
+
+Constraints:
+
+* emails are unique; names are not
+* If an account already exists, it won't proceed the registration
+* If the account is created successfully, you'll see 'User registered succesfully!'
+
+---
+
+```html
+/login
+```
+
+This endpoint expects a User object on the Request's Body.
+
+Example:
+
+```json
+{
+    "email": "testuser@easytemplates.com",
+    "password": "testuserpwd"
+}
+```
+
+Constraints:
+
+* This endpoint returns a Authentication Bearer Token, it must be set in future requests to authenticate yourself
+* Users have privilege levels (ADMIN, USER), even if authenticated; some endpoints are not available for Users with USER Privilege
+
+
 ## 🔧 Compiling
 
 ### Required software stack
