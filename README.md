@@ -7,6 +7,7 @@
 </p>
 
 ![Heroku CI/CD](https://pyheroku-badge.herokuapp.com/?app=easy-templates-backend&path=/&style=flat)
+[![Snyk Analysis](https://github.com/adriamilan-bootcamp/EasyTemplates-Backend/actions/workflows/snyk-analysis.yml/badge.svg)](https://github.com/adriamilan-bootcamp/EasyTemplates-Backend/actions/workflows/snyk-analysis.yml)
 
 ## 📃 General Information
 
