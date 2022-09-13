@@ -29,12 +29,6 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
 
 To get information about the API, head over to /swagger-ui/ !
 
-Constraints:
-
-* This endpoint returns a Authentication Bearer Token, it must be set in future requests to authenticate yourself
-* Users have privilege levels (ADMIN, USER), even if authenticated; some endpoints are not available for Users with USER Privilege
-
-
 ## 🔧 Compiling
 
 ### Required software stack
