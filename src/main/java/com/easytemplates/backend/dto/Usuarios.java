@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -381,7 +382,6 @@ public class Usuarios implements Serializable, UserDetails {
 	}
 
 	@Override
-	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
@@ -393,6 +393,11 @@ public class Usuarios implements Serializable, UserDetails {
 
 	@Override
 	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
 		return true;
 	}
 
