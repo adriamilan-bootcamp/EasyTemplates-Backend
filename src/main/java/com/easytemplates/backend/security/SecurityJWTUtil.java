@@ -83,7 +83,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 			.setIssuer(ISSUER_INFO)
 			.claim("roles", authorities)
 			// Subject for the Token (User who requested it)
-			.setSubject(user.getUsername())
+			.setSubject(user.getEmail())
 			// Expiration date for the token
 			.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 			// What to sign the token with
