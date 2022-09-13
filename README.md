@@ -27,44 +27,7 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
 
 ## 📖 API Endpoints
 
-```html
-/register
-```
-
-This endpoint expects a User object on the Request's Body.
-
-Example:
-
-```json
-{
-    "nombre": "testuser",
-    "email": "testuser@easytemplates.com",
-    "password": "testuserpwd"
-}
-```
-
-Constraints:
-
-* emails are unique; names are not
-* If an account already exists, it won't proceed the registration
-* If the account is created successfully, you'll see 'User registered succesfully!'
-
----
-
-```html
-/login
-```
-
-This endpoint expects a User object on the Request's Body.
-
-Example:
-
-```json
-{
-    "email": "testuser@easytemplates.com",
-    "password": "testuserpwd"
-}
-```
+To get information about the API, head over to /swagger-ui/ !
 
 Constraints:
 
