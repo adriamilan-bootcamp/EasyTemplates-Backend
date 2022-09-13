@@ -15,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,21 +29,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.easytemplates.backend.dto.Usuarios;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 
-public class SecurityJWTFilter extends BasicAuthenticationFilter {
+public class SecurityAuthorization extends BasicAuthenticationFilter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthorization.class);
 	
 	/**
 	 * 	Class constructor
 	 * 	@param authManager
 	 */
-	public SecurityJWTFilter(AuthenticationManager authManager, UserDetailsService userDetailsService) {
+	public SecurityAuthorization(AuthenticationManager authManager, UserDetailsService userDetailsService) {
 		super(authManager);
 		this.userDetailsService = userDetailsService;
 	}
@@ -49,6 +55,9 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		
+
+		LOG.info("[SECURITY] Authorization: Checking client's access privileges...");
 		
 		// Get the HTTP Request's Header
 		String HTTPReqtHdr = request.getHeader(HEADER_AUTHORIZATION_KEY);
@@ -59,6 +68,8 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 			chain.doFilter(request, response);
 			return;
 		}
+		
+		LOG.info("[SECURITY] Authorization: Parsing JSON Web Token...");
 		
 		String username = Jwts.parser()
 				// Cipher key to decrypt the token
@@ -75,8 +86,13 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 		
 		
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), SecurityContextHolder.getContext().getAuthentication(), userDetails);
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        logger.info("authenticated user " + username + ", setting security context");
+        
+		LOG.info("[SECURITY] Authorization: Matching client's roles against target...");
+		
+		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        
+        LOG.info("[SECURITY] Authorization: \'" + ((Usuarios) userDetails).getNombre() + "\' is authorized! Continuing...");
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		// Filter it based on the type
@@ -85,6 +101,8 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 	
 	UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication authentication, final UserDetails userDetails) {
 
+		LOG.info("[SECURITY] Authorization: Obtaining the roles...");
+		
         final JwtParser jwtParser = Jwts.parser().setSigningKey(SUPER_SECRET_KEY);
 
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);

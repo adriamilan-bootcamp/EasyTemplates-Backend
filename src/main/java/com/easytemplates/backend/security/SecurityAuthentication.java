@@ -19,6 +19,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,8 +41,10 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
+public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthentication.class);
+    
 	// The AuthenticationManager Object
 	private AuthenticationManager authenticationManager;
 
@@ -47,19 +52,21 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 	 * 	Class constructor
 	 * 	@param authenticationManager
 	 */
-	public SecurityJWTUtil(AuthenticationManager authenticationManager) {
+	public SecurityAuthentication(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
+		
+		LOG.info("[SECURITY] Authentication: Attempting authentication...");
+		
 		try {
 			// Find the User/Password combination; assume JSON Body
 			Usuarios userCreds = new ObjectMapper().readValue(request.getInputStream(), Usuarios.class);
 			
 			// Try to authenticate
-
 			try {
 				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
@@ -72,9 +79,12 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 	}
 
 	public String generateAccessToken(Usuarios user) {
+		
+		LOG.info("[SECURITY] Authentication: Building JSON Web Token...");
+		
 		final String authorities = user.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+			.map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
 		
 		return Jwts.builder()
 			// Token Issuing Date
@@ -93,7 +103,10 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 	}
 	
 	private String getToken(HttpServletRequest request) {
+		
 		String header = request.getHeader(HEADER_AUTHORIZATION_KEY);
+
+		LOG.info("[SECURITY] Authentication: Obtaining the JSON Web Token from the Request...");
 		
 		if (header != null && header.startsWith("Bearer"))
 		{
@@ -116,7 +129,7 @@ public class SecurityJWTUtil extends UsernamePasswordAuthenticationFilter {
 		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getNombre() + ", your token is: " + JWTToken + "\nCurrent roles: " + ((Usuarios) auth.getPrincipal()).getRoles().toString());
 		
 		// Print it on Spring
-		System.out.println(response.getHeader(HEADER_AUTHORIZATION_KEY));
+		LOG.info("[SECURITY] Authentication: " + "Client has been correctly authenticated as \'" + ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
 	
 	}
 	

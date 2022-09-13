@@ -76,8 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	
         	.and()
 	            // Request Filters
-	            .addFilter(new SecurityJWTUtil(authenticationManager()))
-	            .addFilter(new SecurityJWTFilter(authenticationManager(), userDetailsService));
+	            .addFilter(new SecurityAuthentication(authenticationManager()))
+	            .addFilter(new SecurityAuthorization(authenticationManager(), userDetailsService));
     }
 	
 	@Override
