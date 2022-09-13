@@ -70,7 +70,6 @@ public class SecurityJWTFilter extends BasicAuthenticationFilter {
 				// ...and the subject, which (If all's correct) should be the username
 				.getSubject();
 
-		username += "@easytemplates.com";
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		
