@@ -13,7 +13,7 @@ import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Usuarios;
 import static java.util.Collections.emptyList;
 
-@Service
+@Service("userDetailsService")
 public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 	@Autowired
 	IUsuarioDAO usuarioDAO;
@@ -45,11 +45,14 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
 		Usuarios user = usuarioDAO.findByEmail(username);
+		
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		return new User(user.getNombre(), user.getPassword(), emptyList());
+		
+		return (Usuarios) user;
 	}
 
 	@Override

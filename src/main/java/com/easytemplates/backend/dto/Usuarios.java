@@ -5,6 +5,7 @@ package com.easytemplates.backend.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -86,12 +90,42 @@ public class Usuarios implements Serializable, UserDetails {
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPlantillas> usuariosPlantillas;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();     
+ 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+ 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+ 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+     
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+    
     /** Default constructor. */
     public Usuarios() {
         super();
     }
 
-    /**
+
+	/**
      * Access method for id.
      *
      * @return the current value of id
@@ -347,25 +381,6 @@ public class Usuarios implements Serializable, UserDetails {
 	}
 
 	@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(rol.toString()));
-        return roles;
-    }
-	
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	public void setRol(Rol role) {
-		this.rol = role;
-	}
-	
-	public String getRol() {
-		return this.rol.toString();
-	}
-	
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
