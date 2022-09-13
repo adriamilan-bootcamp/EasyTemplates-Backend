@@ -57,12 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         	// Disable *both* CSRF and CORS
-        	// TODO: Is CORS *really active* then?
-        	.cors().and()
         	.csrf().disable()
         	
-        	
-        
         	.authorizeRequests()
         		.antMatchers(AUTH_WHITELIST).permitAll()
         		.antMatchers(HttpMethod.GET, "/").permitAll()
