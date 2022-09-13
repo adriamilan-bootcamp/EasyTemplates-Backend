@@ -46,6 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
+	private static final String[] AUTH_WHITELIST = {
+	        "/swagger-resources/**",
+	        "/swagger-ui/**",
+	        "/v2/api-docs",
+	        "/webjars/**"
+	};
+	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -53,9 +60,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	// TODO: Is CORS *really active* then?
         	.cors().and()
         	.csrf().disable()
-
+        	
+        	
+        
         	.authorizeRequests()
+        		.antMatchers(AUTH_WHITELIST).permitAll()
         		.antMatchers(HttpMethod.GET, "/").permitAll()
+        		.antMatchers("/v2/api-docs/**").permitAll()
+        		.antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+        		.antMatchers("/swagger-ui.html").permitAll()
         		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         		.antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
         		.anyRequest().authenticated()
