@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,7 +47,7 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 	private UserDetailsService userDetailsService;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthorization.class);
-	
+
 	/**
 	 * 	Class constructor
 	 * 	@param authManager
@@ -86,9 +88,23 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		
-		
-		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), SecurityContextHolder.getContext().getAuthentication(), userDetails);
+		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), userDetails);
         
+		if (authentication == null) {
+			SecurityLogging.log("Authorization: Fatal, authentication == null while authorizating...");
+		    chain.doFilter(request, response);
+		    return;
+		}
+		
+		int status = ((HttpServletResponse) response).getStatus();
+		
+		// Client errors (400–499)
+		if (status >= 400 && status < 500) {
+			SecurityLogging.log("Authorization: Fatal, request error! Status: " + status);
+		    chain.doFilter(request, response);
+		    return;
+		}
+		
 		SecurityLogging.log("Authorization: Matching client's roles against target...");
 		
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -101,7 +117,7 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 		chain.doFilter(request, response);
 	}
 	
-	UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication authentication, final UserDetails userDetails) {
+	UsernamePasswordAuthenticationToken getAuthentication(final String token, final UserDetails userDetails) {
 
 		SecurityLogging.log("Authorization: Obtaining the roles...");
 		
