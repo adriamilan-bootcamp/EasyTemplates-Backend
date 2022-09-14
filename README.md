@@ -8,6 +8,7 @@
 
 ![Heroku CI/CD](https://pyheroku-badge.herokuapp.com/?app=easy-templates-backend&path=/&style=flat)
 [![Snyk Analysis](https://github.com/adriamilan-bootcamp/EasyTemplates-Backend/actions/workflows/snyk-analysis.yml/badge.svg)](https://github.com/adriamilan-bootcamp/EasyTemplates-Backend/actions/workflows/snyk-analysis.yml)
+![Known Vulnerabilities](https://snyk.io/test/github/adriamilan-bootcamp/EasyTemplates-Backend/badge.svg)
 
 ## 📃 General Information
 
