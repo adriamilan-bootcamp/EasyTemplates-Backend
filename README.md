@@ -26,6 +26,10 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
   - Snyk Dependency Analyzer and Up-to-date Deps.
   - SonarQube Code Analysis and Vuln. Fixing
   - Safe REST Interactions w/JPA (Doesn't use DTOs Directly)
+  - REST API contains privilege-division
+    - An user can't edit another user's details
+    - User info returned for a determinate id isn't the same for user or admin
+    - Many other, and not only for users
   - 0 secrets included in repository history; osint-leak-free and secure
 * Amazon's S3 SDK for File Storage
 * Heroku deploy w/MySQL database interconnection for data persistence
