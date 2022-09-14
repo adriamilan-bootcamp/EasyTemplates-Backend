@@ -37,7 +37,7 @@ public class ImagenesController {
 	}
 	
 	@PostMapping("/imagen")
-	public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {
+	public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) throws Exception {
 		imagenService.uploadFile(file);
 		String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
 		return new ResponseEntity<>(response, HttpStatus.OK);
