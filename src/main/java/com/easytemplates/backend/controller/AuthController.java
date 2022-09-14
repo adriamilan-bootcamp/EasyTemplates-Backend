@@ -61,7 +61,6 @@ public class AuthController {
 		String encoded = bCryptPasswordEncoder.encode(requestUserDetails.getPassword());
 		usuarioNuevo.setPassword(encoded);
 		
-		usuarioNuevo.setLockFlag(0);
 		usuarioServiceImpl.saveUsuario(usuarioNuevo);
 		
 		return ResponseEntity.ok()
