@@ -32,6 +32,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.util.UrlPathHelper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,6 +47,8 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 	// The AuthenticationManager Object
 	private AuthenticationManager authenticationManager;
 
+	private final static UrlPathHelper urlPathHelper = new UrlPathHelper();
+	
 	/**
 	 * 	Class constructor
 	 * 	@param authenticationManager
@@ -69,7 +72,6 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
 			} catch (AuthenticationException e) {
-				response.getWriter().write("Wrong email/password combination!");
 				throw new RuntimeException(e);
 			}
 		} catch (IOException e) {
@@ -113,6 +115,16 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 		}
 		
 		return null;
+	}
+	
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+	        AuthenticationException failed) throws IOException, ServletException {
+		SecurityLogging.log("Authentication: Failed auth. attempting to access "
+	            + urlPathHelper.getPathWithinApplication((HttpServletRequest) request));
+
+	    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+	            "Wrong email/password combination!");
 	}
 	
 	@Override
