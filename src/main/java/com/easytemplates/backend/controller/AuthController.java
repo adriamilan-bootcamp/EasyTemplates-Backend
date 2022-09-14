@@ -1,5 +1,6 @@
 package com.easytemplates.backend.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -44,23 +45,21 @@ public class AuthController {
 	}
 	
 	@PostMapping(REGISTER_URL)
-	public ResponseEntity<String> registrarUsuario(@RequestBody Usuarios usuario) {
-		HttpHeaders responseHeaders = new HttpHeaders();
+	public ResponseEntity<String> registrarUsuario(@RequestBody UserDetailsRequestModel requestUserDetails) {
 		Usuarios usuarioNuevo = new Usuarios();
 		
-		if (usuarioDAO.findByEmail(usuario.getEmail()) != null) {
+		if (usuarioDAO.findByEmail(requestUserDetails.getEmail()) != null) {
 			  System.out.println("Email is already registered!");
 			  return ResponseEntity.badRequest()
 				      .body("Email is already registered!");
 		}
 		
-		usuarioNuevo.setNombre(usuario.getNombre());
-		usuarioNuevo.setEmail(usuario.getEmail());
+		BeanUtils.copyProperties(requestUserDetails, usuarioNuevo);
+		
 		usuarioNuevo.addRole(new Role(2));
 
-		String encoded = bCryptPasswordEncoder.encode(usuario.getPassword());
+		String encoded = bCryptPasswordEncoder.encode(requestUserDetails.getPassword());
 		usuarioNuevo.setPassword(encoded);
-		
 		
 		usuarioNuevo.setLockFlag(0);
 		usuarioServiceImpl.saveUsuario(usuarioNuevo);
