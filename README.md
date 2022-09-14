@@ -23,6 +23,9 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
   - Bearer Auth-Protected Endpoints
   - Roles system
   - CORS Filtering
+  - Snyk Dependency Analyzer and Up-to-date Deps.
+  - SonarQube Code Analysis and Vuln. Fixing
+  - Safe REST Interactions w/JPA (Doesn't use DTOs Directly)
 * Amazon's S3 SDK for File Storage
 * Heroku deploy w/MySQL database interconnection for data persistence
 * Built with 💙 by and for Developers
