@@ -47,10 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private static final String[] AUTH_WHITELIST = {
-	        "/swagger-resources/**",
+	        "/api/swagger-ui/**",
+	        "/api/doc.html",
 	        "/swagger-ui/**",
-	        "/v2/api-docs",
-	        "/webjars/**"
+	        "/v3/api-docs/**"
 	};
 	
 	@Override
@@ -62,9 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.authorizeRequests()
         		.antMatchers(AUTH_WHITELIST).permitAll()
         		.antMatchers(HttpMethod.GET, "/").permitAll()
-        		.antMatchers("/v2/api-docs/**").permitAll()
-        		.antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
-        		.antMatchers("/swagger-ui.html").permitAll()
         		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         		.antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
         		.anyRequest().authenticated()
