@@ -67,13 +67,8 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 			// Find the User/Password combination; assume JSON Body
 			Usuarios userCreds = new ObjectMapper().readValue(request.getInputStream(), Usuarios.class);
 			
-			// Try to authenticate
-			try {
 				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
-			} catch (AuthenticationException e) {
-				throw new RuntimeException(e);
-			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
