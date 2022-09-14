@@ -69,6 +69,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
 			} catch (AuthenticationException e) {
+				response.getWriter().write("Wrong email/password combination!");
 				throw new RuntimeException(e);
 			}
 		} catch (IOException e) {
