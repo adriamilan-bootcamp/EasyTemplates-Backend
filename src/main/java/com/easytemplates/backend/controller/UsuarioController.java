@@ -58,7 +58,7 @@ public class UsuarioController {
 			return new ResponseEntity<Object>(userInfo, HttpStatus.UNAUTHORIZED);
 		}
 	
-		return new ResponseEntity<Object>("The specified user and it\'s doesn\'t exist in the database, try registering it", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<Object>("The specified user doesn\'t exist in the database, try registering it", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PutMapping("/usuarios/{id}")
@@ -89,7 +89,7 @@ public class UsuarioController {
 			}
 		}
 	
-		return new ResponseEntity<Object>("The specified user and it\'s doesn\'t exist in the database, try registering it", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<Object>("The specified user doesn\'t exist in the database, try registering it", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@DeleteMapping("/usuarios/{id}")
