@@ -115,10 +115,11 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 	        AuthenticationException failed) throws IOException, ServletException {
-		SecurityLogging.log("Authentication: Failed auth. attempting to access "
+		SecurityLogging.log("Authentication-Request: Failed authentication trying to access "
 	            + urlPathHelper.getPathWithinApplication((HttpServletRequest) request));
 
-	    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    response.getWriter().write(
 	            "Wrong email/password combination!");
 	}
 	
