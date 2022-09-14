@@ -30,7 +30,14 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 
 	@Override
 	public Usuarios usuarioById(Long id) {
-		return usuarioDAO.findById(id).get();
+		try {
+			Usuarios user = usuarioDAO.findById(id).get();
+			
+			return user;
+			
+		} catch (RuntimeException re) {
+            return null;
+        }		
 	}
 
 	@Override
