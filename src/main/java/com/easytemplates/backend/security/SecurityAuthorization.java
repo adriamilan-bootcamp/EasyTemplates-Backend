@@ -14,6 +14,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.easytemplates.backend.dto.Usuarios;
 
@@ -52,12 +55,45 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 		this.userDetailsService = userDetailsService;
 	}
 
+	private static final String[] HEADER_DICTIONARY = {
+	        "X-Forwarded-For",
+	        "Proxy-Client-IP",
+	        "WL-Proxy-Client-IP",
+	        "HTTP_X_FORWARDED_FOR",
+	        "HTTP_X_FORWARDED",
+	        "HTTP_X_CLUSTER_CLIENT_IP",
+	        "HTTP_CLIENT_IP",
+	        "HTTP_FORWARDED_FOR",
+	        "HTTP_FORWARDED",
+	        "HTTP_VIA",
+	        "REMOTE_ADDR"
+	    };
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
+		if (RequestContextHolder.getRequestAttributes() == null) {
+			LOG.info("[SECURITY] Request: Invalid (Client is 0.0.0.0 ?)");
+        }
 
-		LOG.info("[SECURITY] Authorization: Checking client's access privileges...");
+        for (String headerList: HEADER_DICTIONARY) {
+            String ipDict = request.getHeader(headerList);
+            if (ipDict != null && ipDict.length() != 0 && !"unknown".equalsIgnoreCase(ipDict)) {
+                String match = ipDict.split(",")[0];
+                LOG.info("[SECURITY] Request: Got request from " + match);
+            }
+        }
+
+        LOG.info("[SECURITY] Request: New request, processing...");
+        LOG.info("[SECURITY] Request: From  " + request.getRemoteAddr());
+        
+        if (request.getQueryString() != null)
+        	LOG.info("[SECURITY] Request: Query " + request.getQueryString());
+        
+        LOG.info("[SECURITY] Request: To    " + request.getRequestURL().toString());
+        
+		LOG.info("[SECURITY] Authorization: Checking client's request access privileges...");
 		
 		// Get the HTTP Request's Header
 		String HTTPReqtHdr = request.getHeader(HEADER_AUTHORIZATION_KEY);
