@@ -55,22 +55,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        	// Disable *both* CSRF and CORS
+        http
+        	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        	// TODO: Configure CSRF
+        	// Disable CSRF
         	.csrf().disable()
-        	
+        	// Authorize the following requests
         	.authorizeRequests()
+        		// SwaggerUI / OpenAPI related endpoints
         		.antMatchers(AUTH_WHITELIST).permitAll()
+        		// Default endpoint
         		.antMatchers(HttpMethod.GET, "/").permitAll()
+        		// Login and Register URL
         		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
         		.antMatchers(HttpMethod.POST, REGISTER_URL).permitAll()
+        		// All the remaining endpoints, need to be authenticated and/or authorized
         		.anyRequest().authenticated()
-        		// Permit POST Method in /login URI (No auth. needed)
-        	
         	.and()
-	            // Request Filters
+	            // Request Filters, both for Authentication and Authorization
 	            .addFilter(new SecurityAuthentication(authenticationManager()))
-	            .addFilter(new SecurityAuthorization(authenticationManager(), userDetailsService));
+	            .addFilter(new SecurityAuthorization(authenticationManager(), userDetailsService))
+	        // Header configurations
+	        .headers()
+	        	// Protect against XSS w/the inbuilt Spring Protection
+	            .xssProtection()
+	            .and()
+	            // Enable CSP for a more bulletproof protection, only allow from same host
+	            .contentSecurityPolicy("script-src 'self'");
     }
 	
 	@Override
