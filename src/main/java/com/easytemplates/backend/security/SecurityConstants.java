@@ -27,7 +27,7 @@ public class SecurityConstants {
 	 */
 	
 	// Who's the token issuer (Us)
-	public static final String ISSUER_INFO = ${ISSUER_INFO};
+	public static final String ISSUER_INFO = "";
 	
 	/**
 	 * 	The Super Secret Key™ that is capable of (de)ciphering the JSON Web Token
@@ -40,7 +40,7 @@ public class SecurityConstants {
 	 *	We'll default to HMAC SHA512 for our cryptographical needs, which is more than
 	 *	enough considering the tyoe of project we're dealing with.
 	 */
-	public static final String SUPER_SECRET_KEY = ${SUPER_SECRET_KEY};
+	public static final String SUPER_SECRET_KEY = "";
 	
 	// The token expiration time, set it to 1 week by default unless changed
 	public static final long TOKEN_EXPIRATION_TIME = 604_800_000;
