@@ -31,7 +31,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,8 +43,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthentication.class);
-    
 	// The AuthenticationManager Object
 	private AuthenticationManager authenticationManager;
 
@@ -60,7 +58,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		
-		LOG.info("[SECURITY] Authentication: Attempting authentication...");
+		SecurityLogging.getRequestInfo("Authentication");
 		
 		try {
 			// Find the User/Password combination; assume JSON Body
@@ -80,7 +78,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 
 	public String generateAccessToken(Usuarios user) {
 		
-		LOG.info("[SECURITY] Authentication: Building JSON Web Token...");
+		SecurityLogging.log("Authentication: Building JSON Web Token...");
 		
 		final String authorities = user.getAuthorities().stream()
 			.map(GrantedAuthority::getAuthority)
@@ -106,7 +104,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 		
 		String header = request.getHeader(HEADER_AUTHORIZATION_KEY);
 
-		LOG.info("[SECURITY] Authentication: Obtaining the JSON Web Token from the Request...");
+		SecurityLogging.log("Authentication: Obtaining the JSON Web Token from the Request...");
 		
 		if (header != null && header.startsWith("Bearer"))
 		{
@@ -129,7 +127,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getNombre() + ", your token is: " + JWTToken + "\nCurrent roles: " + ((Usuarios) auth.getPrincipal()).getRoles().toString());
 		
 		// Print it on Spring
-		LOG.info("[SECURITY] Authentication: " + "Client has been correctly authenticated as \'" + ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
+		SecurityLogging.log("Authentication: " + "Client has been correctly authenticated as \'" + ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
 	
 	}
 	

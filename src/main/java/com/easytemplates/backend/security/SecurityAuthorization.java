@@ -55,45 +55,11 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 		this.userDetailsService = userDetailsService;
 	}
 
-	private static final String[] HEADER_DICTIONARY = {
-	        "X-Forwarded-For",
-	        "Proxy-Client-IP",
-	        "WL-Proxy-Client-IP",
-	        "HTTP_X_FORWARDED_FOR",
-	        "HTTP_X_FORWARDED",
-	        "HTTP_X_CLUSTER_CLIENT_IP",
-	        "HTTP_CLIENT_IP",
-	        "HTTP_FORWARDED_FOR",
-	        "HTTP_FORWARDED",
-	        "HTTP_VIA",
-	        "REMOTE_ADDR"
-	    };
-	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		if (RequestContextHolder.getRequestAttributes() == null) {
-			LOG.info("[SECURITY] Request: Invalid (Client is 0.0.0.0 ?)");
-        }
-
-        for (String headerList: HEADER_DICTIONARY) {
-            String ipDict = request.getHeader(headerList);
-            if (ipDict != null && ipDict.length() != 0 && !"unknown".equalsIgnoreCase(ipDict)) {
-                String match = ipDict.split(",")[0];
-                LOG.info("[SECURITY] Request: Got request from " + match);
-            }
-        }
-
-        LOG.info("[SECURITY] Request: New request, processing...");
-        LOG.info("[SECURITY] Request: From  " + request.getRemoteAddr());
-        
-        if (request.getQueryString() != null)
-        	LOG.info("[SECURITY] Request: Query " + request.getQueryString());
-        
-        LOG.info("[SECURITY] Request: To    " + request.getRequestURL().toString());
-        
-		LOG.info("[SECURITY] Authorization: Checking client's request access privileges...");
+		SecurityLogging.getRequestInfo("Authorization");
 		
 		// Get the HTTP Request's Header
 		String HTTPReqtHdr = request.getHeader(HEADER_AUTHORIZATION_KEY);
@@ -105,7 +71,7 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 			return;
 		}
 		
-		LOG.info("[SECURITY] Authorization: Parsing JSON Web Token...");
+		SecurityLogging.log("Authorization: Parsing JSON Web Token...");
 		
 		String username = Jwts.parser()
 				// Cipher key to decrypt the token
@@ -123,11 +89,11 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 		
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), SecurityContextHolder.getContext().getAuthentication(), userDetails);
         
-		LOG.info("[SECURITY] Authorization: Matching client's roles against target...");
+		SecurityLogging.log("Authorization: Matching client's roles against target...");
 		
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         
-        LOG.info("[SECURITY] Authorization: \'" + ((Usuarios) userDetails).getNombre() + "\' is authorized! Continuing...");
+        SecurityLogging.log("Authorization: \'" + ((Usuarios) userDetails).getNombre() + "\' is authorized! Continuing...");
         
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		
@@ -137,7 +103,7 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 	
 	UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication authentication, final UserDetails userDetails) {
 
-		LOG.info("[SECURITY] Authorization: Obtaining the roles...");
+		SecurityLogging.log("Authorization: Obtaining the roles...");
 		
         final JwtParser jwtParser = Jwts.parser().setSigningKey(SUPER_SECRET_KEY);
 

@@ -16,15 +16,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityCORSFilter implements Filter {
 
-	// Class logger
-	private final Logger secCORSLog = LoggerFactory.getLogger(SecurityCORSFilter.class);
-
 	/**
 	 *  Class constructor
 	 */
 	public SecurityCORSFilter() {
 		// Simple log (Information regarding the state of the class)
-		secCORSLog.info("[SECURITY] CORS Filter: Initializing...");
+		SecurityLogging.log("CORS: Initializing CORS Filtering Subservice...");
 	}
 
 	@Override
