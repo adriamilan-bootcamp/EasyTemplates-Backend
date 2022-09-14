@@ -291,17 +291,6 @@ public class Usuarios implements Serializable, UserDetails {
         return sb.toString();
     }
 
-    /**
-     * Return all elements of the primary key.
-     *
-     * @return Map of key names to values
-     */
-    public Map<String, Object> getPrimaryKey() {
-        Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Long.valueOf(getId()));
-        return ret;
-    }
-
 	@Override
 	public String getUsername() {
 		return this.getNombre();
