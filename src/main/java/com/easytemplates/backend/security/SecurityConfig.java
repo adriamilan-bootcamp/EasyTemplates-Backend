@@ -129,4 +129,12 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+	
+	/**
+	 *  Add Roles for the Security Class
+	 */
+	public enum SECURITY_ROLE {
+        ROLE_USER,
+        ROLE_ADMIN
+    }
 }
