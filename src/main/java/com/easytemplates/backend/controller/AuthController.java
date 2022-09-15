@@ -4,11 +4,9 @@ import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,17 +63,5 @@ public class AuthController {
 		
 		return ResponseEntity.ok()
 			      .body("User registered succesfully!");
-	}
-	
-
-	@GetMapping("/response-entity-builder-with-http-headers")
-	public ResponseEntity<String> usingResponseEntityBuilderAndHttpHeaders() {
-	    HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.set("Baeldung-Example-Header", 
-	      "Value-ResponseEntityBuilderWithHttpHeaders");
-
-	    return ResponseEntity.ok()
-	      .headers(responseHeaders)
-	      .body("Response with header using ResponseEntity");
 	}
 }
