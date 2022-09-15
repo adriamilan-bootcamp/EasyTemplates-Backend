@@ -14,8 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,8 +37,6 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthorization.class);
-
 	/**
 	 * 	Class constructor
 	 * 	@param authManager

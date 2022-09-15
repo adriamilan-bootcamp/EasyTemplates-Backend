@@ -85,20 +85,6 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 			.compact();		
 	}
 	
-	private String getToken(HttpServletRequest request) {
-		
-		String header = request.getHeader(HEADER_AUTHORIZATION_KEY);
-
-		SecurityLogging.log("Authentication: Obtaining the JSON Web Token from the Request...");
-		
-		if (header != null && header.startsWith("Bearer"))
-		{
-			return header.replace(TOKEN_BEARER_PREFIX, "");
-		}
-		
-		return null;
-	}
-	
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 	        AuthenticationException failed) throws IOException, ServletException {
