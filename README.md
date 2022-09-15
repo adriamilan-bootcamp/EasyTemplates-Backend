@@ -37,7 +37,7 @@ A feature-rich Spring-based Backend for our EasyTemplates Project
 
 ## 📖 API Endpoints
 
-To get information about the API, head over to /swagger-ui/ !
+To get information about the API, head over to [/api/docs/docs.html](https://easy-templates-backend.herokuapp.com/api/docs/docs.html) !
 
 ## 🔧 Compiling
 
