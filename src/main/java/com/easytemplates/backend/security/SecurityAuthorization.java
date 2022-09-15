@@ -77,6 +77,12 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		
+		if (userDetails == null) {
+			SecurityLogging.log("Authorization: Fatal, user not found while authorizating... (userDetails == null)");
+		    chain.doFilter(request, response);
+		    return;
+		}
+		
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(HTTPReqtHdr.replace(TOKEN_BEARER_PREFIX, ""), userDetails);
         
 		if (authentication == null) {

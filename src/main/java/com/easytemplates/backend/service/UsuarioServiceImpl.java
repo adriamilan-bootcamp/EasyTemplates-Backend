@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
@@ -49,12 +48,12 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) {
 		
 		Usuarios user = usuarioDAO.findByEmail(username);
 		
 		if (user == null) {
-			throw new UsernameNotFoundException(username);
+			return null;
 		}
 		
 		return (Usuarios) user;
