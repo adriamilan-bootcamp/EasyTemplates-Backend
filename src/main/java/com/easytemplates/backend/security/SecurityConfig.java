@@ -51,10 +51,15 @@ public class SecurityConfig {
 	}
 	
 	private static final String[] AUTH_WHITELIST = {
-	        "/api/swagger-ui/**",
-	        "/api/doc.html",
-	        "/swagger-ui/**",
-	        "/v3/api-docs/**"
+			"/v2/api-docs",
+			"/configuration/ui",
+			"/swagger-resources",
+			"/configuration/security",
+			"/swagger-ui.html",
+			"/swagger-ui/**",
+			"/webjars/**",
+			"/swagger-resources/configuration/ui",
+	        "/api/docs/**"
 	};
 	
 	@Bean
