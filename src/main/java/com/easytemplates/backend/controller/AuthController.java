@@ -1,5 +1,7 @@
 package com.easytemplates.backend.controller;
 
+import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,8 +19,6 @@ import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
-
-import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 
 @RestController
 @RequestMapping("/")

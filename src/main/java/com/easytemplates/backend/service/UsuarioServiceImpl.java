@@ -3,7 +3,6 @@ package com.easytemplates.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Usuarios;
-import static java.util.Collections.emptyList;
 
 @Service("userDetailsService")
 public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {

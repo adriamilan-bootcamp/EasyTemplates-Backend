@@ -2,7 +2,6 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
-
 import com.easytemplates.backend.dto.UsuariosPlantillas;
 
 public interface UsuarioPlantillaService {
