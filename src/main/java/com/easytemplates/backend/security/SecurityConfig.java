@@ -135,6 +135,7 @@ public class SecurityConfig {
 	 */
 	public enum SECURITY_ROLE {
         ROLE_USER,
-        ROLE_ADMIN
+        ROLE_ADMIN,
+        ROLE_ANONYMOUS
     }
 }
