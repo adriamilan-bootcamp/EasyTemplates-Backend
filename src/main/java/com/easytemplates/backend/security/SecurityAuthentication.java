@@ -25,6 +25,8 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.easytemplates.backend.dto.Usuarios;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,84 +37,93 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 	private AuthenticationManager authenticationManager;
 
 	private final static UrlPathHelper urlPathHelper = new UrlPathHelper();
-	
+
 	/**
-	 * 	Class constructor
-	 * 	@param authenticationManager
+	 * Class constructor
+	 * 
+	 * @param authenticationManager
 	 */
 	public SecurityAuthentication(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
 
+	private Gson gson = new Gson();
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		
+
 		SecurityLogging.getRequestInfo("Authentication");
-		
+
 		try {
 			// Find the User/Password combination; assume JSON Body
 			Usuarios userCreds = new ObjectMapper().readValue(request.getInputStream(), Usuarios.class);
-			
-				return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-						userCreds.getEmail(), userCreds.getPassword(), userCreds.getAuthorities()));
+
+			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userCreds.getEmail(),
+					userCreds.getPassword(), userCreds.getAuthorities()));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	public String generateAccessToken(Usuarios user) {
-		
+
 		SecurityLogging.log("Authentication: Building JSON Web Token...");
-		
-		final String authorities = user.getAuthorities().stream()
-			.map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-		
+
+		final String authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+				.collect(Collectors.joining(","));
+
 		return Jwts.builder()
-			// Token Issuing Date
-			.setIssuedAt(new Date())
-			// Token Issuer (Us)
-			.setIssuer(ISSUER_INFO)
-			.claim("roles", authorities)
-			// Subject for the Token (User who requested it)
-			.setSubject(user.getEmail())
-			// Expiration date for the token
-			.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-			// What to sign the token with
-			.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY)
-			// Build and sign the token
-			.compact();		
+				// Token Issuing Date
+				.setIssuedAt(new Date())
+				// Token Issuer (Us)
+				.setIssuer(ISSUER_INFO).claim("roles", authorities)
+				// Subject for the Token (User who requested it)
+				.setSubject(user.getEmail())
+				// Expiration date for the token
+				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+				// What to sign the token with
+				.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY)
+				// Build and sign the token
+				.compact();
 	}
-	
+
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-	        AuthenticationException failed) throws IOException, ServletException {
+			AuthenticationException failed) throws IOException, ServletException {
 		SecurityLogging.log("Authentication-Request: Failed authentication trying to access "
-	            + urlPathHelper.getPathWithinApplication((HttpServletRequest) request));
+				+ urlPathHelper.getPathWithinApplication((HttpServletRequest) request));
 
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	    response.getWriter().write(
-	            "Wrong email/password combination!");
+		response.getWriter().write("Wrong email/password combination!");
 	}
-	
+
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 
 		String JWTToken = generateAccessToken((Usuarios) auth.getPrincipal());
-		
+
 		// Add the token to the header...
 		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + JWTToken);
 
+		// JSON Object
+		JsonObject json = new JsonObject();
+
+		// token keypair.
+		json.addProperty("token", JWTToken);
+
+		String userJsonString = this.gson.toJson(json);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
 		// ...and response
-		response.getWriter().write("Logged in succesfully!\nWelcome " + ((Usuarios) auth.getPrincipal()).getNombre() + ", your token is: " + JWTToken + "\nCurrent roles: " + ((Usuarios) auth.getPrincipal()).getRoles().toString());
-		
+		response.getWriter().write(userJsonString);
+
 		// Print it on Spring
-		SecurityLogging.log("Authentication: " + "Client has been correctly authenticated as \'" + ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
-	
+		SecurityLogging.log("Authentication: " + "Client has been correctly authenticated as \'"
+				+ ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
+
 	}
-	
-	
-	
+
 }
