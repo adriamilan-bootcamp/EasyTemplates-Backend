@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="imagenes")
 public class Imagenes implements Serializable {
 
@@ -50,7 +52,7 @@ public class Imagenes implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(length=255)
     private String src;
     @Column(name="fecha_creacion")
@@ -72,7 +74,7 @@ public class Imagenes implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -81,7 +83,7 @@ public class Imagenes implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -126,6 +128,7 @@ public class Imagenes implements Serializable {
      *
      * @return the current value of gruposImagenes
      */
+    @JsonIgnore
     public Set<GruposImagenes> getGruposImagenes() {
         return gruposImagenes;
     }
@@ -144,6 +147,7 @@ public class Imagenes implements Serializable {
      *
      * @return the current value of plantillasUsanImagenes
      */
+    @JsonIgnore
     public Set<PlantillasUsanImagenes> getPlantillasUsanImagenes() {
         return plantillasUsanImagenes;
     }
@@ -162,6 +166,7 @@ public class Imagenes implements Serializable {
      *
      * @return the current value of usuariosImagenes
      */
+    @JsonIgnore
     public Set<UsuariosImagenes> getUsuariosImagenes() {
         return usuariosImagenes;
     }
@@ -214,10 +219,10 @@ public class Imagenes implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+    	Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -241,7 +246,7 @@ public class Imagenes implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", getId());
         return ret;
     }
 

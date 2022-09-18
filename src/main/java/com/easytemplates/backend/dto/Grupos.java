@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="grupos")
 public class Grupos implements Serializable {
 
@@ -51,7 +53,7 @@ public class Grupos implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(nullable=false, length=255)
     private String nombre;
     @OneToMany(mappedBy="grupos")
@@ -79,7 +81,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -88,7 +90,7 @@ public class Grupos implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -115,6 +117,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of usuariosPertenecenGrupos
      */
+    @JsonIgnore
     public Set<UsuariosPertenecenGrupos> getUsuariosPertenecenGrupos() {
         return usuariosPertenecenGrupos;
     }
@@ -124,6 +127,7 @@ public class Grupos implements Serializable {
      *
      * @param aUsuariosPertenecenGrupos the new value for usuariosPertenecenGrupos
      */
+    
     public void setUsuariosPertenecenGrupos(Set<UsuariosPertenecenGrupos> aUsuariosPertenecenGrupos) {
         usuariosPertenecenGrupos = aUsuariosPertenecenGrupos;
     }
@@ -133,6 +137,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of usuarios
      */
+    @JsonIgnore
     public Usuarios getUsuarios() {
         return usuarios;
     }
@@ -151,6 +156,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of gruposImagenes
      */
+    @JsonIgnore
     public Set<GruposImagenes> getGruposImagenes() {
         return gruposImagenes;
     }
@@ -169,6 +175,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of gruposPdfs
      */
+    @JsonIgnore
     public Set<GruposPdfs> getGruposPdfs() {
         return gruposPdfs;
     }
@@ -187,6 +194,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of gruposPlantillas
      */
+    @JsonIgnore
     public Set<GruposPlantillas> getGruposPlantillas() {
         return gruposPlantillas;
     }
@@ -205,6 +213,7 @@ public class Grupos implements Serializable {
      *
      * @return the current value of usuarios2
      */
+    @JsonIgnore
     public Usuarios getUsuarios2() {
         return usuarios2;
     }
@@ -214,6 +223,7 @@ public class Grupos implements Serializable {
      *
      * @param aUsuarios2 the new value for usuarios2
      */
+    
     public void setUsuarios2(Usuarios aUsuarios2) {
         usuarios2 = aUsuarios2;
     }
@@ -257,10 +267,10 @@ public class Grupos implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+    	Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -284,7 +294,7 @@ public class Grupos implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", getId());
         return ret;
     }
 

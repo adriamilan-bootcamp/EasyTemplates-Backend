@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="pdfs")
 public class Pdfs implements Serializable {
 
@@ -50,7 +52,7 @@ public class Pdfs implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(length=100)
     private String titulo;
     @Column(length=255)
@@ -72,7 +74,7 @@ public class Pdfs implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -81,7 +83,7 @@ public class Pdfs implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -144,6 +146,7 @@ public class Pdfs implements Serializable {
      *
      * @return the current value of gruposPdfs
      */
+    @JsonIgnore
     public Set<GruposPdfs> getGruposPdfs() {
         return gruposPdfs;
     }
@@ -162,6 +165,7 @@ public class Pdfs implements Serializable {
      *
      * @return the current value of usuariosPdfs
      */
+    @JsonIgnore
     public Set<UsuariosPdfs> getUsuariosPdfs() {
         return usuariosPdfs;
     }
@@ -214,10 +218,10 @@ public class Pdfs implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+    	Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -241,7 +245,7 @@ public class Pdfs implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", getId());
         return ret;
     }
 

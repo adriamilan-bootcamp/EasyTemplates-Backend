@@ -52,10 +52,6 @@ public class UsuarioServiceImpl implements IUsuarioService,UserDetailsService {
 		return new User(user.getNombre(), user.getPassword(), emptyList());
 	}
 
-	@Override
-	public Usuarios usuarioByNombre(String username) {
-		return usuarioDAO.findByNombre(username);
-	}
 	
 
 

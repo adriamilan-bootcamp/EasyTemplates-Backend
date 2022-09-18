@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IGrupoDAO;
 import com.easytemplates.backend.dto.Grupos;
+import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.GrupoServiceImpl;
 
 
@@ -23,6 +25,9 @@ public class GrupoController {
 	
 	@Autowired
 	GrupoServiceImpl grupoServiceImpl;
+	
+	@Autowired
+	IGrupoDAO iGrupoDAO;
 	
 	@GetMapping("/grupos")
 	public List<Grupos> listarGrupos() {
@@ -41,10 +46,17 @@ public class GrupoController {
 		return grupoServiceImpl.gruposById(id);
 	}
 
-	@GetMapping("/grupos_nombre/{nombre}")
-	public Grupos grupoXNombre(@PathVariable(name = "nombre") String nombre) {
+	@GetMapping("/grupos/name/{nombre}")
+	public List<Grupos> grupoXNombre(@PathVariable(name = "nombre") String nombre) {
 
-		return grupoServiceImpl.grupoByNombre(nombre);
+		return iGrupoDAO.findGruposByNombre(nombre);
+	}
+
+	
+	@GetMapping("/grupos/usuarios/id/{id}")
+	public List<Grupos> usuarioXGrupos(@PathVariable(name = "id") Long id) {
+
+		return iGrupoDAO.findGruposByUsuariosId(id);
 	}
 
 	

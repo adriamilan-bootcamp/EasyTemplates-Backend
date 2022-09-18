@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="usuarios")
 public class Usuarios implements Serializable {
 
@@ -49,7 +51,7 @@ public class Usuarios implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @Column(nullable=false, length=255)
     private String nombre;
     @Column(nullable=false, length=255)
@@ -83,7 +85,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -92,7 +94,7 @@ public class Usuarios implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -191,6 +193,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of usuariosPertenecenGrupos
      */
+    @JsonIgnore
     public Set<UsuariosPertenecenGrupos> getUsuariosPertenecenGrupos() {
         return usuariosPertenecenGrupos;
     }
@@ -209,6 +212,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of grupos
      */
+    @JsonIgnore
     public Set<Grupos> getGrupos() {
         return grupos;
     }
@@ -227,6 +231,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of grupos2
      */
+    @JsonIgnore
     public Set<Grupos> getGrupos2() {
         return grupos2;
     }
@@ -245,6 +250,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of usuariosImagenes
      */
+    @JsonIgnore
     public Set<UsuariosImagenes> getUsuariosImagenes() {
         return usuariosImagenes;
     }
@@ -263,6 +269,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of usuariosPdfs
      */
+    @JsonIgnore
     public Set<UsuariosPdfs> getUsuariosPdfs() {
         return usuariosPdfs;
     }
@@ -281,6 +288,7 @@ public class Usuarios implements Serializable {
      *
      * @return the current value of usuariosPlantillas
      */
+    @JsonIgnore
     public Set<UsuariosPlantillas> getUsuariosPlantillas() {
         return usuariosPlantillas;
     }
@@ -333,10 +341,10 @@ public class Usuarios implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+    	Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -360,7 +368,7 @@ public class Usuarios implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", getId());
         return ret;
     }
 

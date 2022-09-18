@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.easytemplates.backend.dao.IImagenDAO;
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 
@@ -26,15 +27,20 @@ public class ImagenesController {
 	@Autowired
 	IImagenService imagenService;
 	
+	@Autowired
+	IImagenDAO iImagenDAO;
+	
 	@GetMapping("/imagenes")
 	public List<Imagenes> listImagenes() {
 		return imagenService.listImagenes();
 	} 
 	
-	@GetMapping("/imagen/{id}")
+	@GetMapping("/imagenes/{id}")
 	public Imagenes imagenXID(@PathVariable(name="id") Long id) {
 		return imagenService.imagenXID(id);
 	}
+	
+	
 	
 	@PostMapping("/imagen")
 	public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {

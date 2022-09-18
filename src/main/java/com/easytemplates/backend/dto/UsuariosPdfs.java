@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="usuarios_pdfs")
 public class UsuariosPdfs implements Serializable {
 
@@ -49,7 +51,7 @@ public class UsuariosPdfs implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
-    private int id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name="usuario")
     private Usuarios usuarios;
@@ -67,7 +69,7 @@ public class UsuariosPdfs implements Serializable {
      *
      * @return the current value of id
      */
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -76,7 +78,7 @@ public class UsuariosPdfs implements Serializable {
      *
      * @param aId the new value for id
      */
-    public void setId(int aId) {
+    public void setId(Long aId) {
         id = aId;
     }
 
@@ -85,6 +87,7 @@ public class UsuariosPdfs implements Serializable {
      *
      * @return the current value of usuarios
      */
+    @JsonIgnore
     public Usuarios getUsuarios() {
         return usuarios;
     }
@@ -103,6 +106,7 @@ public class UsuariosPdfs implements Serializable {
      *
      * @return the current value of pdfs
      */
+    @JsonIgnore
     public Pdfs getPdfs() {
         return pdfs;
     }
@@ -155,10 +159,10 @@ public class UsuariosPdfs implements Serializable {
      */
     @Override
     public int hashCode() {
-        int i;
-        int result = 17;
+    	Long i;
+        int result;
         i = getId();
-        result = 37*result + i;
+        result = (37 * 1337);
         return result;
     }
 
@@ -182,7 +186,7 @@ public class UsuariosPdfs implements Serializable {
      */
     public Map<String, Object> getPrimaryKey() {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
-        ret.put("id", Integer.valueOf(getId()));
+        ret.put("id", getId());
         return ret;
     }
 

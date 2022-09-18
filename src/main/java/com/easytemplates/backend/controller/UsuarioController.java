@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IUsuarioDAO;
+import com.easytemplates.backend.dao.IUsuarioPerteneceGruposDAO;
+import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.dto.UsuariosPertenecenGrupos;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 
 @RestController
@@ -25,12 +29,16 @@ public class UsuarioController {
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
 	
+
+	@Autowired
+	IUsuarioDAO iUsuarioDAO;
+
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	public UsuarioController(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
-	
+
 	@GetMapping("/usuarios")
 	public List<Usuarios> listarUsuarios() {
 		return usuarioServiceImpl.listAllUsuarios();
@@ -42,8 +50,27 @@ public class UsuarioController {
 		return usuarioServiceImpl.usuarioById(id);
 	}
 
+	@GetMapping("/usuarios/name/{nombre}")
+	public List<Usuarios> usuarioXNombre(@PathVariable(name = "nombre") String nombre) {
+
+		return iUsuarioDAO.findUsuariosByNombre(nombre);
+	}
+
+	@GetMapping("/usuarios/email/{email}")
+	public Usuarios usuarioXemail(@PathVariable(name = "email") String email) {
+
+		return iUsuarioDAO.findByEmail(email);
+	}
+	
+	@GetMapping("/usuarios_grupos/id/{id}")
+	public List<Usuarios> usuarioXGrupos(@PathVariable(name = "id") Long id) {
+
+		return iUsuarioDAO.findUsuariosByGruposId(id);
+	}
+
 
 	
+
 	@PutMapping("/usuarios/{id}")
 	public Usuarios actualizarUsuario(@PathVariable(name = "id") Long id, @RequestBody Usuarios usuario) {
 
@@ -55,7 +82,6 @@ public class UsuarioController {
 		seleccionado.setNombre(usuario.getNombre());
 		seleccionado.setEmail(usuario.getEmail());
 		seleccionado.setPassword(usuario.getPassword());
-		
 
 		actualizado = usuarioServiceImpl.updateUsuario(seleccionado);
 
@@ -67,7 +93,5 @@ public class UsuarioController {
 	public void eliminarUsuario(@PathVariable(name = "id") Long id) {
 		usuarioServiceImpl.deleteUsuario(id);
 	}
-	
-	
-	
+
 }

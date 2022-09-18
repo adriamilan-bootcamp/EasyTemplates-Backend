@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import com.easytemplates.backend.dao.IUsuarioImagenDAO;
+import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.dto.UsuariosImagenes;
 import com.easytemplates.backend.service.UsuarioImagenServiceImpl;
 
@@ -23,6 +23,9 @@ public class UsuarioImagenController {
 
 	@Autowired
 	UsuarioImagenServiceImpl serviceImpl;
+	
+	@Autowired
+	IUsuarioImagenDAO iUsuarioImagenDAO;
 	
 	@GetMapping("/usuarios_imagenes")
 	public List<UsuariosImagenes> listarUsuariosImagenes() {
@@ -44,6 +47,12 @@ public class UsuarioImagenController {
 	@GetMapping("/usuarios_imagenes/user/{id}")
 	public List<UsuariosImagenes> findByUsuario(@PathVariable(name="id") Long id) {
 		return serviceImpl.findByUsuario(id);
+	}
+	
+
+	@GetMapping("/imagen/usuario/id/{id}")
+	public List <Imagenes> imagenXUsuario(@PathVariable(name="id") Long id) {
+		return iUsuarioImagenDAO.findImagenesByUsuariosId(id);
 	}
 
 	@PutMapping("/usuarios_imagenes/{id}")
