@@ -7,9 +7,12 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,8 @@ import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.RoleServiceImpl;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/")
@@ -35,6 +40,8 @@ public class AuthController {
 	@Autowired
 	IUsuarioDAO usuarioDAO;
 	
+	private Gson gson = new Gson();
+
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public AuthController(BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -48,6 +55,33 @@ public class AuthController {
 		return ResponseEntity.ok()
 			      .body("Admin role works perfectly!");
 	}
+	
+	@GetMapping(value = "/roles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getRoles() {
+		String userEmail = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
+		Usuarios user = (Usuarios) usuarioServiceImpl.loadUserByUsername(userEmail);
+		
+		Set<Role> userRoles = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getRoles();
+		HashSet<String> userRolesArray = new HashSet<String>(user.getRoles().size());
+		
+		for(Role role : userRoles) {
+			userRolesArray.add(role.toString());
+		}
+		
+		// JSON Object
+		JsonObject json = new JsonObject();
+
+		
+		// token keypair.
+		json.addProperty("roles", userRolesArray.toString()
+				.replace("[", "")
+			    .replace("]", ""));
+
+		String userJsonString = this.gson.toJson(json);
+				
+		return ResponseEntity.ok()
+			      .body(userJsonString);
+	}	
 	
 	@PostMapping(REGISTER_URL)
 	public ResponseEntity<String> registrarUsuario(@RequestBody UserDetailsRequestModel requestUserDetails) {
