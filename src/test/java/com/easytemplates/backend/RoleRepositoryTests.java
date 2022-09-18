@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.easytemplates.backend.dao.IRoleRepository;
+import com.easytemplates.backend.dao.IRoleDAO;
 import com.easytemplates.backend.dto.Role;
  
 @DataJpaTest
@@ -19,7 +19,7 @@ import com.easytemplates.backend.dto.Role;
 @Rollback(false)
 public class RoleRepositoryTests {
 	
-    @Autowired private IRoleRepository repo;
+    @Autowired private IRoleDAO repo;
      
     @Test
     public void testCreateRoles() {

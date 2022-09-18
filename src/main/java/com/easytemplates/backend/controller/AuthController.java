@@ -2,6 +2,9 @@ package com.easytemplates.backend.controller;
 
 import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.service.RoleServiceImpl;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 
 @RestController
@@ -24,6 +28,9 @@ public class AuthController {
 	
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
+	
+	@Autowired
+	RoleServiceImpl roleSvc;
 	
 	@Autowired
 	IUsuarioDAO usuarioDAO;
@@ -54,8 +61,12 @@ public class AuthController {
 		
 		BeanUtils.copyProperties(requestUserDetails, usuarioNuevo);
 		
-		usuarioNuevo.addRole(new Role(2));
-
+		Role role = roleSvc.findByName("ROLE_USER");
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(role);
+        
+        usuarioNuevo.setRoles(roleSet);
+        
 		String encoded = bCryptPasswordEncoder.encode(requestUserDetails.getPassword());
 		usuarioNuevo.setPassword(encoded);
 		
