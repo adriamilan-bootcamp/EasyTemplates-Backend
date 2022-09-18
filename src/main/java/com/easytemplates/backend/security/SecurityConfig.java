@@ -65,7 +65,9 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
      
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http
+        .cors().configurationSource(corsConfigurationSource()).and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
     	// TODO: Configure CSRF
     	// Disable CSRF
     	.csrf().disable()
