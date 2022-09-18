@@ -57,28 +57,17 @@ public class AuthController {
 	}
 	
 	@GetMapping(value = "/roles", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getRoles() {
-		String userEmail = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
-		Usuarios user = (Usuarios) usuarioServiceImpl.loadUserByUsername(userEmail);
-		
-		Set<Role> userRoles = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getRoles();
-		HashSet<String> userRolesArray = new HashSet<String>(user.getRoles().size());
-		
-		for(Role role : userRoles) {
-			userRolesArray.add(role.toString());
-		}
-		
+	public ResponseEntity<String> getRoles() {		
 		// JSON Object
 		JsonObject json = new JsonObject();
 
-		
-		// token keypair.
-		json.addProperty("roles", userRolesArray.toString()
+		// Roles Key Pair
+		json.addProperty("roles", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString()
 				.replace("[", "")
 			    .replace("]", ""));
 
 		String userJsonString = this.gson.toJson(json);
-				
+		
 		return ResponseEntity.ok()
 			      .body(userJsonString);
 	}	
