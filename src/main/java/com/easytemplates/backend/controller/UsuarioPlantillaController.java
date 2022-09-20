@@ -3,6 +3,7 @@ package com.easytemplates.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +13,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IUsuarioPlantillaDAO;
 import com.easytemplates.backend.dto.UsuariosPlantillas;
 import com.easytemplates.backend.service.UsuarioPlantillaServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
 public class UsuarioPlantillaController {
 	@Autowired
 	UsuarioPlantillaServiceImpl serviceImpl;
+	
+	@Autowired
+	IUsuarioPlantillaDAO serviceDAO;
+
+	private Gson gson = new Gson();
 	
 	@GetMapping("/usuarios_plantillas")
 	public List<UsuariosPlantillas> listarUsuariosPlantillas() {
@@ -32,10 +42,23 @@ public class UsuarioPlantillaController {
 		return serviceImpl.saveUsuariosPlantillas(usuario_plantilla);
 	}
 
-	@GetMapping("/usuarios_plantillas/{id}")
-	public UsuariosPlantillas usuariosPlantillasXID(@PathVariable(name = "id") Long id) {
+	@GetMapping(value = "/usuarios_plantillas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String usuariosPlantillasXID(@PathVariable(name = "id") Long id) {
+		List<UsuariosPlantillas> user = serviceDAO.findPlantillasByUsuariosId(id);
+		
+		JsonObject json = new JsonObject();
+		JsonObject jsonfather = new JsonObject();
 
-		return serviceImpl.usuariosPlantillasById(id);
+		for (int i = 0; i < user.size(); i++) {
+			json.addProperty("src", user.get(i).getPlantillas().getSrc().toString());
+			json.addProperty("title", user.get(i).getPlantillas().getTitulo().toString());
+			json.addProperty("date", user.get(i).getPlantillas().getFechaCreacion().toString());
+			jsonfather.getAsJsonObject().add(String.valueOf(user.get(i).getPlantillas().getId()), (JsonElement) gson.toJsonTree(json));
+		}
+
+		String userJsonString = this.gson.toJson(jsonfather);
+
+		return userJsonString;
 	}
 
 	@PutMapping("/usuarios_plantillas/{id}")
