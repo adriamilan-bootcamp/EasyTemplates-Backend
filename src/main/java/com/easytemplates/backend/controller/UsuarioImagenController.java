@@ -1,9 +1,9 @@
 package com.easytemplates.backend.controller;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,7 @@ import com.easytemplates.backend.dao.IUsuarioImagenDAO;
 import com.easytemplates.backend.dto.UsuariosImagenes;
 import com.easytemplates.backend.service.UsuarioImagenServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -42,27 +43,25 @@ public class UsuarioImagenController {
 		return serviceImpl.saveUsuariosImagenes(usuario_imagen);
 	}
 
-	@GetMapping("/usuarios_imagenes/{id}")
+	@GetMapping(value = "/usuarios_imagenes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String usuariosImagenesXID(@PathVariable(name = "id") Long id) {
 		List<UsuariosImagenes> user = serviceDAO.findImagenByUsuarioId(id);
+
 		
-		// JSON Object
-				JsonObject json = new JsonObject();
+		JsonObject json = new JsonObject();
+		JsonObject jsonfather = new JsonObject();
 
 		for (int i = 0; i < user.size(); i++) {
-		    System.out.println(user.get(i).getImagenes());
+			json.addProperty("src", user.get(i).getImagenes().getSrc().toString());
+			json.addProperty("date", user.get(i).getImagenes().getFechaCreacion().toString());
+			jsonfather.getAsJsonObject().add(String.valueOf(user.get(i).getImagenes().getId()), (JsonElement) gson.toJsonTree(json));
 		}
-					
-		HashSet<String> lista = new HashSet<String>();
-		
-        for (int i = 0; i < user.size(); i++) {
-        	lista.add(user.get(i).getImagenes().getSrc());
-        }
-	
-		String userJsonString = this.gson.toJson(lista);
-		
-		
+
+		String userJsonString = this.gson.toJson(jsonfather);
+
 		return userJsonString;
+		
+		
 	}
 
 	@PutMapping("/usuarios_imagenes/{id}")
