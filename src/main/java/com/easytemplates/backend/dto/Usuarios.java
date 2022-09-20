@@ -11,8 +11,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,15 +52,12 @@ public class Usuarios implements Serializable, UserDetails {
     @Column(nullable=false, length=100)
     @JsonView(SecurityRole.role_admin.class)
     private String password;
-    @Enumerated(EnumType.STRING)
-    @JsonView(SecurityRole.role_admin.class)
-    private Rol rol = Rol.USER;
-    
+
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
     @OneToMany(mappedBy="usuarios")
     private Set<Grupos> grupos;
-    @OneToMany(mappedBy="usuarios")
+    @OneToMany(mappedBy="usuario")
     private Set<UsuariosImagenes> usuariosImagenes;
     @OneToMany(mappedBy="usuarios")
     private Set<UsuariosPdfs> usuariosPdfs;

@@ -11,6 +11,7 @@ public interface UsuarioImagenService {
 	
 	public UsuariosImagenes saveUsuariosImagenes(UsuariosImagenes usuario_imagen);
 	
+	public UsuariosImagenes usuariosImagenesByIdUsuario(Long id);
 	
 	public UsuariosImagenes usuariosImagenesById(Long id);
 	

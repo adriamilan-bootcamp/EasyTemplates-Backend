@@ -29,13 +29,20 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 		// TODO Auto-generated method stub
 		return iUsuarioImagenDAO.findById(id).get();
 	}
+	
+	@Override
+	public UsuariosImagenes usuariosImagenesByIdUsuario(Long id) {
+		// TODO Auto-generated method stub
+		return iUsuarioImagenDAO.findById(id).get();
+	}
 
 	@Override
 	public UsuariosImagenes updateUsuariosImagenes(UsuariosImagenes usuario_imagen) {
 		// TODO Auto-generated method stub
 		return iUsuarioImagenDAO.save(usuario_imagen);
 	}
-
+	
+	
 	@Override
 	public void deleteUsuariosImagenes(Long id) {
 		iUsuarioImagenDAO.deleteById(id);		
