@@ -17,7 +17,7 @@ import com.easytemplates.backend.dao.IUsuarioPlantillaDAO;
 import com.easytemplates.backend.dto.UsuariosPlantillas;
 import com.easytemplates.backend.service.UsuarioPlantillaServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -47,16 +47,17 @@ public class UsuarioPlantillaController {
 		List<UsuariosPlantillas> user = serviceDAO.findPlantillasByUsuariosId(id);
 		
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < user.size(); i++) {
+			json.addProperty("id", user.get(i).getPlantillas().getId().toString());
 			json.addProperty("src", user.get(i).getPlantillas().getSrc().toString());
 			json.addProperty("title", user.get(i).getPlantillas().getTitulo().toString());
 			json.addProperty("date", user.get(i).getPlantillas().getFechaCreacion().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(user.get(i).getPlantillas().getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 	}

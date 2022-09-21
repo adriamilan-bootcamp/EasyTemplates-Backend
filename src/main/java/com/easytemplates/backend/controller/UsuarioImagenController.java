@@ -17,7 +17,7 @@ import com.easytemplates.backend.dao.IUsuarioImagenDAO;
 import com.easytemplates.backend.dto.UsuariosImagenes;
 import com.easytemplates.backend.service.UsuarioImagenServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -49,15 +49,16 @@ public class UsuarioImagenController {
 
 		
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < user.size(); i++) {
+			json.addProperty("id", user.get(i).getId().toString());
 			json.addProperty("src", user.get(i).getImagenes().getSrc().toString());
 			json.addProperty("date", user.get(i).getImagenes().getFechaCreacion().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(user.get(i).getImagenes().getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 		

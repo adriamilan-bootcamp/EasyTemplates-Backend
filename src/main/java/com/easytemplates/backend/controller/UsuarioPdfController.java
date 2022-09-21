@@ -17,7 +17,7 @@ import com.easytemplates.backend.dao.IUsuarioPdfDAO;
 import com.easytemplates.backend.dto.UsuariosPdfs;
 import com.easytemplates.backend.service.UsuarioPdfServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
@@ -48,16 +48,17 @@ public class UsuarioPdfController {
 		List<UsuariosPdfs> user = serviceDAO.findPdfByUsuariosId(id);
 
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < user.size(); i++) {
+			json.addProperty("id", String.valueOf(user.get(i).getPdfs().getId()));
 			json.addProperty("src", user.get(i).getPdfs().getSrc().toString());
 			json.addProperty("title", user.get(i).getPdfs().getTitulo().toString());
 			json.addProperty("date", user.get(i).getPdfs().getFechaCreacion().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(user.get(i).getPdfs().getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 	}
