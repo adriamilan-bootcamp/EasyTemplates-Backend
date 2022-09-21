@@ -62,7 +62,7 @@ public class PdfController {
 	}
 	
 	@GetMapping("/pdfs/titulo/{titulo}")
-	public List<Pdfs> usuarioXNombre(@PathVariable(name = "titulo") String titulo) {
+	public List<Pdfs> pdfXtitulo(@PathVariable(name = "titulo") String titulo) {
 
 		return iPdfDAO.findByTitulo(titulo);
 	}

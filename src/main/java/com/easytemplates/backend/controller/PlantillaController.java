@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IPlantillaDAO;
+import com.easytemplates.backend.dto.Pdfs;
 import com.easytemplates.backend.dto.Plantillas;
 import com.easytemplates.backend.service.PlantillaServiceImpl;
 import com.google.gson.Gson;
@@ -25,7 +27,8 @@ public class PlantillaController {
 
 	@Autowired
 	PlantillaServiceImpl plantillaService;
-	
+	@Autowired
+	IPlantillaDAO iPlantillaDAO;
 	private Gson gson = new Gson();
 	
 	@GetMapping(value = "/plantillas", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,6 +54,12 @@ public class PlantillaController {
 	@GetMapping("/plantilla/{id}")
 	public Plantillas plantillaXID(@PathVariable(name="id") Long id) {
 		return plantillaService.plantillaXID(id);
+	}
+	
+	@GetMapping("/plantilla/titulo/{titulo}")
+	public List<Plantillas> plantillaXtitulo(@PathVariable(name = "titulo") String titulo) {
+
+		return iPlantillaDAO.findByTitulo(titulo);	
 	}
 	
 	@PostMapping("/plantilla") 
