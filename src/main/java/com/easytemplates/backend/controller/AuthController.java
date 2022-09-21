@@ -72,14 +72,17 @@ public class AuthController {
 			      .body(userJsonString);
 	}	
 	
-	@PostMapping(REGISTER_URL)
+	@PostMapping(value = REGISTER_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> registrarUsuario(@RequestBody UserDetailsRequestModel requestUserDetails) {
 		Usuarios usuarioNuevo = new Usuarios();
 		
+		JsonObject json = new JsonObject();
+		
 		if (usuarioDAO.findByEmail(requestUserDetails.getEmail()) != null) {
 			  System.out.println("Email is already registered!");
+			  json.addProperty("msg", "Email is already registered!");
 			  return ResponseEntity.badRequest()
-				      .body("Email is already registered!");
+				      .body(this.gson.toJson(json));
 		}
 		
 		BeanUtils.copyProperties(requestUserDetails, usuarioNuevo);
@@ -95,7 +98,9 @@ public class AuthController {
 		
 		usuarioServiceImpl.saveUsuario(usuarioNuevo);
 		
+		json.addProperty("msg", "Registered successfully!");
+		
 		return ResponseEntity.ok()
-			      .body("User registered succesfully!");
+			      .body(this.gson.toJson(json));
 	}
 }
