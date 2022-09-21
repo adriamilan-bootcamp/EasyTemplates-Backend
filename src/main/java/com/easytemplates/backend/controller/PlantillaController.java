@@ -38,6 +38,7 @@ public class PlantillaController {
 		for (int i = 0; i < plant.size(); i++) {
 			json.addProperty("id", plant.get(i).getId().toString());
 			json.addProperty("src", plant.get(i).getSrc().toString());
+			json.addProperty("title", plant.get(i).getTitulo());
 			json.addProperty("date", plant.get(i).getFechaCreacion().toString());
 			array.add(gson.toJsonTree(json));
 		}
