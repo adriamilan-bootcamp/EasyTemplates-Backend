@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -23,11 +27,26 @@ public class ImagenesController {
 	
 	@Autowired
 	IImagenService imagenService;
+
+	private Gson gson = new Gson();
 	
-	@GetMapping("/imagenes")
-	public List<Imagenes> listImagenes() {
-		return imagenService.listImagenes();
-	} 
+	@GetMapping(value = "/imagenes", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String listImagenes() {
+		List<Imagenes> imgs = imagenService.listImagenes();
+		
+		JsonObject json = new JsonObject();
+		JsonObject jsonfather = new JsonObject();
+
+		for (int i = 0; i < imgs.size(); i++) {
+			json.addProperty("src", imgs.get(i).getSrc().toString());
+			json.addProperty("date", imgs.get(i).getFechaCreacion().toString());
+			jsonfather.getAsJsonObject().add(String.valueOf(imgs.get(i).getId()), (JsonElement) gson.toJsonTree(json));
+		}
+
+		String userJsonString = this.gson.toJson(jsonfather);
+
+		return userJsonString;
+	}
 	
 	@GetMapping("/imagen/{id}")
 	public Imagenes imagenXID(@PathVariable(name="id") Long id) {
