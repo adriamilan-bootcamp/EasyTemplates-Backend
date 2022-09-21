@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easytemplates.backend.dto.Plantillas;
 import com.easytemplates.backend.service.PlantillaServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -33,15 +33,16 @@ public class PlantillaController {
 		List<Plantillas> plant = plantillaService.listPlantillas();
 		
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < plant.size(); i++) {
+			json.addProperty("id", plant.get(i).getId().toString());
 			json.addProperty("src", plant.get(i).getSrc().toString());
 			json.addProperty("date", plant.get(i).getFechaCreacion().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(plant.get(i).getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 	} 

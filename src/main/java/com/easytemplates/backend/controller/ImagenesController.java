@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -35,15 +35,16 @@ public class ImagenesController {
 		List<Imagenes> imgs = imagenService.listImagenes();
 		
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < imgs.size(); i++) {
+			json.addProperty("id", String.valueOf(imgs.get(i).getId()));
 			json.addProperty("src", imgs.get(i).getSrc().toString());
 			json.addProperty("date", imgs.get(i).getFechaCreacion().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(imgs.get(i).getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 	}

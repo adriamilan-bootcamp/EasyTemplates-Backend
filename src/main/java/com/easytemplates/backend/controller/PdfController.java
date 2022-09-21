@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easytemplates.backend.dto.Pdfs;
 import com.easytemplates.backend.service.PdfServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @RestController
@@ -34,15 +34,16 @@ public class PdfController {
 		List<Pdfs> pdfs = pdfCtl.listAllPdfs();
 		
 		JsonObject json = new JsonObject();
-		JsonObject jsonfather = new JsonObject();
+		JsonArray   array   = new JsonArray ();
 
 		for (int i = 0; i < pdfs.size(); i++) {
+			json.addProperty("id", pdfs.get(i).getId());
 			json.addProperty("src", pdfs.get(i).getSrc().toString());
 			json.addProperty("title", pdfs.get(i).getTitulo().toString());
-			jsonfather.getAsJsonObject().add(String.valueOf(pdfs.get(i).getId()), (JsonElement) gson.toJsonTree(json));
+			array.add(gson.toJsonTree(json));
 		}
 
-		String userJsonString = this.gson.toJson(jsonfather);
+		String userJsonString = this.gson.toJson(array);
 
 		return userJsonString;
 	}
