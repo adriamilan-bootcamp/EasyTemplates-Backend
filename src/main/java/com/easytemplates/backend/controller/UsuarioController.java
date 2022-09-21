@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
@@ -31,7 +32,8 @@ public class UsuarioController {
 
 	@Autowired
 	UsuarioServiceImpl usuarioServiceImpl;
-	
+	@Autowired
+	IUsuarioDAO iUsuarioDAO;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	private Gson gson = new Gson();
@@ -56,6 +58,18 @@ public class UsuarioController {
 		}
 		
 		return new ResponseEntity<Object>("The specified user doesn\'t exist in the database, try registering it", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@GetMapping("/usuarios/name/{nombre}")
+	public List<Usuarios> usuarioXNombre(@PathVariable(name = "nombre") String nombre) {
+
+		return iUsuarioDAO.findByUsername	(nombre);
+	}
+
+	@GetMapping("/usuarios/email/{email}")
+	public Usuarios usuarioXemail(@PathVariable(name = "email") String email) {
+
+		return iUsuarioDAO.findByEmail(email);
 	}
 
 	/**
