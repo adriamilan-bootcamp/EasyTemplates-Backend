@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dto.Pdfs;
+import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.PdfServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -25,7 +27,8 @@ public class PdfController {
 
 	@Autowired
 	PdfServiceImpl pdfCtl;
-
+	@Autowired
+	IPdfDAO iPdfDAO;
 	private Gson gson = new Gson();
 	
 	@GetMapping(value = "/pdfs", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +59,12 @@ public class PdfController {
 	@GetMapping("/pdfs/{id}")
 	public Pdfs getPdfById(@PathVariable(name = "id") Long id) {
 		return pdfCtl.pdfById(id);
+	}
+	
+	@GetMapping("/pdfs/titulo/{titulo}")
+	public List<Pdfs> usuarioXNombre(@PathVariable(name = "titulo") String titulo) {
+
+		return iPdfDAO.findByTitulo(titulo);
 	}
 	
 	@PutMapping("/pdfs/{id}")
