@@ -16,6 +16,6 @@ public interface UsuarioImagenService {
 	
 	public void deleteUsuariosImagenes(Long id);
 	
-	public List<UsuariosImagenes> findByUsuario(Long id);
+
 	
 }

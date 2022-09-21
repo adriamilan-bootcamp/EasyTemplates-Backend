@@ -9,8 +9,6 @@ import com.easytemplates.backend.dto.UsuariosImagenes;
 
 public interface IUsuarioImagenDAO extends JpaRepository<UsuariosImagenes, Long> {
 
-
-
 	List<Imagenes> findImagenesByUsuariosId(Long id);
 
 }

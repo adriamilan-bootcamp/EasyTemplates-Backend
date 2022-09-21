@@ -44,10 +44,7 @@ public class UsuarioImagenController {
 		return serviceImpl.usuariosImagenesById(id);
 	}
 	
-	@GetMapping("/usuarios_imagenes/user/{id}")
-	public List<UsuariosImagenes> findByUsuario(@PathVariable(name="id") Long id) {
-		return serviceImpl.findByUsuario(id);
-	}
+	
 	
 
 	@GetMapping("/imagen/usuario/id/{id}")
