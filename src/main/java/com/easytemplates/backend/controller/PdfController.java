@@ -42,6 +42,7 @@ public class PdfController {
 		for (int i = 0; i < pdfs.size(); i++) {
 			json.addProperty("id", pdfs.get(i).getId());
 			json.addProperty("src", pdfs.get(i).getSrc().toString());
+			json.addProperty("date", pdfs.get(i).getFechaCreacion().toString());
 			json.addProperty("title", pdfs.get(i).getTitulo().toString());
 			array.add(gson.toJsonTree(json));
 		}
