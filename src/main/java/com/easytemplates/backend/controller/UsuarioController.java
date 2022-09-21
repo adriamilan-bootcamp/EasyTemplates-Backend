@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -30,7 +33,9 @@ public class UsuarioController {
 	UsuarioServiceImpl usuarioServiceImpl;
 	
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+	private Gson gson = new Gson();
+
 	public UsuarioController(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
@@ -99,17 +104,20 @@ public class UsuarioController {
 	 *  The user will have to login again (JWT Bearer Token is invalid)
 	 */
 	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/usuarios/{id}")
-	public ResponseEntity<Object> eliminarUsuario(@PathVariable(name = "id") Long id) {
+	@DeleteMapping(value = "/usuarios/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> eliminarUsuario(@PathVariable(name = "id") Long id) {
 		Usuarios user = usuarioServiceImpl.usuarioById(id);
+		JsonObject json = new JsonObject();
 		
 		if (user != null)
 		{
 			usuarioServiceImpl.deleteUsuario(id);
-			return new ResponseEntity<Object>("User deleted successfully", HttpStatus.OK);
+			json.addProperty("msg", "User deleted successfully");
+			return new ResponseEntity<String>(this.gson.toJson(json), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<Object>("The specified user doesn\'t exist in the database, won't delete", HttpStatus.INTERNAL_SERVER_ERROR);
+		json.addProperty("msg", "Error deleting the user");
+		return new ResponseEntity<String>(this.gson.toJson(json), HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
