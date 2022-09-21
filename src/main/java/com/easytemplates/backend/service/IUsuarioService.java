@@ -28,12 +28,7 @@ public interface IUsuarioService{
 	public Usuarios usuarioById(Long id);
 	
 	
-	/***
-	 * 
-	 * @param username
-	 * @return
-	 */
-	public Usuarios usuarioByNombre (String username);
+
 	
 	/***
 	 * 
