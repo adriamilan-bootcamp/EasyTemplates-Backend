@@ -43,6 +43,22 @@ public class UsuarioController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
+	@GetMapping(value = "/usuarios/user_id", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getId() {		
+		// JSON Object
+		JsonObject json = new JsonObject();
+
+		// Id Key Pair
+		json.addProperty("id", String.valueOf(((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())
+				.replace("[", "")
+			    .replace("]", ""));
+
+		String userJsonString = this.gson.toJson(json);
+		
+		return ResponseEntity.ok()
+			      .body(userJsonString);
+	}
+	
 	@GetMapping(value = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String listarUsuarios() {
 		List<Usuarios> user = usuarioServiceImpl.listAllUsuarios();
