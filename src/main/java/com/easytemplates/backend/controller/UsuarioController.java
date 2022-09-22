@@ -69,17 +69,11 @@ public class UsuarioController {
 		Set<Role> userRoles = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getRoles();
 
-		boolean admin = false;
-
 		HashSet<String> userRolesArray = new HashSet<String>(userRoles.size());
 
 		// Map each role name to a Strings HashSet
 		for (Role role : userRoles) {
 			userRolesArray.add(role.toString());
-		}
-
-		if (userRolesArray.contains("ROLE_ADMIN") == true) {
-			admin = true;
 		}
 
 		for (int i = 0; i < user.size(); i++) {
@@ -89,10 +83,8 @@ public class UsuarioController {
 			json.addProperty("firma", user.get(i).getFirma());
 			json.addProperty("password", user.get(i).getPassword());
 
-			if (admin == true) {
 				json.addProperty("roles",
 						user.get(i).getAuthorities().toString().replace("[", "").replace("]", "").replace("ROLE_", ""));
-			}
 
 			array.add(gson.toJsonTree(json));
 		}
@@ -124,10 +116,8 @@ public class UsuarioController {
 		json.addProperty("firma", user.getFirma());
 		json.addProperty("password", user.getPassword());
 
-		if (userRolesArray.contains("ROLE_ADMIN") == true) {
 			json.addProperty("roles",
 					user.getAuthorities().toString().replace("[", "").replace("]", "").replace("ROLE_", ""));
-		}
 
 		String userJsonString = this.gson.toJson(json);
 
@@ -145,17 +135,11 @@ public class UsuarioController {
 		Set<Role> userRoles = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getRoles();
 
-		boolean admin = false;
-
 		HashSet<String> userRolesArray = new HashSet<String>(userRoles.size());
 
 		// Map each role name to a Strings HashSet
 		for (Role role : userRoles) {
 			userRolesArray.add(role.toString());
-		}
-
-		if (userRolesArray.contains("ROLE_ADMIN") == true) {
-			admin = true;
 		}
 
 		for (int i = 0; i < user.size(); i++) {
@@ -165,10 +149,8 @@ public class UsuarioController {
 			json.addProperty("firma", user.get(i).getFirma());
 			json.addProperty("password", user.get(i).getPassword());
 
-			if (admin == true) {
 				json.addProperty("roles",
 						user.get(i).getAuthorities().toString().replace("[", "").replace("]", "").replace("ROLE_", ""));
-			}
 
 			array.add(gson.toJsonTree(json));
 		}
@@ -200,10 +182,8 @@ public class UsuarioController {
 		json.addProperty("firma", user.getFirma());
 		json.addProperty("password", user.getPassword());
 
-		if (userRolesArray.contains("ROLE_ADMIN") == true) {
 			json.addProperty("roles",
 					user.getAuthorities().toString().replace("[", "").replace("]", "").replace("ROLE_", ""));
-		}
 
 		String userJsonString = this.gson.toJson(json);
 
