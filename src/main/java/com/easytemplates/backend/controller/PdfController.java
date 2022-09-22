@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dto.Pdfs;
-import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.PdfServiceImpl;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -32,24 +29,8 @@ public class PdfController {
 	private Gson gson = new Gson();
 	
 	@GetMapping(value = "/pdfs", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String listAllPdfs() {
-		
-		List<Pdfs> pdfs = pdfCtl.listAllPdfs();
-		
-		JsonObject json = new JsonObject();
-		JsonArray   array   = new JsonArray ();
-
-		for (int i = 0; i < pdfs.size(); i++) {
-			json.addProperty("id", pdfs.get(i).getId());
-			json.addProperty("src", pdfs.get(i).getSrc().toString());
-			json.addProperty("date", pdfs.get(i).getFechaCreacion().toString());
-			json.addProperty("title", pdfs.get(i).getTitulo().toString());
-			array.add(gson.toJsonTree(json));
-		}
-
-		String userJsonString = this.gson.toJson(array);
-
-		return userJsonString;
+	public List<Pdfs> listAllPdfs() {
+		return pdfCtl.listAllPdfs();
 	}
 	
 	@PostMapping("/pdfs")
