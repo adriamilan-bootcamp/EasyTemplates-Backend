@@ -68,7 +68,7 @@ public class Plantillas implements Serializable {
     private LocalDateTime fechaCreacion;
     
     @OneToMany(mappedBy="plantillas")
-    @JsonView(SecurityRole.role_user.class)
+    @JsonIgnore
     private Set<GruposPlantillas> gruposPlantillas;
     
     @OneToMany(mappedBy="plantillas")
