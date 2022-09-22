@@ -217,6 +217,10 @@ public class UsuarioController {
 			if (targetUserEmail.equals(authedUserEmail) || userRolesArray.contains("ROLE_ADMIN") == true) {
 				String encoded = bCryptPasswordEncoder.encode(requestUserDetails.getPassword());
 
+				user.setNombre(requestUserDetails.getUsername());
+				user.setEmail(requestUserDetails.getEmail());
+				user.setPassword(encoded);
+
 				usuarioServiceImpl.updateUsuario(user);
 
 				return new ResponseEntity<Object>(user, HttpStatus.OK);
