@@ -16,6 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity(name="imagenes")
 public class Imagenes implements Serializable {
 
@@ -50,15 +54,26 @@ public class Imagenes implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
+    @JsonView(SecurityRole.role_user.class)
     private int id;
+    
     @Column(length=255)
+    @JsonView(SecurityRole.role_user.class)
     private String src;
+    
     @Column(name="fecha_creacion")
+    @JsonView(SecurityRole.role_user.class)
     private LocalDateTime fechaCreacion;
+    
+    @JsonIgnore
     @OneToMany(mappedBy="imagenes")
     private Set<GruposImagenes> gruposImagenes;
+    
+    @JsonIgnore
     @OneToMany(mappedBy="imagenes")
     private Set<PlantillasUsanImagenes> plantillasUsanImagenes;
+    
+    @JsonIgnore
     @OneToMany(mappedBy="imagenes")
     private Set<UsuariosImagenes> usuariosImagenes;
 

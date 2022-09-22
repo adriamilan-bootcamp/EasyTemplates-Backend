@@ -14,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity(name="plantillas")
 public class Plantillas implements Serializable {
 
@@ -48,18 +52,31 @@ public class Plantillas implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
+    @JsonView(SecurityRole.role_user.class)
     private Long id;
+    
     @Column(length=255)
+    @JsonView(SecurityRole.role_user.class)
     private String titulo;
+    
     @Column(length=255)
+    @JsonView(SecurityRole.role_user.class)
     private String src;
+    
     @Column(name="fecha_creacion")
+    @JsonView(SecurityRole.role_user.class)
     private LocalDateTime fechaCreacion;
+    
     @OneToMany(mappedBy="plantillas")
+    @JsonView(SecurityRole.role_user.class)
     private Set<GruposPlantillas> gruposPlantillas;
+    
     @OneToMany(mappedBy="plantillas")
+    @JsonIgnore
     private Set<PlantillasUsanImagenes> plantillasUsanImagenes;
+    
     @OneToMany(mappedBy="plantillas")
+    @JsonIgnore
     private Set<UsuariosPlantillas> usuariosPlantillas;
 
     /** Default constructor. */

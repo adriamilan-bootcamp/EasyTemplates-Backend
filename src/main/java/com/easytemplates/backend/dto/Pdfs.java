@@ -16,6 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity(name="pdfs")
 public class Pdfs implements Serializable {
 
@@ -50,16 +54,27 @@ public class Pdfs implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
+    @JsonView(SecurityRole.role_user.class)
     private int id;
+    
     @Column(length=100)
+    @JsonView(SecurityRole.role_user.class)
     private String titulo;
+    
     @Column(length=255)
+    @JsonView(SecurityRole.role_user.class)
     private String src;
+    
     @Column(name="fecha_creacion")
+    @JsonView(SecurityRole.role_user.class)
     private LocalDateTime fechaCreacion;
+    
     @OneToMany(mappedBy="pdfs")
+    @JsonIgnore
     private Set<GruposPdfs> gruposPdfs;
+    
     @OneToMany(mappedBy="pdfs")
+    @JsonIgnore
     private Set<UsuariosPdfs> usuariosPdfs;
 
     /** Default constructor. */
