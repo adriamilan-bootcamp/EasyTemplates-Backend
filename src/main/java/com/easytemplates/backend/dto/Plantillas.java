@@ -59,7 +59,7 @@ public class Plantillas implements Serializable {
     @JsonView(SecurityRole.role_user.class)
     private String titulo;
     
-    @Column(length=255)
+    @Column()
     @JsonView(SecurityRole.role_user.class)
     private String src;
     
