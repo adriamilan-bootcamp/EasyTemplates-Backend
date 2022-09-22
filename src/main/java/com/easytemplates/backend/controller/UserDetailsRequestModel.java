@@ -1,16 +1,16 @@
 package com.easytemplates.backend.controller;
 
 public class UserDetailsRequestModel {
-	private String nombre;
+	private String username;
 	private String email;
 	private String password;
 
 	public String getNombre() {
-		return nombre;
+		return username;
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.username = nombre;
 	}
 
 	public String getEmail() {
