@@ -7,5 +7,5 @@ import com.easytemplates.backend.dto.Pdfs;
 
 public interface IPdfDAO extends JpaRepository<Pdfs, Long> {
 	List<Pdfs> findByTitulo(String titulo);
-	Pdfs findById(int id);
+	
 }
