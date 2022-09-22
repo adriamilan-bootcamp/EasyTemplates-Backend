@@ -25,6 +25,7 @@ import com.easytemplates.backend.dto.Usuarios;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 @RestController
 @RequestMapping("/api")
@@ -42,9 +43,50 @@ public class UsuarioController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 	
-	@GetMapping("/usuarios")
-	public List<Usuarios> listarUsuarios() {
-		return usuarioServiceImpl.listAllUsuarios();
+	@GetMapping(value = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String listarUsuarios() {
+		List<Usuarios> user = usuarioServiceImpl.listAllUsuarios();
+
+		JsonObject json = new JsonObject();
+		JsonArray   array   = new JsonArray ();
+
+		Set<Role> userRoles = ((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getRoles();
+
+		boolean admin = false;
+
+		HashSet<String> userRolesArray = new HashSet<String>(userRoles.size());
+
+		// Map each role name to a Strings HashSet
+		for(Role role : userRoles) {
+			userRolesArray.add(role.toString());
+		}
+
+		if (userRolesArray.contains("ROLE_ADMIN") == true)
+		{
+			admin = true;
+		}
+
+		for (int i = 0; i < user.size(); i++) {
+			json.addProperty("id", String.valueOf(user.get(i).getId()));
+			json.addProperty("username", user.get(i).getUsername());
+			json.addProperty("email", user.get(i).getEmail());
+			json.addProperty("firma", user.get(i).getFirma());
+			json.addProperty("password", user.get(i).getPassword());
+
+			if (admin == true)
+			{
+				json.addProperty("roles", user.get(i).getAuthorities().toString()
+						.replace("[", "")
+					    .replace("]", "")
+					    .replace("ROLE_", ""));
+			}
+
+			array.add(gson.toJsonTree(json));
+		}
+
+		String userJsonString = this.gson.toJson(array);
+
+		return userJsonString;
 	}
 
 	@GetMapping("/usuarios/{id}")
