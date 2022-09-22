@@ -94,7 +94,7 @@ public class UsuarioController {
 		return userJsonString;
 	}
 
-	@GetMapping("/usuarios/{id}")
+	@GetMapping(value = "/usuarios/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String usuarioXID(@PathVariable(name = "id") Long id) {
 
 		Usuarios user = usuarioServiceImpl.usuarioById(id);
@@ -124,7 +124,7 @@ public class UsuarioController {
 		return userJsonString;
 	}
 
-	@GetMapping("/usuarios/name/{nombre}")
+	@GetMapping(value = "/usuarios/name/{nombre}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String usuarioXNombre(@PathVariable(name = "nombre") String nombre) {
 
 		List<Usuarios> user = iUsuarioDAO.findByUsername(nombre);
@@ -216,10 +216,6 @@ public class UsuarioController {
 
 			if (targetUserEmail.equals(authedUserEmail) || userRolesArray.contains("ROLE_ADMIN") == true) {
 				String encoded = bCryptPasswordEncoder.encode(requestUserDetails.getPassword());
-
-				user.setNombre(requestUserDetails.getNombre());
-				user.setEmail(requestUserDetails.getEmail());
-				user.setPassword(encoded);
 
 				usuarioServiceImpl.updateUsuario(user);
 
