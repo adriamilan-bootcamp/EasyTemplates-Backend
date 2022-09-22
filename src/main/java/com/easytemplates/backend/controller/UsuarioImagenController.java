@@ -82,11 +82,14 @@ public class UsuarioImagenController {
 
 		return actualizado;
 	}
-
-	@DeleteMapping("/usuarios_imagenes/{id}")
-
-	public void eliminarUsuariosImagenes(@PathVariable(name = "id") Long id) {
-		serviceImpl.deleteUsuariosImagenes(id);
-	}
 	
+	@DeleteMapping(value = "/usuarios_imagenes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String eliminarUsuariosPdfs(@PathVariable(name = "id") Long id) {
+		serviceImpl.deleteUsuariosImagenes(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "User's image deleted successfully!");
+		
+		return this.gson.toJson(json);
+	}
 }

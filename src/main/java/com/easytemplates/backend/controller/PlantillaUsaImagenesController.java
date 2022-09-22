@@ -3,6 +3,7 @@ package com.easytemplates.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easytemplates.backend.dto.PlantillasUsanImagenes;
 import com.easytemplates.backend.service.IPlantillaUsaImagenesService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +24,8 @@ public class PlantillaUsaImagenesController {
 
 	@Autowired
 	IPlantillaUsaImagenesService puiService;
+	
+	private Gson gson = new Gson();
 	
 	@GetMapping("/plantillasusanimagenes")
 	public List<PlantillasUsanImagenes> listPUIs() {
@@ -49,9 +54,13 @@ public class PlantillaUsaImagenesController {
 		return puiUpdated;
 	}
 	
-	@DeleteMapping("/plantillasusanimagenes/{id}")
-	public String deletePUI(@PathVariable(name="id") Long id) {
-		return puiService.deletePlantillaUsaImagenes(id);
+	@DeleteMapping(value = "/plantillasusanimagenes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deletePUI(@PathVariable(name = "id") Long id) {
+		puiService.deletePlantillaUsaImagenes(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "Template uses images relation deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
-	
 }

@@ -80,9 +80,13 @@ public class UsuarioPlantillaController {
 		return actualizado;
 	}
 
-	@DeleteMapping("/usuarios_plantillas/{id}")
-
-	public void eliminarUsuariosImagenes(@PathVariable(name = "id") Long id) {
+	@DeleteMapping(value = "/usuarios_plantillas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String eliminarUsuariosImagenes(@PathVariable(name = "id") Long id) {
 		serviceImpl.deleteUsuariosPlantillas(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "User's template deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
 }

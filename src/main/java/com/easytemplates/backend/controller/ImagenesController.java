@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -44,10 +45,14 @@ public class ImagenesController {
 		String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	@DeleteMapping("/imagen/{id}")
-	public String deleteImagen(@PathVariable(name="id") Long id) {
-		return imagenService.deleteImagen(id);
+
+	@DeleteMapping(value = "/imagen/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deleteImagen(@PathVariable(name = "id") Long id) {
+		imagenService.deleteImagen(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "Image deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
-	
 }

@@ -17,6 +17,7 @@ import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dto.Pdfs;
 import com.easytemplates.backend.service.PdfServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -63,8 +64,13 @@ public class PdfController {
 		return updatedPdf;
 	}
 	
-	@DeleteMapping("/pdfs/{id}")
-	public void deletePdf(@PathVariable(name = "id") Long id) {
+	@DeleteMapping(value = "/pdfs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deletePdf(@PathVariable(name = "id") Long id) {
 		pdfCtl.deletePdf(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "Pdf deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
 }

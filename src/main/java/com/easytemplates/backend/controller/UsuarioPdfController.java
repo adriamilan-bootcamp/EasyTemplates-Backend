@@ -81,9 +81,13 @@ public class UsuarioPdfController {
 		return actualizado;
 	}
 
-	@DeleteMapping("/usuarios_pdfs/{id}")
-
-	public void eliminarUsuariosImagenes(@PathVariable(name = "id") Long id) {
+	@DeleteMapping(value = "/usuarios_pdfs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String eliminarUsuariosPdfs(@PathVariable(name = "id") Long id) {
 		serviceImpl.deleteUsuariosPdfs(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "User's pdf deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
 }

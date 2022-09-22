@@ -17,6 +17,7 @@ import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Plantillas;
 import com.easytemplates.backend.service.PlantillaServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -63,9 +64,13 @@ public class PlantillaController {
 		return plantillaUpdated;
 	}
 	
-	@DeleteMapping("/plantilla/{id}")
-	public String deletePlantilla(@PathVariable(name="id") Long id) {
-		return plantillaService.deletePlantilla(id);
+	@DeleteMapping(value = "/plantilla/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String deletePlantilla(@PathVariable(name = "id") Long id) {
+		plantillaService.deletePlantilla(id);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "Template deleted successfully!");
+		
+		return this.gson.toJson(json);
 	}
-	
 }
