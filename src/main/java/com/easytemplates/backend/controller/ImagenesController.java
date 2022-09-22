@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @RestController
 @RequestMapping("/api")
@@ -31,22 +29,8 @@ public class ImagenesController {
 	private Gson gson = new Gson();
 	
 	@GetMapping(value = "/imagenes", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String listImagenes() {
-		List<Imagenes> imgs = imagenService.listImagenes();
-		
-		JsonObject json = new JsonObject();
-		JsonArray   array   = new JsonArray ();
-
-		for (int i = 0; i < imgs.size(); i++) {
-			json.addProperty("id", String.valueOf(imgs.get(i).getId()));
-			json.addProperty("src", imgs.get(i).getSrc().toString());
-			json.addProperty("date", imgs.get(i).getFechaCreacion().toString());
-			array.add(gson.toJsonTree(json));
-		}
-
-		String userJsonString = this.gson.toJson(array);
-
-		return userJsonString;
+	public List<Imagenes> listImagenes() {
+		return imagenService.listImagenes();
 	}
 	
 	@GetMapping("/imagen/{id}")

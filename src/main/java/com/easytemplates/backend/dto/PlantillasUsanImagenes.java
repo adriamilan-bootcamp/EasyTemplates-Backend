@@ -15,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity(name="plantillas_usan_imagenes")
 public class PlantillasUsanImagenes implements Serializable {
 
@@ -49,12 +53,17 @@ public class PlantillasUsanImagenes implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
+    @JsonView(SecurityRole.role_user.class)
     private int id;
+    
     @ManyToOne
     @JoinColumn(name="plantilla")
+    @JsonIgnore
     private Plantillas plantillas;
+    
     @ManyToOne
     @JoinColumn(name="imagen")
+    @JsonIgnore
     private Imagenes imagenes;
 
     /** Default constructor. */

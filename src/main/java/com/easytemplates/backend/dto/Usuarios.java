@@ -25,6 +25,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity(name="usuarios")
@@ -40,30 +41,44 @@ public class Usuarios implements Serializable, UserDetails {
     @Column(unique=true, nullable=false, precision=10)
     @JsonView(SecurityRole.role_admin.class)
     private Long id;
+    
     @Column(nullable=false, length=255)
     @JsonView(SecurityRole.role_user.class)
     private String username;
+    
     @Column(nullable=false, length=255)
     @JsonView(SecurityRole.role_user.class)
     private String email;
+    
     @Column(length=255)
     @JsonView(SecurityRole.role_admin.class)
     private String firma;
+    
     @Column(nullable=false, length=100)
     @JsonView(SecurityRole.role_admin.class)
     private String password;
 
     @OneToMany(mappedBy="usuarios")
+    @JsonIgnore
     private Set<UsuariosPertenecenGrupos> usuariosPertenecenGrupos;
+    
     @OneToMany(mappedBy="usuarios")
+    @JsonIgnore
     private Set<Grupos> grupos;
+    
     @OneToMany(mappedBy="usuario")
+    @JsonIgnore
     private Set<UsuariosImagenes> usuariosImagenes;
+    
     @OneToMany(mappedBy="usuarios")
+    @JsonIgnore
     private Set<UsuariosPdfs> usuariosPdfs;
+    
     @OneToMany(mappedBy="usuarios")
+    @JsonIgnore
     private Set<UsuariosPlantillas> usuariosPlantillas;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_roles",

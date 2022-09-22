@@ -15,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.easytemplates.backend.security.SecurityRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity(name="usuarios_plantillas")
 public class UsuariosPlantillas implements Serializable {
 
@@ -49,11 +53,16 @@ public class UsuariosPlantillas implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false, precision=10)
+    @JsonView(SecurityRole.role_user.class)
     private int id;
+    
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="usuario")
     private Usuarios usuarios;
+    
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="plantilla")
     private Plantillas plantillas;
 
