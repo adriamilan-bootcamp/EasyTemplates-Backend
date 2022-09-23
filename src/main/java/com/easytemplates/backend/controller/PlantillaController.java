@@ -49,10 +49,10 @@ public class PlantillaController {
 		return plantillaService.plantillaXID(id);
 	}
 	
-	@GetMapping("/plantilla/titulo/{titulo}")
-	public List<Plantillas> plantillaXtitulo(@PathVariable(name = "titulo") String titulo) {
+	@GetMapping("/plantilla/titulo")
+	public List<Plantillas> plantillaXtitulo(@RequestBody PlantillaDetailsRequestModel requestTemplateDetails) {
 
-		return iPlantillaDAO.findByTitulo(titulo);	
+		return iPlantillaDAO.findByTitulo(requestTemplateDetails.getTitle());	
 	}
 	
 	@PutMapping("/plantilla/{id}")

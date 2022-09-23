@@ -47,10 +47,10 @@ public class PdfController {
 		return pdfCtl.pdfById(id);
 	}
 	
-	@GetMapping("/pdfs/titulo/{titulo}")
-	public List<Pdfs> pdfXtitulo(@PathVariable(name = "titulo") String titulo) {
+	@GetMapping("/pdfs/titulo")
+	public List<Pdfs> pdfXtitulo(@RequestBody PdfDetailsRequestModel requestPdfDetails) {
 
-		return iPdfDAO.findByTitulo(titulo);
+		return iPdfDAO.findByTitulo(requestPdfDetails.getTitle());
 	}
 	
 	@PutMapping("/pdfs/{id}")
