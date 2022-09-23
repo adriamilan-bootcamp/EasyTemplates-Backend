@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,10 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.easytemplates.backend.dao.IPlantillaDAO;
+import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Plantillas;
+import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.dto.UsuariosPlantillas;
 import com.easytemplates.backend.security.SecurityLogging;
 @Service
 public class PlantillaServiceImpl implements IPlantillaService {
@@ -32,6 +36,13 @@ public class PlantillaServiceImpl implements IPlantillaService {
 	@Autowired
 	private AmazonS3 amazonS3;
 
+	@Autowired
+	IUsuarioDAO userDao;
+	
+	@Autowired
+	UsuarioPlantillaServiceImpl templateuserSvc;
+	
+	
 	@Value("${aws.s3.bucket}")
 	private String bucketName;
 	
@@ -80,6 +91,16 @@ public class PlantillaServiceImpl implements IPlantillaService {
 			plantilla.setFechaCreacion(LocalDateTime.now());
 			plantilla.setTitulo(title);
 			plantillaDAO.save(plantilla);
+			
+			Usuarios userReq = userDao.findByEmail(((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+			
+			UsuariosPlantillas userPlantilla = new UsuariosPlantillas();
+			
+			userPlantilla.setUsuarios(userReq);
+			userPlantilla.setPlantillas(plantilla);
+			
+			templateuserSvc.saveUsuariosPlantillas(userPlantilla);
+			
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 

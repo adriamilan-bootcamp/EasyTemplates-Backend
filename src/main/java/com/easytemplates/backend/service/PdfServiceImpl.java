@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,10 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dao.IPlantillaDAO;
+import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Pdfs;
+import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.dto.UsuariosPdfs;
 import com.easytemplates.backend.security.SecurityLogging;
 
 @Service
@@ -42,6 +46,12 @@ public class PdfServiceImpl implements IPdfService {
 	@Autowired
 	IPdfDAO pdfDAO;
 
+	@Autowired
+	IUsuarioDAO userDao;
+	
+	@Autowired
+	UsuarioPdfServiceImpl pdfuserSvc;
+	
 	/**
 	 * Lists all the Pdf's
 	 * 
@@ -113,6 +123,16 @@ public class PdfServiceImpl implements IPdfService {
 			pdf.setFechaCreacion(LocalDateTime.now());
 			pdf.setTitulo(title);
 			pdfDAO.save(pdf);
+			
+			Usuarios userReq = userDao.findByEmail(((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+			
+			UsuariosPdfs userPdf = new UsuariosPdfs();
+			
+			userPdf.setUsuarios(userReq);
+			userPdf.setPdfs(pdf);
+			
+			pdfuserSvc.saveUsuariosPdfs(userPdf);
+			
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 
