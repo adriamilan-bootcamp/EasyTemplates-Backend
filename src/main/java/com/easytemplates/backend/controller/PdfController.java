@@ -84,9 +84,9 @@ public class PdfController {
 
 	@PostMapping("/pdfs") 
 	public ResponseEntity<String> uploadPdf(@RequestPart(value="file") MultipartFile file,
-			@RequestParam(name = "title") String title) throws Exception {
+			@RequestParam(name = "titulo") String titulo) throws Exception {
 		
-			pdfCtl.uploadFile(file, title);
+			pdfCtl.uploadFile(file, titulo);
 			
 			JsonObject json = new JsonObject();
 			json.addProperty("msg", "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3!");
