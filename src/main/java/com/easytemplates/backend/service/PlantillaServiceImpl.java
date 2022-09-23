@@ -1,8 +1,10 @@
 package com.easytemplates.backend.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,8 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Plantillas;
 @Service
@@ -75,4 +81,31 @@ public class PlantillaServiceImpl implements IPlantillaService {
 			throw new IOException(e);
 		} 
 	}
+	
+	public ByteArrayOutputStream downloadFile(String keyName) {
+        try {
+            S3Object s3object = amazonS3.getObject(new GetObjectRequest(bucketName, keyName));
+
+            InputStream is = s3object.getObjectContent();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            int len;
+            byte[] buffer = new byte[4096];
+            while ((len = is.read(buffer, 0, buffer.length)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+
+            return outputStream;
+        } catch (IOException ioException) {
+            System.out.println("IOException: " + ioException.getMessage());
+        } catch (AmazonServiceException serviceException) {
+        	System.out.println("AmazonServiceException Message:    " + serviceException.getMessage());
+            throw serviceException;
+        } catch (AmazonClientException clientException) {
+        	System.out.println("AmazonClientException Message: " + clientException.getMessage());
+            throw clientException;
+        }
+
+        return null;
+    }
+
 }

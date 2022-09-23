@@ -1,6 +1,9 @@
 package com.easytemplates.backend.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,16 +55,6 @@ public class PlantillaController {
 		return iPlantillaDAO.findByTitulo(titulo);	
 	}
 	
-	@PostMapping("/plantilla") 
-	public ResponseEntity<String> uploadPlantilla(@RequestPart(value="file") MultipartFile file,
-			@RequestParam(name = "title") String title) throws Exception {
-		
-			plantillaService.uploadFile(file, title);
-			String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		
-	}
-	
 	@PutMapping("/plantilla/{id}")
 	public Plantillas updatePlantilla(@PathVariable(name="id") Long id, @RequestBody Plantillas plantilla) {
 		Plantillas plantillaSelected = new Plantillas();
@@ -75,7 +68,7 @@ public class PlantillaController {
 		
 		return plantillaUpdated;
 	}
-	
+
 	@DeleteMapping(value = "/plantilla/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String deletePlantilla(@PathVariable(name = "id") Long id) {
 		plantillaService.deletePlantilla(id);
@@ -84,5 +77,40 @@ public class PlantillaController {
 		json.addProperty("msg", "Template deleted successfully!");
 		
 		return this.gson.toJson(json);
+	}
+	
+	/**
+	 * 	Amazon S3
+	 */
+
+	@PostMapping("/plantilla") 
+	public ResponseEntity<String> uploadPlantilla(@RequestPart(value="file") MultipartFile file,
+			@RequestParam(name = "title") String title) throws Exception {
+		
+			plantillaService.uploadFile(file, title);
+			String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(value = "/plantilla/s3/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getTemplateFromS3(@PathVariable(name="id") Long id) {
+		Plantillas plantilla = plantillaService.plantillaXID(id);
+		
+		String url = plantilla.getSrc();
+		
+		String escape = "[^/\\\\&\\?]+\\.\\w{3,4}(?=([\\?&].*$|$))";
+		
+		final Pattern pattern = Pattern.compile(escape, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(url);
+
+        matcher.find();
+        
+        System.out.println("File: " + matcher.group(0));
+        
+        ByteArrayOutputStream downloadInputStream = plantillaService.downloadFile(matcher.group(0));
+
+        return ResponseEntity.ok()
+                .body(downloadInputStream.toString());
 	}
 }
