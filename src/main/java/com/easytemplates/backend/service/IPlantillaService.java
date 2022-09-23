@@ -2,6 +2,8 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.easytemplates.backend.dto.Plantillas;
 
 public interface IPlantillaService {
@@ -15,5 +17,7 @@ public interface IPlantillaService {
 	public Plantillas updatePlantila(Plantillas plantilla);
 	
 	public String deletePlantilla(Long id);
+	
+	public void uploadFile(MultipartFile file) throws Exception;
 	
 }
