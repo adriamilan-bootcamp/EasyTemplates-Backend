@@ -83,13 +83,16 @@ public class PlantillaController {
 	 * 	Amazon S3
 	 */
 
-	@PostMapping("/plantilla") 
+	@PostMapping(value = "/plantilla", produces = MediaType.APPLICATION_JSON_VALUE) 
 	public ResponseEntity<String> uploadPlantilla(@RequestPart(value="file") MultipartFile file,
 			@RequestParam(name = "title") String title) throws Exception {
 		
 			plantillaService.uploadFile(file, title);
-			String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
-			return new ResponseEntity<>(response, HttpStatus.OK);
+			
+			JsonObject json = new JsonObject();
+			json.addProperty("msg", "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3!");
+			
+			return new ResponseEntity<>(this.gson.toJson(json), HttpStatus.OK);
 		
 	}
 	

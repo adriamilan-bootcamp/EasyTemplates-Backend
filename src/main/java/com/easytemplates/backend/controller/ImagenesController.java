@@ -42,8 +42,10 @@ public class ImagenesController {
 	@PostMapping("/imagen")
 	public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) throws Exception {
 		imagenService.uploadFile(file);
-		String response = "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3";
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		JsonObject json = new JsonObject();
+		json.addProperty("msg", "El archivo " + file.getOriginalFilename() + " fue subido correctamente a s3!");
+		
+		return new ResponseEntity<>(this.gson.toJson(json), HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/imagen/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
