@@ -9,19 +9,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Role;
 import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.security.SecurityLogging;
 import com.easytemplates.backend.service.RoleServiceImpl;
 import com.easytemplates.backend.service.UsuarioServiceImpl;
 import com.google.gson.Gson;
@@ -48,14 +47,6 @@ public class AuthController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value="/admin", method = RequestMethod.GET)
-	public ResponseEntity<String> test()
-	{
-		return ResponseEntity.ok()
-			      .body("Admin role works perfectly!");
-	}
-	
 	@GetMapping(value = "/roles", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getRoles() {		
 		// JSON Object
@@ -79,7 +70,7 @@ public class AuthController {
 		JsonObject json = new JsonObject();
 		
 		if (usuarioDAO.findByEmail(requestUserDetails.getEmail()) != null) {
-			  System.out.println("Email is already registered!");
+			  SecurityLogging.logMsg("REGISTER", "Email is already registered!");
 			  json.addProperty("msg", "Email is already registered!");
 			  return ResponseEntity.badRequest()
 				      .body(this.gson.toJson(json));

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Plantillas;
+import com.easytemplates.backend.security.SecurityLogging;
 import com.easytemplates.backend.service.PlantillaServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -106,7 +107,7 @@ public class PlantillaController {
 
         matcher.find();
         
-        System.out.println("File: " + matcher.group(0));
+        SecurityLogging.logMsg("TEMPLATE-S3", "Downloading " + matcher.group(0));
         
         byte[] data = plantillaService.downloadFile(matcher.group(0));
         ByteArrayResource resource = new ByteArrayResource(data);

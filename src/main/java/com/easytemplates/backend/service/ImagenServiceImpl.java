@@ -14,6 +14,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.easytemplates.backend.dao.IImagenDAO;
 import com.easytemplates.backend.dto.Imagenes;
+import com.easytemplates.backend.security.SecurityLogging;
 
 @Service
 public class ImagenServiceImpl implements IImagenService {
@@ -49,7 +50,7 @@ public class ImagenServiceImpl implements IImagenService {
 		try(FileOutputStream stream = new FileOutputStream(mainFile)) {
 			stream.write(file.getBytes());
 			String newFileName = System.currentTimeMillis() + "_" + mainFile.getName();
-			System.out.println("Subiendo archivo con el nombre " + newFileName);
+			SecurityLogging.logMsg("IMAGES-S3", "Uploading " + mainFile.getName());
 			PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
 			amazonS3.putObject(request);
 

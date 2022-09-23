@@ -22,6 +22,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Plantillas;
+import com.easytemplates.backend.security.SecurityLogging;
 @Service
 public class PlantillaServiceImpl implements IPlantillaService {
 
@@ -66,7 +67,8 @@ public class PlantillaServiceImpl implements IPlantillaService {
 		try(FileOutputStream stream = new FileOutputStream(mainFile)) {
 			stream.write(file.getBytes());
 			String newFileName = System.currentTimeMillis() + "_" + mainFile.getName();
-			System.out.println("Subiendo archivo con el nombre " + newFileName);
+			SecurityLogging.logMsg("TEMPLATE-S3", "Uploading " + mainFile.getName());
+			
 			PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
 			amazonS3.putObject(request);
 
@@ -95,7 +97,7 @@ public class PlantillaServiceImpl implements IPlantillaService {
             
             try {
                 content = IOUtils.toByteArray(stream);
-                System.out.println("File downloaded successfully.");
+                SecurityLogging.logMsg("TEMPLATE-S3", keyName + " downloaded successfully!");
                 s3object.close();
             } catch(final IOException ex) {
             	System.out.println("IOException: " + ex.getMessage());

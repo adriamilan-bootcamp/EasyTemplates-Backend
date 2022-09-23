@@ -23,6 +23,7 @@ import com.amazonaws.util.IOUtils;
 import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dao.IPlantillaDAO;
 import com.easytemplates.backend.dto.Pdfs;
+import com.easytemplates.backend.security.SecurityLogging;
 
 @Service
 // Implementation of the PdfService interface
@@ -100,7 +101,8 @@ public class PdfServiceImpl implements IPdfService {
 		try(FileOutputStream stream = new FileOutputStream(mainFile)) {
 			stream.write(file.getBytes());
 			String newFileName = System.currentTimeMillis() + "_" + mainFile.getName();
-			System.out.println("Subiendo archivo con el nombre " + newFileName);
+			SecurityLogging.logMsg("PDF-S3", "Uploading " + mainFile.getName());
+			
 			PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
 			amazonS3.putObject(request);
 
@@ -128,7 +130,7 @@ public class PdfServiceImpl implements IPdfService {
             
             try {
                 content = IOUtils.toByteArray(stream);
-                System.out.println("File downloaded successfully.");
+                SecurityLogging.logMsg("PDF-S3", keyName + " downloaded successfully!");
                 s3object.close();
             } catch(final IOException ex) {
             	System.out.println("IOException: " + ex.getMessage());

@@ -28,6 +28,10 @@ public class SecurityLogging {
 		public static void log(String msg) {
 			LOG.info("[SECURITY] " + msg);
 		}
+		
+		public static void logMsg(String from, String msg) {
+			LOG.info("[" + from + "] " + msg);
+		}
 	
 	    public static void getRequestInfo(String fromModule) {
 

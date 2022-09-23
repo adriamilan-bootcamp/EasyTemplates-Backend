@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.easytemplates.backend.dao.IPdfDAO;
 import com.easytemplates.backend.dto.Pdfs;
+import com.easytemplates.backend.security.SecurityLogging;
 import com.easytemplates.backend.service.PdfServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -104,7 +105,7 @@ public class PdfController {
 
         matcher.find();
         
-        System.out.println("File: " + matcher.group(0));
+        SecurityLogging.logMsg("PDF-S3", "Downloading " + matcher.group(0));
         
         byte[] data = pdfCtl.downloadFile(matcher.group(0));
         
