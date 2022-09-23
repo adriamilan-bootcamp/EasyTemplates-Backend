@@ -3,6 +3,7 @@ package com.easytemplates.backend.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class PlantillaServiceImpl implements IPlantillaService {
 	}
 
 	@Override
-	public void uploadFile(MultipartFile file) throws Exception {
+	public void uploadFile(MultipartFile file, String title) throws Exception {
 		File mainFile = new File(file.getOriginalFilename());
 		try(FileOutputStream stream = new FileOutputStream(mainFile)) {
 			stream.write(file.getBytes());
@@ -64,7 +65,11 @@ public class PlantillaServiceImpl implements IPlantillaService {
 
 			// Image Constructor 
 			Plantillas plantilla = new Plantillas();
+			LocalDateTime fechaCreacion;
+			
 			plantilla.setSrc(amazonS3.getUrl(bucketName, newFileName).toString());
+			plantilla.setFechaCreacion(LocalDateTime.now());
+			plantilla.setTitulo(title);
 			plantillaDAO.save(plantilla);
 		} catch (IOException e) {
 			throw new IOException(e);

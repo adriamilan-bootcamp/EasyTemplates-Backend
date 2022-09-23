@@ -18,6 +18,6 @@ public interface IPlantillaService {
 	
 	public String deletePlantilla(Long id);
 	
-	public void uploadFile(MultipartFile file) throws Exception;
+	public void uploadFile(MultipartFile file, String title) throws Exception;
 	
 }
