@@ -49,9 +49,9 @@ public class PdfController {
 	}
 	
 	@GetMapping("/pdfs/titulo")
-	public List<Pdfs> pdfXtitulo(@RequestParam(name = "title") String title) {
+	public List<Pdfs> pdfXtitulo(@RequestParam(name = "titulo") String titulo) {
 
-		return iPdfDAO.findByTitulo(title);
+		return iPdfDAO.findByTitulo(titulo);
 	}
 	
 	@PutMapping("/pdfs/{id}")
