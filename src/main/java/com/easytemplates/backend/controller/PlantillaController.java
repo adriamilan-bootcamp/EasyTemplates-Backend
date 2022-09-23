@@ -1,11 +1,11 @@
 package com.easytemplates.backend.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -94,7 +94,7 @@ public class PlantillaController {
 	}
 	
 	@GetMapping(value = "/plantilla/s3/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getTemplateFromS3(@PathVariable(name="id") Long id) {
+	public ResponseEntity<ByteArrayResource> getTemplateFromS3(@PathVariable(name="id") Long id) {
 		Plantillas plantilla = plantillaService.plantillaXID(id);
 		
 		String url = plantilla.getSrc();
@@ -108,9 +108,14 @@ public class PlantillaController {
         
         System.out.println("File: " + matcher.group(0));
         
-        ByteArrayOutputStream downloadInputStream = plantillaService.downloadFile(matcher.group(0));
-
-        return ResponseEntity.ok()
-                .body(downloadInputStream.toString());
+        byte[] data = plantillaService.downloadFile(matcher.group(0));
+        ByteArrayResource resource = new ByteArrayResource(data);
+        
+        return ResponseEntity
+                .ok()
+                .contentLength(data.length)
+                .header("Content-type", "application/json")
+                .header("Content-disposition", "attachment; filename=\"" + matcher.group(0).toString() + "\"")
+                .body(resource);
 	}
 }

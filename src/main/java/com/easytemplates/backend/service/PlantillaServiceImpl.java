@@ -1,6 +1,5 @@
 package com.easytemplates.backend.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -85,9 +84,10 @@ public class PlantillaServiceImpl implements IPlantillaService {
 	}
 	
 	@Async
-	public ByteArrayOutputStream downloadFile(String keyName) {
+	public byte[] downloadFile(String keyName) {
+		byte[] content = null;
+		
         try {
-        	byte[] content = null;
         	
             S3Object s3object = amazonS3.getObject(new GetObjectRequest(bucketName, keyName));
 
@@ -108,7 +108,7 @@ public class PlantillaServiceImpl implements IPlantillaService {
             throw clientException;
         }
 
-        return null;
+        return content;
     }
 
 }
