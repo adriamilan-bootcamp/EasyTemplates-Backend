@@ -53,7 +53,7 @@ public class UsuarioPdfController {
 		for (int i = 0; i < user.size(); i++) {
 			json.addProperty("id", String.valueOf(user.get(i).getPdfs().getId()));
 			json.addProperty("src", user.get(i).getPdfs().getSrc().toString());
-			json.addProperty("title", user.get(i).getPdfs().getTitulo().toString());
+			json.addProperty("titulo", user.get(i).getPdfs().getTitulo().toString());
 			json.addProperty("date", user.get(i).getPdfs().getFechaCreacion().toString());
 			array.add(gson.toJsonTree(json));
 		}
