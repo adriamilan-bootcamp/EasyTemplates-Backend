@@ -52,7 +52,7 @@ public class UsuarioPlantillaController {
 		for (int i = 0; i < user.size(); i++) {
 			json.addProperty("id", user.get(i).getPlantillas().getId().toString());
 			json.addProperty("src", user.get(i).getPlantillas().getSrc().toString());
-			json.addProperty("title", user.get(i).getPlantillas().getTitulo().toString());
+			json.addProperty("titulo", user.get(i).getPlantillas().getTitulo().toString());
 			json.addProperty("date", user.get(i).getPlantillas().getFechaCreacion().toString());
 			array.add(gson.toJsonTree(json));
 		}
