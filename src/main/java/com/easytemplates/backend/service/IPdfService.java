@@ -2,6 +2,8 @@ package com.easytemplates.backend.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.easytemplates.backend.dto.Pdfs;
 
 // Interface skeleton for the Pdf Service
@@ -44,4 +46,6 @@ public interface IPdfService {
 	 * @param id
 	 */
 	public void deletePdf(Long id);
+	
+	public void uploadFile(MultipartFile file, String title) throws Exception;
 }
