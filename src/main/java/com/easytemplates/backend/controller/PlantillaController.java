@@ -51,9 +51,8 @@ public class PlantillaController {
 	}
 	
 	@GetMapping("/plantilla/titulo")
-	public List<Plantillas> plantillaXtitulo(@RequestBody PlantillaDetailsRequestModel requestTemplateDetails) {
-
-		return iPlantillaDAO.findByTitulo(requestTemplateDetails.getTitle());	
+	public List<Plantillas> plantillaXtitulo(@RequestParam(name = "title") String title) {
+		return iPlantillaDAO.findByTitulo(title);	
 	}
 	
 	@PutMapping("/plantilla/{id}")
