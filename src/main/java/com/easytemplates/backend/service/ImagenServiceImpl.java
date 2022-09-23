@@ -7,13 +7,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.easytemplates.backend.dao.IImagenDAO;
+import com.easytemplates.backend.dao.IUsuarioDAO;
 import com.easytemplates.backend.dto.Imagenes;
+import com.easytemplates.backend.dto.Usuarios;
+import com.easytemplates.backend.dto.UsuariosImagenes;
 import com.easytemplates.backend.security.SecurityLogging;
 
 @Service
@@ -21,6 +25,12 @@ public class ImagenServiceImpl implements IImagenService {
 	
 	@Autowired
 	IImagenDAO imagenDAO;
+
+	@Autowired
+	IUsuarioDAO userDao;
+	
+	@Autowired
+	UsuarioImagenServiceImpl imguserSvc;
 	
 	@Autowired
 	private AmazonS3 amazonS3;
@@ -54,10 +64,22 @@ public class ImagenServiceImpl implements IImagenService {
 			PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
 			amazonS3.putObject(request);
 
+
+			Usuarios userReq = userDao.findByEmail(((Usuarios) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+			
+			
 			// Image Constructor 
 			Imagenes imagen = new Imagenes();
 			imagen.setSrc(amazonS3.getUrl(bucketName, newFileName).toString());
 			imagenDAO.save(imagen);
+			
+			UsuariosImagenes userImg = new UsuariosImagenes();
+			
+			userImg.setUsuario(userReq);
+			userImg.setImagenes(imagen);
+			
+			imguserSvc.saveUsuariosImagenes(userImg);
+			
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 
