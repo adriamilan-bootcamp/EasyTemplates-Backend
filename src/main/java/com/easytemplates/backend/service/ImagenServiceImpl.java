@@ -55,7 +55,7 @@ public class ImagenServiceImpl implements IImagenService {
 	}
 
 	@Override
-	public void uploadFile(MultipartFile file) throws Exception {
+	public String uploadFile(MultipartFile file) throws Exception {
 		File mainFile = new File(file.getOriginalFilename());
 		try(FileOutputStream stream = new FileOutputStream(mainFile)) {
 			stream.write(file.getBytes());
@@ -80,9 +80,10 @@ public class ImagenServiceImpl implements IImagenService {
 			
 			imguserSvc.saveUsuariosImagenes(userImg);
 			
+			return amazonS3.getUrl(bucketName, newFileName).toString();
 		} catch (IOException e) {
 			throw new IOException(e);
-		} 
+		}
 	}
 	
 } 

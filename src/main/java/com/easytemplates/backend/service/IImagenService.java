@@ -14,6 +14,6 @@ public interface IImagenService {
 	
 	public String deleteImagen(Long id);
 	
-	public void uploadFile(MultipartFile file) throws Exception;
+	public String uploadFile(MultipartFile file) throws Exception;
 	
 }
