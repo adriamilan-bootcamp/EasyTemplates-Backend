@@ -8,12 +8,9 @@ public interface UsuarioImagenService {
 	
 	public List<UsuariosImagenes> listAllUsuariosImagenes();
 	
-	
 	public UsuariosImagenes saveUsuariosImagenes(UsuariosImagenes usuario_imagen);
 	
 	public UsuariosImagenes usuariosImagenesByIdUsuario(Long id);
-	
-	public UsuariosImagenes usuariosImagenesById(Long id);
 	
 	public UsuariosImagenes updateUsuariosImagenes(UsuariosImagenes usuario_imagen);
 	

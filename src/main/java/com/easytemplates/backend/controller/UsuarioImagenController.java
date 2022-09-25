@@ -71,7 +71,7 @@ public class UsuarioImagenController {
 		UsuariosImagenes seleccionado = new UsuariosImagenes();
 		UsuariosImagenes actualizado = new UsuariosImagenes();
 
-		seleccionado = serviceImpl.usuariosImagenesById(id);
+		seleccionado = serviceImpl.usuariosImagenesByIdUsuario(id);
 
 		seleccionado.setUsuario(usuario_imagen.getUsuario());
 		seleccionado.setImagenes(usuario_imagen.getImagenes());

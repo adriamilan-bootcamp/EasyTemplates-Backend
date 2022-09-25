@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.easytemplates.backend.dto.Imagenes;
 import com.easytemplates.backend.service.IImagenService;
+import com.easytemplates.backend.service.UsuarioImagenServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -27,6 +28,9 @@ public class ImagenesController {
 	@Autowired
 	IImagenService imagenService;
 
+	@Autowired
+	UsuarioImagenServiceImpl imguserSvc;
+	
 	private Gson gson = new Gson();
 	
 	@GetMapping(value = "/imagenes", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,6 +55,8 @@ public class ImagenesController {
 	@DeleteMapping(value = "/imagen/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String deleteImagen(@PathVariable(name = "id") Long id) {
 		imagenService.deleteImagen(id);
+		
+		imguserSvc.deleteUsuariosImagenes(imguserSvc.findImagenById(id).getId());
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("msg", "Image deleted successfully!");

@@ -12,6 +12,7 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 
 	@Autowired
 	IUsuarioImagenDAO iUsuarioImagenDAO;
+	
 	@Override
 	public List<UsuariosImagenes> listAllUsuariosImagenes() {
 		// TODO Auto-generated method stub
@@ -22,12 +23,6 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 	public UsuariosImagenes saveUsuariosImagenes(UsuariosImagenes usuario_imagen) {
 		// TODO Auto-generated method stub
 		return iUsuarioImagenDAO.save(usuario_imagen);
-	}
-
-	@Override
-	public UsuariosImagenes usuariosImagenesById(Long id) {
-		// TODO Auto-generated method stub
-		return iUsuarioImagenDAO.findById(id).get();
 	}
 	
 	@Override
@@ -46,6 +41,11 @@ public class UsuarioImagenServiceImpl implements UsuarioImagenService{
 	@Override
 	public void deleteUsuariosImagenes(Long id) {
 		iUsuarioImagenDAO.deleteById(id);		
+	}
+	
+	public UsuariosImagenes findImagenById(Long id) {
+		UsuariosImagenes imagen = iUsuarioImagenDAO.findImagenById(id);
+		return imagen;
 	}
 
 }
