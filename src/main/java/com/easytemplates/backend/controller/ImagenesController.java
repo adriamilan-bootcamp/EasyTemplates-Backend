@@ -47,7 +47,7 @@ public class ImagenesController {
 	public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) throws Exception {
 		String url = imagenService.uploadFile(file);
 		JsonObject json = new JsonObject();
-		json.addProperty("url", url);
+		json.addProperty("src", url);
 		
 		return new ResponseEntity<>(this.gson.toJson(json), HttpStatus.OK);
 	}
