@@ -104,7 +104,7 @@ public class SecurityAuthorization extends BasicAuthenticationFilter {
 		
 		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         
-        SecurityLogging.log("Authorization: \'" + ((Usuarios) userDetails).getNombre() + "\' is authorized! Continuing...");
+        SecurityLogging.log("Authorization: \'" + ((Usuarios) userDetails).getUsername() + "\' is authorized! Continuing...");
         
         SecurityContextHolder.getContext().setAuthentication(authentication);
 		

@@ -5,7 +5,6 @@ import static com.easytemplates.backend.security.SecurityConstants.REGISTER_URL;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +75,8 @@ public class AuthController {
 				      .body(this.gson.toJson(json));
 		}
 		
-		BeanUtils.copyProperties(requestUserDetails, usuarioNuevo);
+		usuarioNuevo.setEmail(requestUserDetails.getEmail());
+		usuarioNuevo.setUsername(requestUserDetails.getUsername());
 		
 		Role role = roleSvc.findByName("ROLE_USER");
         Set<Role> roleSet = new HashSet<>();

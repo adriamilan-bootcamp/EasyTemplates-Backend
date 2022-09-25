@@ -133,21 +133,12 @@ public class Usuarios implements Serializable, UserDetails {
     }
 
     /**
-     * Access method for nombre.
-     *
-     * @return the current value of nombre
-     */
-    public String getNombre() {
-        return username;
-    }
-
-    /**
      * Setter method for nombre.
      *
      * @param aNombre the new value for nombre
      */
-    public void setNombre(String aNombre) {
-    	username = aNombre;
+    public void setUsername(String username) {
+    	username = username;
     }
 
     /**
@@ -309,7 +300,7 @@ public class Usuarios implements Serializable, UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.getNombre();
+		return username;
 	}
 
 	@Override

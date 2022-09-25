@@ -122,7 +122,7 @@ public class SecurityAuthentication extends UsernamePasswordAuthenticationFilter
 
 		// Print it on Spring
 		SecurityLogging.log("Authentication: " + "Client has been correctly authenticated as \'"
-				+ ((Usuarios) auth.getPrincipal()).getNombre() + "\'");
+				+ ((Usuarios) auth.getPrincipal()).getUsername() + "\'");
 
 	}
 
