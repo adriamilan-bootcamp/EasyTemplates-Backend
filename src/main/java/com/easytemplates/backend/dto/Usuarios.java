@@ -138,7 +138,7 @@ public class Usuarios implements Serializable, UserDetails {
      * @param aNombre the new value for nombre
      */
     public void setUsername(String username) {
-    	username = username;
+    	this.username = username;
     }
 
     /**
